@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
 import {Container, Form, Button, Icon, Message, Grid} from 'semantic-ui-react';
+import Test from './components/connectTest';
 
 const CORRECT_EMAILS = ['reshad@ofi.com', 'mir@ofi.com']
 const CORRECT_PASSWORD = 'password'
@@ -31,6 +32,7 @@ export default class App extends Component {
   constructor(){
     super();
     this.state = {
+      testMode: false,
       name: 'Md Reshad Bin Harun',
       email: '',
       password: '',
@@ -46,73 +48,6 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.logout = this.logout.bind(this);
     this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
-    this.handleBackEndClick = this.handleBackEndClick.bind(this);
-  }
-
-  handleBackEndClick(e){
-    console.log("button clicked!")
-    e.preventDefault();
-    // fetch('http://localhost:8080/newMentee', {
-    //   method: 'post',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify({
-    //     name: "Reshad",
-    //     email: "reshadbinharun@gmail.com",
-    //     password: "password",
-    //     school: "Tufts",
-    //     timeZone: "GMT+4",
-    //     location: "Dhaka"
-    //   })
-    //  }).then(res => {
-    //    console.log("received response",res.json())
-    //  });
-
-    // var headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    // headers.append('Accept', 'application/json');
-    // fetch('http://localhost:8080/getAllMentees', {
-    //   method: 'get',
-    //   credentials: 'include',
-    //   headers: headers,
-    // }).then(res => {
-    //    console.log("received response",res.json())
-    // });
-
-    // fetch('http://localhost:8080/testJwt').then(res => {
-    //    console.log("received response",res)
-    // });
-
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    // headers.append('Access-Control-Allow-Origin', 'localhost')
-    fetch('http://localhost:8080/menteeLogin', {
-      method: 'post',
-      credentials: 'include',
-      headers: headers,
-      body: JSON.stringify({
-        email: "reshadbinharun@gmail.com",
-        password: "password",
-      })
-    }).then(async res => {
-      let resolvedRes = await res.json()
-      console.log("received jwt", resolvedRes);
-      console.log("cookies are", document.cookie)
-     });
-
-    // fetch('http://localhost:8080/login', {
-    //   method: 'post',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify({
-    //     email: "reshadbinharun@gmail.com",
-    //     password: "password",
-    //   })
-    // }).then(async res => {
-    //   let resolvedRes = await res.json()
-    //   console.log("received response", resolvedRes);
-    //   window.sessionStorage.token = resolvedRes.token;
-    //   console.log("session storage is", window.sessionStorage)
-    //  });
   }
 
   logout(e){
@@ -217,7 +152,6 @@ export default class App extends Component {
               </Button>
             </Form>
           </Grid.Row>
-          <Button onClick={this.handleBackEndClick}>Test Server Connection</Button>
         </Grid>
         
     </div>
@@ -234,6 +168,7 @@ export default class App extends Component {
           />
           {this.renderIncorrectCredentialsMessage()}
         <Container>{this.renderLogin()}</Container>
+        <Test/>
       </div>
     )
   }
