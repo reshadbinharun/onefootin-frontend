@@ -30,6 +30,17 @@ let newMentorPayload = {
     preferredTopics: [ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, ECA_STRATEGY]
 }
 
+let newRequestPayload = {
+    dateTime: ['Sunday-9pm'],
+    requestorId: '7',
+    topic: ECA_STRATEGY,
+}
+
+let confirmRequestPayload = {
+    mentorId: '8',
+    requestId: '3',
+}
+
 export default class Test extends Component {
     constructor() {
         super();
@@ -42,6 +53,11 @@ export default class Test extends Component {
         this.mentorAdd = this.mentorAdd.bind(this);
         this.mentorGet = this.mentorGet.bind(this);
         this.mentorLogout = this.mentorLogout.bind(this);
+
+        this.mentorConfirmRequest = this.mentorConfirmRequest.bind(this);
+        this.getAllRequests = this.getAllRequests.bind(this);
+        this.getConfirmedRequests = this.getConfirmedRequests.bind(this);
+        this.newRequest = this.newRequest.bind(this);
     }
     // - - - Mentee Test Routes - - - //
 
@@ -175,10 +191,74 @@ export default class Test extends Component {
         });
     }
 
+    // - - - RequestTest Routes - - - //
+
+    newRequest(e) {
+        e.preventDefault();
+        console.log("new request");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/newRequest`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify(newRequestPayload)
+        }).then(res => {
+            console.log("received response", res.json())
+        });
+    }
+
+    mentorConfirmRequest(e) {
+        e.preventDefault();
+        console.log("confirm request");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/confirmRequest`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify(confirmRequestPayload)
+        }).then(res => {
+            console.log("received response", res.json())
+        });
+    }
+
+    getAllRequests(e) {
+        e.preventDefault();
+        console.log("get all requests");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getAllRequests`, {
+            method: 'get',
+            credentials: 'include',
+            headers: headers,
+        }).then(res => {
+            console.log("received response", res.json())
+        });
+    }
+
+    getConfirmedRequests(e) {
+        e.preventDefault();
+        console.log("get confirmed requests");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getConfirmedRequests`, {
+            method: 'get',
+            credentials: 'include',
+            headers: headers,
+        }).then(res => {
+            console.log("received response", res.json())
+        });
+    }
+
     render() {
         return (
             <Container>
-                <Grid rows={2}>
+                <Grid rows={3}>
                     <Grid.Row centered>
                         <Button class="ui button" onClick={this.menteeLogin}>
                             Mentee Login
@@ -205,6 +285,20 @@ export default class Test extends Component {
                         </Button>
                         <Button class="ui button" onClick={this.mentorLogout}>
                             Mentor Logout
+                        </Button>
+                    </Grid.Row>
+                    <Grid.Row centered>
+                        <Button class="ui button" onClick={this.newRequest}>
+                            Add Request
+                        </Button>
+                        <Button class="ui button" onClick={this.mentorConfirmRequest}>
+                            Confirm Request
+                        </Button>
+                        <Button class="ui button" onClick={this.getAllRequests}>
+                            Get All Requests
+                        </Button>
+                        <Button class="ui button" onClick={this.getConfirmedRequests}>
+                            Get Confirmed Requests
                         </Button>
                     </Grid.Row>
                 </Grid>
