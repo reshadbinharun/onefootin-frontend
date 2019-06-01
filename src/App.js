@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
-import {Container, Form, Button, Icon, Message, Grid} from 'semantic-ui-react';
+import {Container, Message, Grid} from 'semantic-ui-react';
 import Test from './components/connectTest';
+import LoginForm from "./components/LoginForm";
 
 const CORRECT_EMAILS = ['reshad@ofi.com', 'mir@ofi.com']
 const CORRECT_PASSWORD = 'password'
@@ -32,7 +33,6 @@ export default class App extends Component {
   constructor(){
     super();
     this.state = {
-      testMode: false,
       name: 'Md Reshad Bin Harun',
       email: '',
       password: '',
@@ -41,13 +41,22 @@ export default class App extends Component {
       image: '',
       connections: 20,
       loggedIn: false,
-      incorrectCredentials: false
+      incorrectCredentials: false,
+      testMode: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.logout = this.logout.bind(this);
     this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
+    this.toggleTest = this.toggleTest.bind(this);
+  }
+
+  toggleTest(e) {
+    e.preventDefault();
+    this.setState({
+      testMode: !this.state.testMode
+    })
   }
 
   logout(e){
@@ -101,13 +110,6 @@ export default class App extends Component {
   }
 
   renderLogin() {
-    let fieldStyle = {
-      width: '100%',
-    }
-    let messageStyle = {
-      padding: '20px',
-      margin: '10px',
-    }
     let loggedInView =       
       <NavBar
         image={this.state.image}
@@ -116,45 +118,12 @@ export default class App extends Component {
         memberSince={this.state.memberSince}
         connections={this.state.connections}
         />
-    let loginForm =
-      <div>
-      <Message
-        style= {messageStyle}
-        attached
-        centered
-        header="We've been there. We'll take you there."
-        content='Please sign in.'
+    let loginForm = 
+      <LoginForm
+        handleSubmit = {this.handleSubmit}
+        handleChange = {this.handleChange}
+        toggleTest = {this.toggleTest}
       />
-        <Grid>
-          <Grid.Row centered>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field
-              type="email"
-              required="true"
-              style={fieldStyle}
-            >
-                <label>Email</label>
-                <input placeholder='Email' name="email" onChange={this.handleChange} />
-              </Form.Field>
-              <Form.Field
-                type="password"
-                required="true"
-                style={fieldStyle}
-              >
-                <label>Password</label>
-                <input placeholder='***' name="password" onChange={this.handleChange} />
-              </Form.Field>
-              <Button 
-                color="blue" 
-                type='submit'>
-                <Icon name="unlock"/>
-                Submit
-              </Button>
-            </Form>
-          </Grid.Row>
-        </Grid>
-        
-    </div>
     return this.state.loggedIn ? loggedInView : loginForm;
   }
 
@@ -168,7 +137,7 @@ export default class App extends Component {
           />
           {this.renderIncorrectCredentialsMessage()}
         <Container>{this.renderLogin()}</Container>
-        <Test/>
+        {this.state.testMode? <Test/> : null}
       </div>
     )
   }
