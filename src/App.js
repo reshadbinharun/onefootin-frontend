@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
-import {Container, Message, Grid} from 'semantic-ui-react';
+import {Container, Message, Grid, Button, Divider} from 'semantic-ui-react';
 import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
+import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
+import SignUpMentor from './components/SignUp/SignUpMentor';
+import SignUpMentee from './components/SignUp/SignUpMentee';
 
 const CORRECT_EMAILS = ['reshad@ofi.com', 'mir@ofi.com']
 const CORRECT_PASSWORD = 'password'
+
+const PATHS = {
+  root: "/",
+  signupMentor: "/signupMentor",
+  signupMentee: "/signupMentee",
+}
 
 const IMAGE_MAP = [
   {
@@ -118,13 +127,42 @@ export default class App extends Component {
         memberSince={this.state.memberSince}
         connections={this.state.connections}
         />
-    let loginForm = 
-      <LoginForm
-        handleSubmit = {this.handleSubmit}
-        handleChange = {this.handleChange}
-        toggleTest = {this.toggleTest}
-      />
-    return this.state.loggedIn ? loggedInView : loginForm;
+    let navigation =
+    <Router>
+      <div>
+        <div>
+        <Grid rows={1}>
+          <Grid.Row left>
+            <Button>
+              <Link to={PATHS.signupMentor}>
+                Sign up as Mentor
+              </Link>
+            </Button>
+            <Button>
+              <Link to={PATHS.signupMentee}>
+                Sign up as Mentee
+              </Link>
+            </Button>
+          </Grid.Row>
+        </Grid>
+        </div>
+        <Divider/>
+        
+        <Switch>
+          <Route exact path={PATHS.root} render={(props) => 
+            <LoginForm {...props} 
+              handleSubmit = {this.handleSubmit}
+              handleChange = {this.handleChange}
+              toggleTest = {this.toggleTest}
+            /> 
+          }/>
+          <Route exact path={PATHS.signupMentor} render={() => <SignUpMentor/> }/>
+          <Route exact path={PATHS.signupMentee} component = {SignUpMentee}/>
+        </Switch>
+        
+      </div>
+    </Router>
+    return this.state.loggedIn ? loggedInView : navigation;
   }
 
   render() {
