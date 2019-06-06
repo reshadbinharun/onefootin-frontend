@@ -100,14 +100,15 @@ export default class PreferredTimeSelector extends React.Component {
         ]
 
         let payload = Object.assign(this.props.payload, {preferredTimes: preferredTimes})
-        console.log(payload);
-        // fetch(`${BACKEND}/newMentee`, {
-        //     method: 'post',
-        //     headers: {'Content-Type':'application/json'},
-        //     body: JSON.stringify(payload)
-        //    }).then(res => {
-        //      console.log("received response", res.json())
-        //    });
+        // console.log(payload);
+        fetch(`${BACKEND}/newMentor`, {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(payload)
+           }).then(res => {
+             console.log("received response", res.json())
+             alert(`Congratulations. Your submission was successful!`)
+           });
     }
     render() {
         return (
