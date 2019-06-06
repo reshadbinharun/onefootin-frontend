@@ -1,9 +1,8 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Icon, Message, Grid, Dropdown } from 'semantic-ui-react';
+import { Form, Button, Message, Grid, Dropdown } from 'semantic-ui-react';
 import PreferredTimeSelector from '../PreferredTimeSelector';
 
-const BACKEND = process.env.BACKEND || 'http://localhost:8080';
 // topic choices
 export const ESSAY_BRAINSTORM = 'Essay Brainstorm';
 export const ESSAY_CRITIQUE = 'Essay Critique';
@@ -44,16 +43,14 @@ export default class SignUpMentor extends React.Component {
             school: '',
             major: '',
             location: '',
-            preferredTimes: [],
             preferredTopics: [],
             selectTimes: false,
-
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.selectTimes = this.selectTimes.bind(this);
         this.setPreferredTimes = this.setPreferredTimes.bind(this);
+        this.formPayload = this.formPayload.bind(this);
     }
     setPreferredTimes(preferredTimes) {
         this.setState({
@@ -62,9 +59,16 @@ export default class SignUpMentor extends React.Component {
     }
     selectTimes(e) {
         if (e) {e.preventDefault()};
-        this.setState({
-            selectTimes: !this.state.selectTimes
-        })
+        let readyForTimeSelect = this.state.name && this.state.email && this.state.password &&
+            this.state.major && this.state.location && this.state.preferredTopics.length
+        if (readyForTimeSelect) {
+            this.setState({
+                selectTimes: !this.state.selectTimes
+            })
+        } else {
+            // react-alert
+            alert("Please fill in all fields");
+        }
     }
     handleChange(e) {
         e.preventDefault();
@@ -80,10 +84,9 @@ export default class SignUpMentor extends React.Component {
         })
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    formPayload() {
         let timeZone = `GMT${getTimezoneOffset()}`;
-        let payload = {
+        return {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
@@ -94,17 +97,11 @@ export default class SignUpMentor extends React.Component {
             preferredTopics: this.state.preferredTopics,
             timeZone: timeZone,
         }
-        fetch(`${BACKEND}/newMentee`, {
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(payload)
-           }).then(res => {
-             console.log("received response", res.json())
-           });
-        console.log(payload);
     }
+
     render() {
-    return (<div>
+    return (
+    <div>
         <Message
             style= {messageStyle}
             attached
@@ -115,15 +112,12 @@ export default class SignUpMentor extends React.Component {
             <Grid>
             {
                 this.state.selectTimes? <PreferredTimeSelector 
-                    handleSubmit={this.selectTimes}
+                    payload={this.formPayload()}
                     setPreferredTimes={this.setPreferredTimes}
                 /> : 
                 <Grid.Column centered>
                 <Grid.Row>
-                    <Button onClick={this.selectTimes}>Select preferred times</Button>
-                </Grid.Row>
-                <Grid.Row>
-                <Form onSubmit={this.handleSubmit}>
+                <Form >
                     <Form.Field
                     type="email"
                     required="true"
@@ -175,12 +169,9 @@ export default class SignUpMentor extends React.Component {
                     <Form.Field>
                     <Dropdown placeholder='Preferred Topics' fluid multiple selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="preferredTopics"/>
                     </Form.Field>
-                    <Button 
-                        color="blue" 
-                        type='submit'>
-                        <Icon name="unlock"/>
-                        Submit
-                    </Button>
+                    <Grid.Row>
+                        <Button onClick={this.selectTimes}>Select preferred times</Button>
+                    </Grid.Row>
                     </Form>
                     </Grid.Row>
                 </Grid.Column>

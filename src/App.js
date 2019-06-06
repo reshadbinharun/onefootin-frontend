@@ -37,7 +37,6 @@ const IMAGE_MAP = [
   }
 ]
 
-
 export default class App extends Component {
   constructor(){
     super();

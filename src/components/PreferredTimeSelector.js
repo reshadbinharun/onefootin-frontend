@@ -1,9 +1,10 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Button, Dropdown, Divider, Message, Container, Header } from 'semantic-ui-react';
+import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
 
 //time choices
 const PREFERRED_TIMES_SLOTS = ['6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'];
+const BACKEND = process.env.BACKEND || 'http://localhost:8080';
 let preferredTimesSlots = PREFERRED_TIMES_SLOTS.map( val => {
     return {key: val, text: val, value: val}
 })
@@ -85,6 +86,7 @@ export default class PreferredTimeSelector extends React.Component {
             saturdayPreferredTimes: value
         })
     }
+
     handleSubmit(e) {
         e.preventDefault();
         let preferredTimes = [
@@ -96,8 +98,16 @@ export default class PreferredTimeSelector extends React.Component {
         ...this.state.fridayPreferredTimes && this.state.fridayPreferredTimes.map(time => `Friday-${time}`),
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
-        this.props.setPreferredTimes(preferredTimes);
-        this.props.handleSubmit();
+
+        let payload = Object.assign(this.props.payload, {preferredTimes: preferredTimes})
+        console.log(payload);
+        // fetch(`${BACKEND}/newMentee`, {
+        //     method: 'post',
+        //     headers: {'Content-Type':'application/json'},
+        //     body: JSON.stringify(payload)
+        //    }).then(res => {
+        //      console.log("received response", res.json())
+        //    });
     }
     render() {
         return (
@@ -159,7 +169,14 @@ export default class PreferredTimeSelector extends React.Component {
                             onChange={this.handleChangeSaturdayTime} name='Saturday'/>
                     </Grid.Column>
                 </Grid>
-                <Button onClick={this.handleSubmit}>Submit</Button>
+                <Button 
+                    color="blue" 
+                    type='submit'
+                    onClick={this.handleSubmit}
+                    >
+                    <Icon name="unlock"/>
+                    Submit
+                </Button>
             </Container>
         )
     }
