@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import Profile from './Profile'
-import MentorConnections from './MentorConnections';
 import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 
 export const MY_PROFILE = 'My Profile';
-export const MY_MENTOR_CONNECTIONS = 'My Mentor Connections';
 export const MENTOR_NETWORK = 'Mentor Network';
 export const SCHEDULINGS = 'Schedulings';
 export const MENTOR_PROFILE = 'Mentor Profile'
 export const NEW_CALL = 'New Call'
 
-export default class NavBar extends Component {
+//TODO: adapt to mentee login model --> currently copied from mentor login
+export default class NavBarMentee extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -54,8 +53,6 @@ export default class NavBar extends Component {
                     memberSince={this.props.memberSince}
                     connections={this.props.connections}
                 />
-            case MY_MENTOR_CONNECTIONS:
-                return <MentorConnections/>
             case MENTOR_NETWORK:
                 return <MentorNetwork
                     pickMentor={this.handleNewScheduleWithMentor}
@@ -83,11 +80,6 @@ export default class NavBar extends Component {
         <div>
             <Menu pointing>
                 <Menu.Item name={MY_PROFILE} active={activeItem === MY_PROFILE} onClick={this.handleItemClick} />
-                <Menu.Item
-                    name={MY_MENTOR_CONNECTIONS}
-                    active={activeItem === MY_MENTOR_CONNECTIONS}
-                    onClick={this.handleItemClick}
-                />
                 <Menu.Item
                     name={MENTOR_NETWORK}
                     active={activeItem === MENTOR_NETWORK}
