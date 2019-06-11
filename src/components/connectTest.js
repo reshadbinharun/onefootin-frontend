@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import {Container, Button, Grid} from 'semantic-ui-react';
+import {ECA_STRATEGY, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING} from "../../src/topics"
 
 const BACKEND = 'http://localhost:8080'
-// topic choices
-export const ESSAY_BRAINSTORM = 'essay brainstorm';
-export const ECA_STRATEGY = 'eca strategy';
-export const COLLEGE_SHORTLISTING = 'college shortlisting';
+
 
 let newMenteePayload = {
     name: "Reshad",
@@ -18,20 +16,20 @@ let newMenteePayload = {
   }
 
 let newMentorPayload = {
-    name: "Mir",
-    email: "mirfaiyaz@gmail.com",
+    name: "Reshad",
+    email: "reshad@gmail.com",
     password: "password",
-    school: "Dartmouth",
-    timeZone: "GMT-6",
-    location: "USA",
+    school: "Tufts",
+    timeZone: "GMT+0600",
+    location: "Iceland",
     position: "Consultant",
-    major: "Mathematics",
-    preferredTimes: ['Sunday-10pm', 'Monday-9pm', 'Saturday-12pm'],
-    preferredTopics: [ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, ECA_STRATEGY]
+    major: "BME",
+    preferredTimes: ['Sunday-9pm-12am', 'Sunday-12pm-3pm', 'Saturday-9am-12pm', 'Sunday-3am-6pm'],
+    preferredTopics: [ESSAY_BRAINSTORM, ECA_STRATEGY]
 }
 
 let newRequestPayload = {
-    dateTime: ['Sunday-9pm'],
+    dateTime: ['Sunday-7.30pm'],
     requestorId: '7',
     topic: ECA_STRATEGY,
 }
@@ -39,6 +37,15 @@ let newRequestPayload = {
 let confirmRequestPayload = {
     mentorId: '8',
     requestId: '3',
+}
+
+let topicMatchedMentorsPayload = {
+    requestedTopics: [ECA_STRATEGY, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING]
+}
+
+let timeMatchedMentorsPayload = {
+    menteeTime: 'Saturday-9.30pm',
+    menteeTimezone: 'GMT+0000'
 }
 
 export default class Test extends Component {
@@ -191,7 +198,7 @@ export default class Test extends Component {
         });
     }
 
-    // - - - RequestTest Routes - - - //
+    // - - - Request Test Routes - - - //
 
     newRequest(e) {
         e.preventDefault();
@@ -255,6 +262,48 @@ export default class Test extends Component {
         });
     }
 
+    getTopicMatchedMentors(e) {
+        e.preventDefault();
+        console.log("get topic matched mentors");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getMatchingMentorsByTopic`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify(topicMatchedMentorsPayload)
+        }).then(async res => {
+            let resolvedRes = await res.json()
+            if (res.status===200){
+                console.log("received response",resolvedRes)
+            } else {
+                console.log("res rejected")
+            }
+        });
+    }
+
+    getTimeMatchedMentors(e) {
+        e.preventDefault();
+        console.log("get time matched mentors");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getMatchingMentorsByTime`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify(timeMatchedMentorsPayload)
+        }).then(async res => {
+            let resolvedRes = await res.json()
+            if (res.status===200){
+                console.log("received response",resolvedRes)
+            } else {
+                console.log("res rejected")
+            }
+        });
+    }
+
     render() {
         return (
             <Container>
@@ -299,6 +348,12 @@ export default class Test extends Component {
                         </Button>
                         <Button class="ui button" onClick={this.getConfirmedRequests}>
                             Get Confirmed Requests
+                        </Button>
+                        <Button class="ui button" onClick={this.getTopicMatchedMentors}>
+                            Get Matching Mentors by Topic
+                        </Button>
+                        <Button class="ui button" onClick={this.getTimeMatchedMentors}>
+                            Get Matching Mentors by Time
                         </Button>
                     </Grid.Row>
                 </Grid>

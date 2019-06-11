@@ -2,14 +2,8 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Message, Grid, Dropdown } from 'semantic-ui-react';
 import PreferredTimeSelector from '../PreferredTimeSelector';
+import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../../topics"
 
-// topic choices
-export const ESSAY_BRAINSTORM = 'Essay Brainstorm';
-export const ESSAY_CRITIQUE = 'Essay Critique';
-export const ECA_STRATEGY = 'ECA Development';
-export const COLLEGE_SHORTLISTING = 'College Shortlisting';
-export const GENERAL_CONSULTATION = 'General Consulation';
-export const FINANCIAL_AID_MATTERS = 'Financial Aid Matters';
 const PREFERRED_TOPICS = [ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
     return {key: val, text: val, value: val}
