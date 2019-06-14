@@ -28,6 +28,8 @@ export default class LoginForm extends React.Component {
         this.handleSubmitAsMentor = this.handleSubmitAsMentor.bind(this);
         this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
     }
+
+    //TODO: combine both handleSubmit functions into one which takes a bool for isMentor
     handleSubmitAsMentor(e) {
         e.preventDefault();
         var headers = new Headers();
@@ -63,7 +65,36 @@ export default class LoginForm extends React.Component {
 
     handleSubmitAsMentee(e) {
         e.preventDefault();
-        console.log("mentee sign in")        
+        console.log("mentee sign in")
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/menteeLogin`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            })
+        }).then(async res => {
+            let resolvedRes = await res;
+            resolvedRes = await resolvedRes.json()
+            if (resolvedRes.status === 400) {
+                this.setState({
+                    incorrectCredentials: true,
+                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                },() => console.log("login rejected", resolvedRes))
+            }
+            else {
+                this.setState({
+                    incorrectCredentials: false,
+                },() => {
+                    this.props.login()
+                    this.props.liftPayload(resolvedRes, false);
+                })
+            }
+        });        
     }
     
     handleChange(e) {

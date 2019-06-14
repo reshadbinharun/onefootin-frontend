@@ -3,7 +3,8 @@ import { Grid, Card, Icon, Image } from 'semantic-ui-react'
 
 export default class MentorCard extends React.Component {
     render() {
-        const {name, image, school, connectionSince, company, country} = this.props;
+        //TODO: include image and memberSince
+        const {name, school, position, location} = this.props;
         const cardStyle ={
             width: '100%',
             padding: '5px',
@@ -18,17 +19,17 @@ export default class MentorCard extends React.Component {
                     <Grid.Column width={12}>
                         <Card.Content>
                         <Card.Header>{name}</Card.Header>
-                        <Card.Meta>
+                        {/* <Card.Meta>
                             <span className='date'>Joined in {connectionSince}</span>
-                        </Card.Meta>
+                        </Card.Meta> */}
                         <Card.Description>
                             School: {school}
                         </Card.Description>
                         <Card.Description>
-                            Company: {company}
+                            Position: {position}
                         </Card.Description>
                         <Card.Description>
-                            Country: {country}
+                            Location: {location}
                         </Card.Description>
                         </Card.Content>
                         <Card.Content extra>

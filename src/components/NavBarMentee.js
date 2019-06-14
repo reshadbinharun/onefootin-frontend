@@ -4,6 +4,7 @@ import Profile from './Profile'
 import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
+import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
@@ -17,21 +18,38 @@ export default class NavBarMentee extends Component {
         super(props);
         this.state = {
             activeItem: MY_PROFILE,
+            data: {},
+            schedule: null,
             mentorPicked: false,
-            mentor: ''
+            mentorId: ''
         }
+        this.getSchedule = this.getSchedule.bind(this);
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
     }
 
+    componentDidMount() {
+        console.log("mentee data is", this.props.payload)
+        this.setState({
+            data: this.props.payload.mentee
+        }, async () => {
+            await this.getSchedule(this.state.data.id)
+        })
+    }
+
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    async getSchedule(menteeId) {
+        //TODO: get list of requests for mentee from backend
+        console.log("getSchedule called")
+    }
 
     handleNewSchedule(e) {
         e.preventDefault();
         this.setState({
             activeItem: NEW_CALL,
             mentorPicked: false,
-            mentor: ''
+            mentorId: ''
         })
     }
 
@@ -39,7 +57,7 @@ export default class NavBarMentee extends Component {
         this.setState({
             activeItem: NEW_CALL,
             mentorPicked: true,
-            mentor: value
+            mentorId: value
         })
     }
 
@@ -47,11 +65,10 @@ export default class NavBarMentee extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile 
-                    image={this.props.image}
-                    name={this.props.name}
-                    school={this.props.school}
-                    memberSince={this.props.memberSince}
-                    connections={this.props.connections}
+                    // image={this.props.data.image}
+                    name={this.state.data.name}
+                    school={this.state.data.school}
+                    // memberSince={this.props.memberSince}
                 />
             case MENTOR_NETWORK:
                 return <MentorNetwork
@@ -62,10 +79,13 @@ export default class NavBarMentee extends Component {
                 getForm={this.handleNewSchedule}
                 />
             case NEW_CALL:
-                return <ScheduleForm
-                    mentorPicked={this.state.mentorPicked}
-                    mentor={this.state.mentor}
-                    />
+                return (this.state.mentorPicked? 
+                    <ScheduleFormMentorPicked
+                        mentorId={this.state.mentorId}
+                        menteeId={this.state.data.id}
+                        menteeTimeZone={this.state.data.timeZone}
+                        />:
+                    <ScheduleForm/>)
             case MENTOR_PROFILE:
                 return null
             default:

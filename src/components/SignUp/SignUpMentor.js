@@ -17,7 +17,7 @@ let messageStyle = {
     margin: '10px',
 }
 
-function getTimezoneOffset() {
+export function getTimezoneOffset() {
     function z(n) {
         return (n < 10 ? '0' : '') + n
     }

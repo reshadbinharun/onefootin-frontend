@@ -24,7 +24,7 @@ let newMentorPayload = {
     location: "Iceland",
     position: "Consultant",
     major: "BME",
-    preferredTimes: ['Sunday-9pm-12am', 'Sunday-12pm-3pm', 'Saturday-9am-12pm', 'Sunday-3am-6pm'],
+    preferredTimes: ['Sunday-9pm-12am', 'Sunday-12pm-3pm', 'Saturday-9am-12pm', 'Sunday-3pm-6pm'],
     preferredTopics: [ESSAY_BRAINSTORM, ECA_STRATEGY]
 }
 

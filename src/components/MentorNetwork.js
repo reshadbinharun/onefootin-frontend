@@ -3,50 +3,35 @@ import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 import SearchBar from './SearchBar';
 import MentorNetworkCard from './MentorNetworkCard';
+import { BACKEND } from "../App";
 
-//sample connection data, remove when back-end finished
-const mentors = [
-    {name: 'Md Reshad Bin Harun',
-    school: 'Tufts University',
-    connectionSince: 'May 2016',
-    company: 'Stratasys',
-    country: 'Bangladesh',
-    image: 'images/sample.png'},
-    {name: 'Mir Faiyaz',
-    school: 'Dartmouth',
-    connectionSince: 'May 2018',
-    company: 'Altman Vilandrie',
-    country: 'Bangladesh',
-    image: 'images/mir.png'},
-    {name: 'Anindya Kumar Guha',
-    school: 'Colgate',
-    connectionSince: 'Dec 2016',
-    company: 'Amazon',
-    country: 'Bangladesh',
-    image: 'images/anindya.png'},
-    {name: 'Rakin Muhtahi',
-    country: 'Bangladesh',
-    school: 'Amherst',
-    connectionSince: 'Apr 2017',
-    company: 'New York University School of Medicine',
-    image: 'images/rakin.png'},
-    {name: 'Roza Ogurlu',
-    school: 'Tufts',
-    connectionSince: 'May 2017',
-    company: 'Boston Children\'s Hospital',
-    country: 'Turkey',
-    image: 'images/roza.png'},
-]
 export default class MentorNetwork extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            mentors: [],
             searchMode: false,
             searchTerms: '',
         }
         this.updateSearchTerms = this.updateSearchTerms.bind(this);
     }
 
+    componentDidMount(){
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getAllMentors`, {
+            method: 'get',
+            credentials: 'include',
+            headers: headers,
+        }).then(async res => {
+            let resolvedRes = await res;
+            resolvedRes = await resolvedRes.json()
+            this.setState({
+                mentors: resolvedRes && resolvedRes.mentors
+            });
+        });
+    }
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
         e.preventDefault();
@@ -57,7 +42,7 @@ export default class MentorNetwork extends React.Component {
     }
 
     getBagofWords(mentor) {
-        return [mentor.name, mentor.school, mentor.connectionSince, mentor.company, mentor.country];
+        return [mentor.name, mentor.school, mentor.position, mentor.location];
     }
 
     filterResults(MentorObjects) {
@@ -77,12 +62,12 @@ export default class MentorNetwork extends React.Component {
         return MentorObjects.map(mentor => {
             return (
                 <MentorNetworkCard
+                id={mentor.id}
                 name={mentor.name}
                 school={mentor.school}
-                connectionSince={mentor.connectionSince}
-                company={mentor.company}
-                country={mentor.country}
-                image={mentor.image}
+                position={mentor.position}
+                location={mentor.location}
+                // image={mentor.image}
                 pickMentor={this.props.pickMentor}
                 />
             )
@@ -94,7 +79,7 @@ export default class MentorNetwork extends React.Component {
             <Container>
                 <Grid columns={2}>
                     <Grid.Column width={10}>
-                        There as {mentors.length} Mentors currently in network.
+                        There as {this.state.mentors.length} Mentors currently in network.
                     </Grid.Column>
                     <Grid.Column width={6}>
                         <SearchBar
@@ -104,7 +89,7 @@ export default class MentorNetwork extends React.Component {
                 </Grid>
                 <Container>
                     {this.state.searchMode ? 
-                    this.renderUserCards(this.filterResults(mentors)) : this.renderUserCards(mentors)}
+                    this.renderUserCards(this.filterResults(this.state.mentors)) : this.renderUserCards(this.state.mentors)}
                 </Container>
             </Container>
           )

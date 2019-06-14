@@ -43,7 +43,7 @@ export default class PreferredTimeSelector extends React.Component {
         this.handleChangeSaturdayTime = this.handleChangeSaturdayTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    // TODO: Refactor into map function to allow coe re-use
+    // TODO: Refactor into map function to allow code re-use
     handleChangeSundayTime(e, {value}) {
         e.preventDefault();
         this.setState({
@@ -107,6 +107,7 @@ export default class PreferredTimeSelector extends React.Component {
             body: JSON.stringify(payload)
            }).then(res => {
              console.log("received response", res.json())
+             //TODO: User react-alert
              alert(`Congratulations. Your submission was successful!`)
            });
     }

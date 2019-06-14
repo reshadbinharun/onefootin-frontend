@@ -1,31 +1,32 @@
 import React, { Component } from 'react'
 import { Grid, Form, Container, Message, Button, Checkbox } from 'semantic-ui-react'
 import _ from 'lodash'
+import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../topics"
+import {BACKEND} from "../App"
 
-export const CUSTOM_ENTRY = 'Custom Entry'; //magic string
 // takes mentor and mentorPicked bool as prop
-const TOPIC_OPTIONS = ['General Consulting', 'Essay Brainstorming', 'Essay Critique', 'College Shortlisting', 'Extra-curricular Development', 'Financial Aid Matters', 'VISA application', CUSTOM_ENTRY]
+const TOPIC_OPTIONS = [ECA_STRATEGY, ESSAY_CRITIQUE, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let topic_options = _.map(TOPIC_OPTIONS, option => ({
     key: option,
     text: option,
     value: option
 }))
 
-export default class NavBar extends Component {
+//TODO: Remove custom topic/ match by default time
+
+export default class ScheduleForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            message: this.props.mentorPicked ? `Your call will be scheduled with ${this.props.mentor}.` :
-                `We will match you to a mentor who's most apt to meet your needs.`,
             topicSelection: '',
-            disableCustomTopic: true,
             topicSelectComplete: false,
             timeSelectionComplete: false,
             useDefaultTime: false,
             time: '',
             day: '',
             customCompleteTime: '',
-            submissionComplete: false
+            submissionComplete: false,
+            mentor: null
         }
         this.handleTopicChoice = this.handleTopicChoice.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,6 +37,29 @@ export default class NavBar extends Component {
         this.renderSubmissionMessage = this.renderSubmissionMessage.bind(this);
     }
 
+    componentDidMount() {
+        //TODO: use this.props.mentorId to get mentor info from backend
+        if (this.props.mentorPicked) {
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            fetch(`${BACKEND}/getMentorById`, {
+                method: 'post',
+                credentials: 'include',
+                headers: headers,
+                body: JSON.stringify({
+                    id: this.props.mentorId
+                })
+            }).then(async res => {
+                let resolvedRes = await res;
+                resolvedRes = await resolvedRes.json()
+                console.log(resolvedRes)
+                this.setState({
+                    mentor: resolvedRes
+                });
+            });
+        }
+    }
     gmtMapper(timezone) {
         let gmtOffset = parseInt(timezone)/60;
         let prefix = gmtOffset >= 0 ? '+' : '-';
@@ -63,17 +87,10 @@ export default class NavBar extends Component {
     handleTopicChoice(e, {value}) {
         // check async await pattern, nest as callbacks if not working
         e.preventDefault();
-        if (value===CUSTOM_ENTRY) {
-            this.setState({
-                disableCustomTopic: false
-            })
-        } else {
-            this.setState({
-                topicSelection: value,
-                disableCustomTopic: true,
-                topicSelectComplete: true,
-            })
-        }
+        this.setState({
+            topicSelection: value,
+            topicSelectComplete: true,
+        })
     }
 
     handleCustomTopicEntry(e, {value}) {
@@ -118,7 +135,7 @@ export default class NavBar extends Component {
 
     renderSubmissionMessage(){
         let message1 = `Your call is scheduled with ${this.props.mentorPicked ? 
-            this.props.mentor + '.' : 'a mentor we will pick for you shortly.'} `
+            this.state.mentor.name + '.' : 'a mentor we will pick for you shortly.'} `
         let message2 = `Your call will be about ${this.state.topicSelection}. `
         let message3 = `You have requested to ${this.state.useDefaultTime ? 'be matched as per your default time availabilities' :
             'to schedule at ' + this.state.customCompleteTime}.`
@@ -153,7 +170,8 @@ export default class NavBar extends Component {
                   <Message>
                     <Message.Header>Scheduling form</Message.Header>
                     <p>
-                    {this.state.message}
+                    {this.props.mentorPicked ? `Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}.` :
+            `We will match you to a mentor who's most apt to meet your needs.`}
                     </p>
                     {this.state.submissionComplete? this.renderSubmissionMessage() : null}
                 </Message>
