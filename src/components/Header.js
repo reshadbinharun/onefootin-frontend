@@ -27,9 +27,8 @@ export default class Header extends Component {
     renderLogo() {
         // TODO: Fix broken logo render
         return (
-        <div class="ui small image">
-            <img src={require("./logo.png")} alt="logo"/>
-        </div>)
+            <img class="ui small image centered" src={require("./logo.png")} alt="logo"/>
+        )
     }
     render () {
         return (

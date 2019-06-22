@@ -83,7 +83,7 @@ export default class App extends Component {
       <Router>
             <div>
               <div>
-              <Grid rows={1}>
+              <Grid centered rows={1}>
                 <Grid.Row left>
                   <Button>
                     <Link to={PATHS.signupMentor}>
