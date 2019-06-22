@@ -212,7 +212,11 @@ export default class Test extends Component {
             headers: headers,
             body: JSON.stringify(newRequestPayload)
         }).then(res => {
-            console.log("received response", res.json())
+            if (res.status !== 200) {
+                console.log("Request failed")
+            } else {
+                console.log("received response", res.json())
+            }
         });
     }
 
@@ -228,7 +232,11 @@ export default class Test extends Component {
             headers: headers,
             body: JSON.stringify(confirmRequestPayload)
         }).then(res => {
-            console.log("received response", res.json())
+            if (res.status !== 200) {
+                console.log("Request failed")
+            } else {
+                console.log("received response", res.json())
+            }
         });
     }
 
@@ -243,7 +251,11 @@ export default class Test extends Component {
             credentials: 'include',
             headers: headers,
         }).then(res => {
-            console.log("received response", res.json())
+            if (res.status !== 200) {
+                console.log("Request failed")
+            } else {
+                console.log("received response", res.json())
+            }
         });
     }
 
@@ -258,7 +270,11 @@ export default class Test extends Component {
             credentials: 'include',
             headers: headers,
         }).then(res => {
-            console.log("received response", res.json())
+            if (res.status !== 200) {
+                console.log("Request failed")
+            } else {
+                console.log("received response", res.json())
+            }
         });
     }
 

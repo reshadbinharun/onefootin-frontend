@@ -2,41 +2,55 @@
 import React from 'react'
 import { Container, Button, Segment, Icon } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
+import { BACKEND } from "../App"
+import { convertToViewerTimeZone } from "./MentorView/CallCard"
 
-// topics will be selected from a limited selection
-// mentors will be linked by mentor Id
-// time format --> hh:mmAM - Day - GMT+00
-//sample connection data, remove when back-end finished
-const StockSchedules = [
-    {id: 1,
-    time: '12:00PM - Saturday - GMT-6',
-    topic: 'General Consulting',
-    mentor: 'Mir Faiyaz'},
-    {id: 2,
-    time: '1:00PM - Sunday - GMT-6',
-    topic: 'Essay Brainstorming',
-    mentor: 'Reshad Bin Harun'},
-    {id: 3,
-    time: '4:00PM - Friday - GMT-6',
-    topic: 'College Shortlisting',
-    mentor: 'Rakin Muhtadi'},
-]
 export default class Schedule extends React.Component {
-    static LastScheduleId = 3; //increment everytime a new schedule is added
     constructor(props){
         super(props);
         this.state = {
-            schedules: StockSchedules,
+            schedules: [],
+            menteeId: null,
         }
+        this.renderScheduleCards = this.renderScheduleCards.bind(this);
     }
-
-    renderScheduleCards(ScheduleObjects) {
-        return ScheduleObjects.map(schedule => {
+    
+    // TODO: use BACKEND to list confirmed calls
+    componentDidMount() {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        this.setState({
+            menteeId: this.props.menteeId
+        }, async () => 
+            await fetch(`${BACKEND}/getConfirmedRequestsForMentee`, {
+                method: 'post',
+                credentials: 'include',
+                headers: headers,
+                body: JSON.stringify({
+                    menteeId: this.props.menteeId,
+                })
+            }).then(async res => {
+                let resolvedRes = await res;
+                if (resolvedRes.status !== 200) {
+                    console.log("Request to get mentee schedules was not successful")
+                } else {
+                    resolvedRes = await res.json()
+                    this.setState({
+                        schedules: resolvedRes
+                    })
+                }
+            })
+        );
+    }
+    
+    renderScheduleCards() {
+        return this.state.schedules && this.state.schedules.map(request => {
             return (
                 <ScheduleCard
-                time={schedule.time}
-                topic={schedule.topic}
-                mentor={schedule.mentor}
+                    time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone, request.mentor.timeZone)}
+                    topic={request.topic}
+                    mentor={request.mentor.name}
                 />
             )
         })
@@ -57,7 +71,7 @@ export default class Schedule extends React.Component {
                     </Button>
                 </Container>
                 <Container>
-                    {this.renderScheduleCards(StockSchedules)}
+                    {this.renderScheduleCards()}
                 </Container>
             </Container>
           )

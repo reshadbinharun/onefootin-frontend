@@ -3,9 +3,11 @@ import { Grid, Form, Container, Message, Button, Dropdown } from 'semantic-ui-re
 import _ from 'lodash'
 import {BACKEND} from "../App"
 
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+export const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-function convertTo12h(time) {
+// TODO: Unify mentor/mentee time formats so that either 9:00am or 9am is used, preferrably 9:00am
+
+export function convertTo12h(time) {
     let hh = parseInt(time/100);
     let mm = (time%100)
     let mmString = mm === 50 ? `30` : `00`;
@@ -14,7 +16,7 @@ function convertTo12h(time) {
 }
 
 // returns a 2d array where each item is array of 24h time and day
-function generateTimesfromStartOfSlot(day, startTimeIn24h, slotsNum) {
+export function generateTimesfromStartOfSlot(day, startTimeIn24h, slotsNum) {
     let allTimes = []
     let dayMoved = false; // day is only going to be moved once possibly in one timeSlot
     while (slotsNum) {
@@ -29,7 +31,7 @@ function generateTimesfromStartOfSlot(day, startTimeIn24h, slotsNum) {
     return allTimes;
 }
 
-function convertTo24hours(time) {
+export function convertTo24hours(time) {
     let pm = time.substring(time.length-2) === 'pm'
     let mentorAdjustedTime = 0;
     let hours = time.length > 3 ? parseInt(time.substring(0,2))*100 : parseInt(time[0])*100;
@@ -40,7 +42,7 @@ function convertTo24hours(time) {
     return mentorAdjustedTime;
 }
 
-function moveDay(day, moveDayForward) {
+export function moveDay(day, moveDayForward) {
     let dayInd = (days.indexOf(day) + (moveDayForward ? 1 : -1)) % days.length
     if (dayInd < 0) {
         return days[6];
@@ -48,7 +50,10 @@ function moveDay(day, moveDayForward) {
     return days[dayInd];
 }
 
-function adjustTime(mentorTime, menteeTimeZone, mentorTimeZone) {
+/*
+Returns an array of 6 time slots of form Day-11.00am
+*/
+export function adjustTime(mentorTime, menteeTimeZone, mentorTimeZone) {
     let parts = mentorTime.split('-');
     let GMTOffset = 0;
     GMTOffset = parseInt(menteeTimeZone.substring(3)) - parseInt(mentorTimeZone.substring(3)); //from perspective of mentee --> mentee GMT - mentor GMT
@@ -68,7 +73,6 @@ function adjustTime(mentorTime, menteeTimeZone, mentorTimeZone) {
         timeIn24h = 2400+adjustedTime;
     }
     // return an array of 6 times
-    console.log("generating slots from", `${day}-${timeIn24h}`);
     let timesIn24h = generateTimesfromStartOfSlot(day, timeIn24h, 6);
     return timesIn24h.map(timeSlot => {
         let dayTimeSlots = [];

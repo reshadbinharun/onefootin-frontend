@@ -13,11 +13,13 @@ export default class Backlog extends React.Component {
         return calls.map(call => {
             return (
                 <CallCard
-                    // TODO: fetch info about mentor on getAllRequests backend call
-                    // menteeName={call.mentee.name}
-                    // menteeSchool={call.mentee.school}
-                    // menteeLocation={call.mentee.location}
-                    topic={call.location}
+                    // TODO: fetch info about mentor on getAllRequests backend call + adjust to Mentor's timezone
+                    mentorTimeZone={this.props.mentorTimeZone}
+                    topic={call.topic}
+                    time={call.dateTime}
+                    requestId={call.id}
+                    mentee={call.mentee}
+                    confirmed={this.props.confirmed}
                 />
             )
         })
@@ -26,7 +28,7 @@ export default class Backlog extends React.Component {
     render() {
         return (  
             <Container>
-                {this.renderRequestCards(this.props.backlog)}
+                {this.renderRequestCards(this.props.calls)}
             </Container>
           )
     }

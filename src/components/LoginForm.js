@@ -45,7 +45,6 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
-            resolvedRes = await resolvedRes.json()
             if (resolvedRes.status === 400) {
                 this.setState({
                     incorrectCredentials: true,
@@ -53,6 +52,7 @@ export default class LoginForm extends React.Component {
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
+                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                 },() => {
@@ -79,7 +79,6 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
-            resolvedRes = await resolvedRes.json()
             if (resolvedRes.status === 400) {
                 this.setState({
                     incorrectCredentials: true,
@@ -87,6 +86,7 @@ export default class LoginForm extends React.Component {
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
+                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                 },() => {

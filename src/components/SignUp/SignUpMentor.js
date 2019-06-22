@@ -39,6 +39,8 @@ export default class SignUpMentor extends React.Component {
             location: '',
             preferredTopics: [],
             selectTimes: false,
+            position: '',
+            aboutYourself: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
@@ -54,7 +56,8 @@ export default class SignUpMentor extends React.Component {
     selectTimes(e) {
         if (e) {e.preventDefault()};
         let readyForTimeSelect = this.state.name && this.state.email && this.state.password &&
-            this.state.major && this.state.location && this.state.preferredTopics.length
+            this.state.major && this.state.location && this.state.preferredTopics.length && this.state.position
+            && this.state.aboutYourself
         if (readyForTimeSelect) {
             this.setState({
                 selectTimes: !this.state.selectTimes
@@ -90,6 +93,8 @@ export default class SignUpMentor extends React.Component {
             preferredTimes: this.state.preferredTimes,
             preferredTopics: this.state.preferredTopics,
             timeZone: timeZone,
+            position: this.state.position,
+            aboutYourself: this.state.aboutYourself
         }
     }
 
@@ -160,7 +165,24 @@ export default class SignUpMentor extends React.Component {
                         <label>Location</label>
                         <input placeholder='Location' name="location" onChange={this.handleChange} />
                     </Form.Field>
+                    <Form.Field
+                        type="text"
+                        required="true"
+                        style={fieldStyle}
+                    >
+                        <label>Professional Position</label>
+                        <input placeholder='Position' name="position" onChange={this.handleChange} />
+                    </Form.Field>
+                    <Form.Field
+                        type="text"
+                        required="true"
+                        style={fieldStyle}
+                    >
+                        <label>Tell us a little bit about yourself!</label>
+                        <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
+                    </Form.Field>
                     <Form.Field>
+                        <label>Select the topics you would like to consult.</label>
                     <Dropdown placeholder='Preferred Topics' fluid multiple selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="preferredTopics"/>
                     </Form.Field>
                     <Grid.Row>

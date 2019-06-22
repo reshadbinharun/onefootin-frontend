@@ -7,7 +7,6 @@ export default class Header extends Component {
         super(props);
         this.state = {
             loggedIn: false,
-            name: '',
         }
     }
     renderLoginStateInfo() {
@@ -21,15 +20,15 @@ export default class Header extends Component {
             width = {6}
             style = {style}
             >
-            <p>{loggedIn ? `Welcome ${this.props.name}` : `Please log in` }</p>
             <Button class="ui button" onClick={this.props.logout}>{loggedIn ? 'Log Out' : 'Log In'}</Button>
         </Grid.Column>)
     }
 
     renderLogo() {
+        // TODO: Fix broken logo render
         return (
         <div class="ui small image">
-            <img src="images/logo_ofi.png" alt="logo"/>
+            <img src={require("./logo.png")} alt="logo"/>
         </div>)
     }
     render () {

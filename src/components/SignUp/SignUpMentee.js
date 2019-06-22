@@ -20,7 +20,8 @@ export default class SignUpMentee extends React.Component {
             email: '',
             password: '',
             school: '',
-            location: ''
+            location: '',
+            aboutYourself: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,7 +36,7 @@ export default class SignUpMentee extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let readyForSubmit = this.state.name && this.state.email && this.state.password && this.state.school && this.state.location
+        let readyForSubmit = this.state.name && this.state.email && this.state.password && this.state.school && this.state.location && this.state.aboutYourself
         if (readyForSubmit) {
             let timeZone = `GMT${getTimezoneOffset()}`;
             let payload = {
@@ -45,6 +46,7 @@ export default class SignUpMentee extends React.Component {
                 school: this.state.school,
                 location: this.state.location,
                 timeZone: timeZone,
+                aboutYourself: this.state.aboutYourself
             }
             e.preventDefault();
             fetch(`${BACKEND}/newMentee`, {
@@ -113,6 +115,14 @@ export default class SignUpMentee extends React.Component {
                     <label>Location</label>
                     <input placeholder='Location' name="location" onChange={this.handleChange} />
                 </Form.Field>
+                <Form.Field
+                        type="text"
+                        required="true"
+                        style={fieldStyle}
+                    >
+                        <label>Tell us a little bit about yourself!</label>
+                        <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
+                    </Form.Field>
                 <Button 
                     color="blue" 
                     type='submit'>

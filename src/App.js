@@ -63,6 +63,7 @@ export default class App extends Component {
       })
     } else {
       this.setState({
+        isMentor: false,
         menteePayload: payload
       })
     }
@@ -121,8 +122,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Header 
-          name={this.state.name} 
+        <Header
           loggedIn={this.state.loggedIn}
           logout={this.logout}
           />

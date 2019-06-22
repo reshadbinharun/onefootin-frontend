@@ -3,7 +3,8 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Profile from '../Profile'
 import { BACKEND } from "../../App"
 import Backlog from "./Backlog";
-import ConfirmedCalls from "./ConfirmedCalls"
+// TODO: Deprecated, remove
+// import ConfirmedCalls from "./ConfirmedCalls"
 
 export const MY_PROFILE = 'My Profile';
 export const BACKLOG = 'Backlog';
@@ -15,45 +16,51 @@ export default class NavBarMentor extends Component {
         this.state = {
             activeItem: MY_PROFILE,
             data: {},
-            backlog: null,
+            requests: null,
         }
+        this.getRequests = this.getRequests.bind(this);
+        this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
         this.getBacklog = this.getBacklog.bind(this);
     }
 
-    async getBacklog(mentorId) {
+    getConfirmedCalls() {
+        return this.state.requests.filter(request => request.confirmed)
+    }
+
+    getBacklog() {
+        return this.state.requests.filter(request => !request.confirmed)
+    }
+
+    async getRequests(mentorId) {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        fetch(`${BACKEND}/getAllRequests`, {
-            method: 'get',
+        await fetch(`${BACKEND}/getRequests`, {
+            method: 'post',
             credentials: 'include',
             headers: headers,
+            body: JSON.stringify({
+                mentorId: mentorId
+            })
         }).then(async res => {
             let resolvedRes = await res;
-            resolvedRes = await resolvedRes.json()
-            this.setState({
-                backlog: resolvedRes
-            });
+            if (res.status !== 200) {
+                console.log("Request getRequests failed");
+            } else {
+                resolvedRes = await resolvedRes.json()
+                this.setState({
+                    requests: resolvedRes
+                })
+            }
         });
-        // TODO: make route that gets matching requests only
-        // fetch(`${BACKEND}/getBacklog`, {
-        //     method: 'post',
-        //     credentials: 'include',
-        //     headers: headers,
-        //     body: JSON.stringify({
-        //         mentorId: mentorId
-        //     })
-        // }).then(async res => {
-        //     let resolvedRes = await res;
-        //     resolvedRes = await resolvedRes.json()
-        // });
+
     }
 
     componentDidMount() {
         this.setState({
             data: this.props.payload.mentor
         }, async () => {
-            await this.getBacklog(this.state.data.id)
+            await this.getRequests(this.state.data.id)
         })
 
     }
@@ -62,19 +69,27 @@ export default class NavBarMentor extends Component {
     renderNavSelection() {
         switch(this.state.activeItem) {
             case MY_PROFILE:
-                return <Profile 
+                return <Profile
+                    // TODO: add image when it is present in database
                     // image={this.props.image}
                     name={this.state.data.name}
                     school={this.state.data.school}
-                    // memberSince={this.props.memberSince}
+                    memberSince={this.state.data.memberSince}
+                    aboutYourself={this.state.data.aboutYourself}
+                    isMentor={true}
+                    position={this.state.data.position}
                 />
             case BACKLOG:
                 return <Backlog
-                    backlog = {this.state.backlog}
+                    calls = {this.getBacklog()}
+                    mentorTimeZone = {this.state.data.timeZone}
+                    confirmed = {false}
                 />
             case CONFIRMED_CALLS:
-                return <ConfirmedCalls
-                    calls = {this.state.data.confirmedRequests}
+                return <Backlog
+                    calls = {this.getConfirmedCalls()}
+                    mentorTimeZone = {this.state.data.timeZone}
+                    confirmed = {true}
                 />
             default:
                 return null

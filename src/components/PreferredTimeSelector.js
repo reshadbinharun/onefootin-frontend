@@ -105,10 +105,16 @@ export default class PreferredTimeSelector extends React.Component {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(payload)
-           }).then(res => {
-             console.log("received response", res.json())
-             //TODO: User react-alert
-             alert(`Congratulations. Your submission was successful!`)
+           }).then(async res => {
+               let resolvedRes = await res;
+               if (resolvedRes.status !== 200) {
+                   console.log("Request Sign up for mentor was not successful")
+               }
+               else {
+                console.log("received response", resolvedRes.json())
+                //TODO: User react-alert
+                alert(`Congratulations. Your submission was successful!`)
+               }
            });
     }
     render() {

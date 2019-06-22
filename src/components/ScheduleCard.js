@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
 
 export default class ScheduleCard extends React.Component {
+    // TODO: Implement cancel and reschedule
     render() {
         const {time, topic, mentor} = this.props;
         const cardStyle ={
@@ -23,7 +24,7 @@ export default class ScheduleCard extends React.Component {
                     <Button basic color='dark orange'>
                         Cancel
                     </Button>
-                    <Button basic color='yellow'>
+                    <Button basic color='yellow' disabled>
                         Reschedule
                     </Button>
                     </div>

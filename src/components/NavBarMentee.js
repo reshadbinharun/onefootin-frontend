@@ -65,10 +65,13 @@ export default class NavBarMentee extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile 
-                    // image={this.props.data.image}
+                    // TODO: add image when it is present in database
+                    // image={this.props.image}
                     name={this.state.data.name}
                     school={this.state.data.school}
-                    // memberSince={this.props.memberSince}
+                    memberSince={this.state.data.memberSince}
+                    aboutYourself={this.state.data.aboutYourself}
+                    isMentor={false}
                 />
             case MENTOR_NETWORK:
                 return <MentorNetwork
@@ -76,7 +79,8 @@ export default class NavBarMentee extends Component {
                     />
             case SCHEDULINGS:
                 return <Schedule
-                getForm={this.handleNewSchedule}
+                    getForm={this.handleNewSchedule}
+                    menteeId={this.state.data.id}
                 />
             case NEW_CALL:
                 return (this.state.mentorPicked? 
@@ -85,7 +89,10 @@ export default class NavBarMentee extends Component {
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
                         />:
-                    <ScheduleForm/>)
+                    <ScheduleForm
+                        menteeId={this.state.data.id}
+                        menteeTimeZone={this.state.data.timeZone}
+                    />)
             case MENTOR_PROFILE:
                 return null
             default:
