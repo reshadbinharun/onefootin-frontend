@@ -87,7 +87,7 @@ export default class CallCard extends React.Component {
             <Card style={cardStyle}>
                 <Card.Content>
                     <Card.Header>Request from {mentee.name}</Card.Header>
-                    <Card.Meta>Topic {topic} at {convertToViewerTimeZone(time, mentorTimeZone, mentee.timeZone)}</Card.Meta>
+                    <Card.Meta>Topic {topic} at { convertToViewerTimeZone(time, mentorTimeZone, mentee.timeZone) }</Card.Meta>
                     <Card.Description>
                         {mentee.name} attends {mentee.school} and is from {mentee.location}
                     </Card.Description>
