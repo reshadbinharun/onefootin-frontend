@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import {Container, Button, Grid} from 'semantic-ui-react';
 import {ECA_STRATEGY, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING} from "../../src/topics"
-
-const BACKEND = 'http://localhost:8080'
-
+import { BACKEND } from "../App"
 
 let newMenteePayload = {
     name: "Reshad",

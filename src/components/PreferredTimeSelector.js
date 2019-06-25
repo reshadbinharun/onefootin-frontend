@@ -1,10 +1,10 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
+import { BACKEND } from "../App";
 
 //time choices
 const PREFERRED_TIMES_SLOTS = ['6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'];
-const BACKEND = process.env.BACKEND || 'http://localhost:8080';
 let preferredTimesSlots = PREFERRED_TIMES_SLOTS.map( val => {
     return {key: val, text: val, value: val}
 })
