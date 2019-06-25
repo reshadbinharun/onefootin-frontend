@@ -2,7 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
-const BACKEND = process.env.BACKEND || 'http://localhost:8080';
+import { BACKEND } from "../../App"
 
 let fieldStyle = {
     width: '100%',
