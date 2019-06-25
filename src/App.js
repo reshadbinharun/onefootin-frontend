@@ -10,7 +10,7 @@ import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
-export const BACKEND = process.env.BACKEND || 'http://localhost:8080';
+export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com/' || 'http://localhost:8080';
 
 const PATHS = {
   root: "/",
