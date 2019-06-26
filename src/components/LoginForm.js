@@ -71,6 +71,7 @@ export default class LoginForm extends React.Component {
         headers.append('Accept', 'application/json');
         fetch(`${BACKEND}/menteeLogin`, {
             method: 'post',
+            mode: 'cors',
             credentials: 'include',
             headers: headers,
             body: JSON.stringify({
