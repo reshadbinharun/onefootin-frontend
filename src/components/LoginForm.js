@@ -66,6 +66,7 @@ export default class LoginForm extends React.Component {
     handleSubmitAsMentee(e) {
         e.preventDefault();
         console.log("mentee sign in")
+        console.log(BACKEND);
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
