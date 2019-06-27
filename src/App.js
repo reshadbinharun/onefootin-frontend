@@ -6,7 +6,7 @@ import NavBarMentee from "./components/NavBarMentee";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
 // import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
-import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Link, Switch, Redirect } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
@@ -74,13 +74,13 @@ export default class App extends Component {
   }
 
   handleMenteeSignUp() {
-    setState({
+    this.setState({
       menteeSignUpDone: true,
     })
   }
 
   handleMentorSignUp() {
-    setState({
+    this.setState({
       mentorSignUpDone: true,
     })
   }
@@ -129,7 +129,7 @@ export default class App extends Component {
                   <SignUpMentor handleSignUp={this.handleMentorSignUp}/> )}/>
                 <Route exact path={PATHS.signupMentee} render={() => (this.state.menteeSignUpDone ? 
                   <Redirect to={PATHS.root}/> : 
-                  <SignUpMentor handleSignUp={this.handleMenteeSignUp}/> )}/>/>
+                  <SignUpMentee handleSignUp={this.handleMenteeSignUp}/> )}/>/>
               </Switch>
               
             </div>
