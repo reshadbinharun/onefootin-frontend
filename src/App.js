@@ -27,12 +27,16 @@ export default class App extends Component {
       menteePayload: {},
       loggedIn: false,
       testMode: false,
+      menteeSignUpDone: false,
+      mentorSignUpDone: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
+    this.handleMenteeSignUp = this.handleMenteeSignUp.bind(this);
+    this.handleMentorSignUp = this.handleMentorSignUp.bind(this);
   }
 
   toggleTest(e) {
@@ -67,6 +71,18 @@ export default class App extends Component {
         menteePayload: payload
       })
     }
+  }
+
+  handleMenteeSignUp() {
+    setState({
+      menteeSignUpDone: true,
+    })
+  }
+
+  handleMentorSignUp() {
+    setState({
+      mentorSignUpDone: true,
+    })
   }
 
   renderLogin() {
@@ -108,8 +124,12 @@ export default class App extends Component {
                     liftPayload = {this.liftPayload}
                   /> 
                 }/>
-                <Route exact path={PATHS.signupMentor} render={() => <SignUpMentor/> }/>
-                <Route exact path={PATHS.signupMentee} component = {SignUpMentee}/>
+                <Route exact path={PATHS.signupMentor} render={() => (this.state.mentorSignUpDone ? 
+                  <Redirect to={PATHS.root}/> : 
+                  <SignUpMentor handleSignUp={this.handleMentorSignUp}/> )}/>
+                <Route exact path={PATHS.signupMentee} render={() => (this.state.menteeSignUpDone ? 
+                  <Redirect to={PATHS.root}/> : 
+                  <SignUpMentor handleSignUp={this.handleMenteeSignUp}/> )}/>/>
               </Switch>
               
             </div>

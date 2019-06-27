@@ -113,6 +113,7 @@ export default class SignUpMentor extends React.Component {
                 this.state.selectTimes? <PreferredTimeSelector 
                     payload={this.formPayload()}
                     setPreferredTimes={this.setPreferredTimes}
+                    handleSignUp={this.props.handleSignUp}
                 /> : 
                 <Grid.Column centered>
                 <Grid.Row>

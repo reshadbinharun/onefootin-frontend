@@ -113,7 +113,8 @@ export default class PreferredTimeSelector extends React.Component {
                else {
                 console.log("received response", resolvedRes.json())
                 //TODO: User react-alert
-                alert(`Congratulations. Your submission was successful!`)
+                alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
+                this.props.handleSignUp();
                }
            });
     }
@@ -122,7 +123,7 @@ export default class PreferredTimeSelector extends React.Component {
             <Container>
                 <Message
                     centered
-                    content="Please select the times that work for you"
+                    content="Please select the times that work for you. All time submissions are in your local time."
                     style = {messageStyle}
                 />
                 <Divider/>

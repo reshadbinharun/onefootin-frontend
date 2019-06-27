@@ -57,7 +57,7 @@ export default class SignUpMentee extends React.Component {
             }).then(res => {
                 console.log("received response", res.json())
                 alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
-                return <Redirect to="/"/>
+                this.props.handleSignUp();
             });
         } else {
             //TODO: Replace with React-alert
