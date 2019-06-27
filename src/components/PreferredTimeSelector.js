@@ -2,6 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
 import { BACKEND } from "../App";
+import { Redirect } from "react-router-dom";
 
 //time choices
 const PREFERRED_TIMES_SLOTS = ['6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'];
@@ -33,6 +34,7 @@ export default class PreferredTimeSelector extends React.Component {
             thursdayPreferredTimes: [],
             fridayPreferredTimes: [],
             saturdayPreferredTimes: [],
+            signUpDone: false,
         }
         this.handleChangeSundayTime = this.handleChangeSundayTime.bind(this);
         this.handleChangeMondayTime = this.handleChangeMondayTime.bind(this);
@@ -114,79 +116,87 @@ export default class PreferredTimeSelector extends React.Component {
                 console.log("received response", resolvedRes.json())
                 //TODO: User react-alert
                 alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
-                this.props.handleSignUp();
+                this.setState({
+                    signUpDone: true
+                })
                }
            });
     }
     render() {
         return (
-            <Container>
-                <Message
-                    centered
-                    content="Please select the times that work for you. All time submissions are in your local time."
-                    style = {messageStyle}
-                />
-                <Divider/>
-                <Grid columns={7}>
-                    <Grid.Column>
-                        <Header>Sunday</Header>
+            <div>
+                {
+                    this.state.signUpDone? <Redirect to="/" /> :
+                    <Container>
+                        <Message
+                            centered
+                            content="Please select the times that work for you. All time submissions are in your local time."
+                            style = {messageStyle}
+                        />
                         <Divider/>
-                            <Dropdown placeholder='Sunday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeSundayTime} name='Sunday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Monday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Monday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeMondayTime} name='Monday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Tuesday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Tuesday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeTuesdayTime} name='Tuesday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Wednesday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Wednesday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeWednesdayTime} name='Wednesday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Thursday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Thursday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeThursdayTime} name='Thursday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Friday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Friday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeFridayTime} name='Friday'/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header>Saturday</Header>
-                        <Divider/>
-                            <Dropdown placeholder='Saturday' fluid multiple selection options=
-                            {preferredTimesSlots} 
-                            onChange={this.handleChangeSaturdayTime} name='Saturday'/>
-                    </Grid.Column>
-                </Grid>
-                <Button 
-                    color="blue" 
-                    type='submit'
-                    onClick={this.handleSubmit}
-                    >
-                    <Icon name="unlock"/>
-                    Submit
-                </Button>
-            </Container>
+                        <Grid columns={7}>
+                            <Grid.Column>
+                                <Header>Sunday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Sunday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeSundayTime} name='Sunday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Monday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Monday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeMondayTime} name='Monday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Tuesday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Tuesday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeTuesdayTime} name='Tuesday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Wednesday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Wednesday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeWednesdayTime} name='Wednesday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Thursday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Thursday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeThursdayTime} name='Thursday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Friday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Friday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeFridayTime} name='Friday'/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Header>Saturday</Header>
+                                <Divider/>
+                                    <Dropdown placeholder='Saturday' fluid multiple selection options=
+                                    {preferredTimesSlots} 
+                                    onChange={this.handleChangeSaturdayTime} name='Saturday'/>
+                            </Grid.Column>
+                        </Grid>
+                        <Button 
+                            color="blue" 
+                            type='submit'
+                            onClick={this.handleSubmit}
+                            >
+                            <Icon name="unlock"/>
+                            Submit
+                        </Button>
+                    </Container>
+                }
+            </div>
+            
         )
     }
 }

@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
 import { BACKEND } from "../../App"
+import { Redirect } from "react-router-dom"
 
 let fieldStyle = {
     width: '100%',
@@ -22,6 +23,7 @@ export default class SignUpMentee extends React.Component {
             school: '',
             location: '',
             aboutYourself: '',
+            signUpDone: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,7 +58,9 @@ export default class SignUpMentee extends React.Component {
             }).then(res => {
                 console.log("received response", res.json())
                 alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
-                this.props.handleSignUp();
+                this.setState({
+                    signUpDone: true
+                })
             });
         } else {
             //TODO: Replace with React-alert
@@ -65,75 +69,81 @@ export default class SignUpMentee extends React.Component {
         
     }
     render() {
-    return (<div>
-        <Message
-            style= {messageStyle}
-            attached
-            centered
-            header="Mentee Sign up"
-            content="Welcome! We're excited to have you on board."
-        />
-            <Grid>
-            <Grid.Row centered>
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Field
-                type="email"
-                required="true"
-                style={fieldStyle}
-                >
-                    <label>Email</label>
-                    <input placeholder='Email' name="email" onChange={this.handleChange} />
-                </Form.Field>
-                <Form.Field
-                    type="password"
-                    required="true"
-                    style={fieldStyle}
-                >
-                    <label>Password</label>
-                    <input placeholder='***' name="password" onChange={this.handleChange} />
-                </Form.Field>
-                <Form.Field
-                    type="text"
-                    required="true"
-                    style={fieldStyle}
-                >
-                    <label>Name</label>
-                    <input placeholder='Name' name="name" onChange={this.handleChange} />
-                </Form.Field>
-                <Form.Field
-                    type="text"
-                    required="true"
-                    style={fieldStyle}
-                >
-                    <label>School</label>
-                    <input placeholder='School' name="school" onChange={this.handleChange} />
-                </Form.Field>
-                <Form.Field
-                    type="text"
-                    required="true"
-                    style={fieldStyle}
-                >
-                    <label>Location</label>
-                    <input placeholder='Location' name="location" onChange={this.handleChange} />
-                </Form.Field>
-                <Form.Field
-                        type="text"
-                        required="true"
-                        style={fieldStyle}
-                    >
-                        <label>Tell us a little bit about yourself!</label>
-                        <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
-                    </Form.Field>
-                <Button 
-                    color="blue" 
-                    type='submit'>
-                    <Icon name="unlock"/>
-                    Submit
-                </Button>
-                </Form>
-            </Grid.Row>
-            </Grid>
-            
-        </div>)
+    return (
+        <div>
+            {
+                this.state.signUpDone? <Redirect to="/" /> :
+                <div>
+                    <Message
+                        style= {messageStyle}
+                        attached
+                        centered
+                        header="Mentee Sign up"
+                        content="Welcome! We're excited to have you on board."
+                    />
+                        <Grid>
+                        <Grid.Row centered>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Field
+                            type="email"
+                            required="true"
+                            style={fieldStyle}
+                            >
+                                <label>Email</label>
+                                <input placeholder='Email' name="email" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field
+                                type="password"
+                                required="true"
+                                style={fieldStyle}
+                            >
+                                <label>Password</label>
+                                <input placeholder='***' name="password" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field
+                                type="text"
+                                required="true"
+                                style={fieldStyle}
+                            >
+                                <label>Name</label>
+                                <input placeholder='Name' name="name" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field
+                                type="text"
+                                required="true"
+                                style={fieldStyle}
+                            >
+                                <label>School</label>
+                                <input placeholder='School' name="school" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field
+                                type="text"
+                                required="true"
+                                style={fieldStyle}
+                            >
+                                <label>Location</label>
+                                <input placeholder='Location' name="location" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field
+                                    type="text"
+                                    required="true"
+                                    style={fieldStyle}
+                                >
+                                    <label>Tell us a little bit about yourself!</label>
+                                    <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
+                                </Form.Field>
+                            <Button 
+                                color="blue" 
+                                type='submit'>
+                                <Icon name="unlock"/>
+                                Submit
+                            </Button>
+                            </Form>
+                        </Grid.Row>
+                        </Grid>    
+                    </div>
+            }
+        </div>
+        )
     }
 }
