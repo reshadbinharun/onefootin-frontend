@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
 import { BACKEND } from "../../App"
+import { Redirect } from "react-router-dom";
 
 let fieldStyle = {
     width: '100%',
@@ -55,7 +56,8 @@ export default class SignUpMentee extends React.Component {
                 body: JSON.stringify(payload)
             }).then(res => {
                 console.log("received response", res.json())
-                alert(`Congratulations. Your submission was successful!`)
+                alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
+                return <Redirect to="/"/>
             });
         } else {
             //TODO: Replace with React-alert
