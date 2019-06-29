@@ -74,10 +74,13 @@ export default class Test extends Component {
         console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
+        var headers = new Headers();
+        headers.append('Content-Type', undefined);
         fetch(`${BACKEND}/imageUpload`, {
             method: 'POST',
             credentials: 'include',
-            body: file
+            body: file,
+            headers: headers
         }).then(
             response => response.json() // if the response is a JSON object
         ).then(
