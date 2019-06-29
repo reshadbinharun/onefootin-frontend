@@ -89,7 +89,7 @@ export default class Test extends Component {
         // ).catch(
         //     error => console.log(error) // Handle the error response object
         // );
-        await axios.post(`${BACKEND}/imageUpload`, data, {
+        axios.post(`${BACKEND}/imageUpload`, data, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
