@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import {Container, Button, Grid} from 'semantic-ui-react';
+import {Container, Button, Grid, Form} from 'semantic-ui-react';
 import {ECA_STRATEGY, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING} from "../../src/topics"
 import { BACKEND } from "../App"
 
@@ -389,10 +389,13 @@ export default class Test extends Component {
                         <Button class="ui button" onClick={this.getTimeMatchedMentors}>
                             Get Matching Mentors by Time
                         </Button>
-                        <Button>
-                            <label>Test image upload</label>
-                            <input type="file" onClick={this.uploadImageTest} class="ui huge yellow center floated button"/>
-                        </Button>
+                        <Form>
+                            <Form.Field>
+                                <label>Test image upload</label>
+                                <input type="file" onClick={this.uploadImageTest} class="ui huge yellow center floated button"/>     
+                            </Form.Field>
+                        </Form>
+                            
                     </Grid.Row>
                 </Grid>
             </Container>
