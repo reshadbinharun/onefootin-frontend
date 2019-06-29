@@ -63,8 +63,28 @@ export default class Test extends Component {
         this.getAllRequests = this.getAllRequests.bind(this);
         this.getConfirmedRequests = this.getConfirmedRequests.bind(this);
         this.newRequest = this.newRequest.bind(this);
+
+        this.uploadImageTest = this.uploadImageTest.bind(this);
     }
     // - - - Mentee Test Routes - - - //
+
+    uploadImageTest(e) {
+        e.preventDefault();
+        let file = e.target.files[0];
+        console.log("file is", file)
+        let data = new FormData();
+        data.append('file', file);
+        fetch(`${BACKEND}/imageUpload`, {
+            method: 'POST',
+            body: file
+        }).then(
+            response => response.json() // if the response is a JSON object
+        ).then(
+            success => console.log(success) // Handle the success response object
+        ).catch(
+            error => console.log(error) // Handle the error response object
+        );
+    }
 
     menteeLogin(e) {
         e.preventDefault();
@@ -369,6 +389,10 @@ export default class Test extends Component {
                         <Button class="ui button" onClick={this.getTimeMatchedMentors}>
                             Get Matching Mentors by Time
                         </Button>
+                        <Form.Field>
+                            <label>Test image upload</label>
+                            <input type="file" onChange={this.uploadImage} class="ui huge yellow center floated button"/>
+                        </Form.Field>
                     </Grid.Row>
                 </Grid>
             </Container>
