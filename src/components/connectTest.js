@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import {Container, Button, Grid, Form} from 'semantic-ui-react';
 import {ECA_STRATEGY, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING} from "../../src/topics"
 import { BACKEND } from "../App"
+import axios from 'axios';
 
 let newMenteePayload = {
     name: "Reshad",
@@ -74,20 +75,31 @@ export default class Test extends Component {
         console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
-        var headers = new Headers();
-        headers.append('Content-Type', undefined);
-        fetch(`${BACKEND}/imageUpload`, {
-            method: 'POST',
-            credentials: 'include',
-            body: file,
-            headers: headers
+        // var headers = new Headers();
+        // headers.append('Content-Type', undefined);
+        // fetch(`${BACKEND}/imageUpload`, {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     body: file,
+        //     headers: headers
+        // }).then(
+        //     response => response.json() // if the response is a JSON object
+        // ).then(
+        //     success => console.log(success) // Handle the success response object
+        // ).catch(
+        //     error => console.log(error) // Handle the error response object
+        // );
+        await axios.post(`${BACKEND}/imageUpload`, data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
         }).then(
-            response => response.json() // if the response is a JSON object
-        ).then(
-            success => console.log(success) // Handle the success response object
-        ).catch(
-            error => console.log(error) // Handle the error response object
-        );
+                response => response.json() // if the response is a JSON object
+            ).then(
+                success => console.log(success) // Handle the success response object
+            ).catch(
+                error => console.log(error) // Handle the error response object
+            );
     }
 
     menteeLogin(e) {
