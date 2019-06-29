@@ -23,10 +23,13 @@ export default class SignUpMentee extends React.Component {
             school: '',
             location: '',
             aboutYourself: '',
+            // TODO: include stock image if image link is empty, IMAGE LINK is optional
+            imageLink: '',
             signUpDone: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     handleChange(e) {
@@ -34,6 +37,24 @@ export default class SignUpMentee extends React.Component {
         let change = {}
         change[e.target.name] = e.target.value
         this.setState(change)
+    }
+
+    uploadImage(e) {
+        e.preventDefault();
+        let file = e.target.files[0];
+        console.log("file is", file)
+        let data = new FormData();
+        data.append('file', file);
+        fetch(`${BACKEND}/imageUpload`, {
+            method: 'POST',
+            body: file
+        }).then(
+            response => response.json() // if the response is a JSON object
+        ).then(
+            success => console.log(success) // Handle the success response object
+        ).catch(
+            error => console.log(error) // Handle the error response object
+        );
     }
 
     handleSubmit(e) {
@@ -131,6 +152,10 @@ export default class SignUpMentee extends React.Component {
                                 >
                                     <label>Tell us a little bit about yourself!</label>
                                     <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Let's put a face on you! Please upload an image.</label>
+                                    <input type="file" onChange={this.uploadImage} class="ui huge yellow center floated button"/>
                                 </Form.Field>
                             <Button 
                                 color="blue" 

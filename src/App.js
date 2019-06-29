@@ -4,9 +4,9 @@ import Header from './components/Header';
 import NavBarMentor from './components/MentorView/NavBarMentor';
 import NavBarMentee from "./components/NavBarMentee";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
-// import Test from './components/connectTest';
+import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
-import { Route, BrowserRouter as Router, Link, Switch, Redirect } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
@@ -129,7 +129,7 @@ export default class App extends Component {
           logout={this.logout}
           />
         <Container>{this.renderLogin()}</Container>
-        {/* {this.state.testMode? <Test/> : null} */}
+        {this.state.testMode? <Test/> : null}
       </div>
     )
   }
