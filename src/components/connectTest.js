@@ -389,10 +389,10 @@ export default class Test extends Component {
                         <Button class="ui button" onClick={this.getTimeMatchedMentors}>
                             Get Matching Mentors by Time
                         </Button>
-                        <Form.Field>
+                        <Button>
                             <label>Test image upload</label>
-                            <input type="file" onChange={this.uploadImage} class="ui huge yellow center floated button"/>
-                        </Form.Field>
+                            <input type="file" onClick={this.uploadImage} class="ui huge yellow center floated button"/>
+                        </Button>
                     </Grid.Row>
                 </Grid>
             </Container>
