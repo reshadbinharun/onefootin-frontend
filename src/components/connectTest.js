@@ -76,6 +76,7 @@ export default class Test extends Component {
         data.append('file', file);
         fetch(`${BACKEND}/imageUpload`, {
             method: 'POST',
+            credentials: 'include',
             body: file
         }).then(
             response => response.json() // if the response is a JSON object
