@@ -394,7 +394,7 @@ export default class Test extends Component {
                                 <label>Test image upload</label>
                                 <input type="file" onClick={this.uploadImageTest} class="ui huge yellow center floated button"/>     
                             </Form.Field>
-                        </Form> 
+                        </Form>
                     </Grid.Row>
                 </Grid>
             </Container>
