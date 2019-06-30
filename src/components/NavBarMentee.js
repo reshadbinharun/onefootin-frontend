@@ -29,7 +29,6 @@ export default class NavBarMentee extends Component {
     }
 
     componentDidMount() {
-        console.log("mentee data is", this.props.payload)
         this.setState({
             data: this.props.payload.mentee
         }, async () => {
@@ -66,7 +65,7 @@ export default class NavBarMentee extends Component {
             case MY_PROFILE:
                 return <Profile 
                     // TODO: add image when it is present in database
-                    imageLink={this.props.imageLink}
+                    imageLink={this.state.data.imageLink}
                     name={this.state.data.name}
                     school={this.state.data.school}
                     memberSince={this.state.data.memberSince}

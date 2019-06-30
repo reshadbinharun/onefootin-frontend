@@ -71,7 +71,7 @@ export default class NavBarMentor extends Component {
             case MY_PROFILE:
                 return <Profile
                     // TODO: add image when it is present in database
-                    imageLink={this.props.imageLink}
+                    imageLink={this.state.data.imageLink}
                     name={this.state.data.name}
                     school={this.state.data.school}
                     memberSince={this.state.data.memberSince}
