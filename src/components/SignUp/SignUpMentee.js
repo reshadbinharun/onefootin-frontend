@@ -52,7 +52,8 @@ export default class SignUpMentee extends React.Component {
             }
         }).then(
             success => {
-                console.log(success) // Handle the success response object
+                console.log(success); // Handle the success response object
+                this.setState({imageLink: success.data})
             }
         ).catch(
             error => console.log(error) // Handle the error response object
@@ -71,7 +72,8 @@ export default class SignUpMentee extends React.Component {
                 school: this.state.school,
                 location: this.state.location,
                 timeZone: timeZone,
-                aboutYourself: this.state.aboutYourself
+                aboutYourself: this.state.aboutYourself,
+                imageLink: this.state.imageLink
             }
             e.preventDefault();
             fetch(`${BACKEND}/newMentee`, {

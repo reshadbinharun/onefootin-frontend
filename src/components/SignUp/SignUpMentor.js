@@ -3,6 +3,8 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Message, Grid, Dropdown } from 'semantic-ui-react';
 import PreferredTimeSelector from '../PreferredTimeSelector';
 import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../../topics"
+import axios from 'axios';
+import { BACKEND } from "../../App"
 
 const PREFERRED_TOPICS = [ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
@@ -41,12 +43,14 @@ export default class SignUpMentor extends React.Component {
             selectTimes: false,
             position: '',
             aboutYourself: '',
+            imageLink: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.selectTimes = this.selectTimes.bind(this);
         this.setPreferredTimes = this.setPreferredTimes.bind(this);
         this.formPayload = this.formPayload.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
     setPreferredTimes(preferredTimes) {
         this.setState({
@@ -81,6 +85,26 @@ export default class SignUpMentor extends React.Component {
         })
     }
 
+    uploadImage(e) {
+        e.preventDefault();
+        let file = e.target.files[0];
+        console.log("file is", file)
+        let data = new FormData();
+        data.append('file', file);
+        axios.post(`${BACKEND}/imageUpload`, data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        }).then(
+            success => {
+                console.log(success); // Handle the success response object
+                this.setState({imageLink: success.data})
+            }
+        ).catch(
+            error => console.log(error) // Handle the error response object
+        );
+    }
+
     formPayload() {
         let timeZone = `GMT${getTimezoneOffset()}`;
         return {
@@ -94,7 +118,8 @@ export default class SignUpMentor extends React.Component {
             preferredTopics: this.state.preferredTopics,
             timeZone: timeZone,
             position: this.state.position,
-            aboutYourself: this.state.aboutYourself
+            aboutYourself: this.state.aboutYourself,
+            imageLink: this.state.imageLink
         }
     }
 
@@ -185,6 +210,10 @@ export default class SignUpMentor extends React.Component {
                     <Form.Field>
                         <label>Select the topics you would like to consult.</label>
                     <Dropdown placeholder='Preferred Topics' fluid multiple selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="preferredTopics"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Let's put a face on you! Please upload an image.</label>
+                        <input type="file" onChange={this.uploadImage} class="ui huge yellow center floated button"/>
                     </Form.Field>
                     <Grid.Row>
                         <Button onClick={this.selectTimes}>Select preferred times</Button>

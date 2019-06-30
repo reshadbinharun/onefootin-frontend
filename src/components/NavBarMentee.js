@@ -66,7 +66,7 @@ export default class NavBarMentee extends Component {
             case MY_PROFILE:
                 return <Profile 
                     // TODO: add image when it is present in database
-                    // image={this.props.image}
+                    imageLink={this.props.imageLink}
                     name={this.state.data.name}
                     school={this.state.data.school}
                     memberSince={this.state.data.memberSince}

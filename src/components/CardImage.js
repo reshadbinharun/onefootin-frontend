@@ -3,10 +3,10 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 
 export default  class ImageCard extends React.Component {
   render() {
-    const {name, image} = this.props;
+    const {name, imageLink} = this.props;
     return (  
     <Card>
-      <Image src={image} />
+      <Image size='large' src={imageLink} />
       <Card.Content>
         <Card.Header>{name}</Card.Header>
       </Card.Content>

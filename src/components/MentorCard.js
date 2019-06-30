@@ -1,10 +1,11 @@
+// DEPRECATED FILE, not used anywhere
 import React from 'react'
-import { Grid, Card, Icon, Image } from 'semantic-ui-react'
+import { Grid, Card, Image } from 'semantic-ui-react'
 
 export default class MentorCard extends React.Component {
     render() {
-        //TODO: include image and memberSince
-        const {name, school, position, location} = this.props;
+        //TODO: Include link to mentor profile page
+        const {name, school, position, location, imageLink} = this.props;
         const cardStyle ={
             width: '100%',
             padding: '5px',
@@ -14,7 +15,7 @@ export default class MentorCard extends React.Component {
             <Card centered={true} style={cardStyle}>
                 <Grid columns={2}>
                     <Grid.Column width={4}>
-                        <Image src={image} />
+                        <Image size='medium' src={imageLink} />
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Card.Content>
@@ -32,11 +33,11 @@ export default class MentorCard extends React.Component {
                             Location: {location}
                         </Card.Description>
                         </Card.Content>
-                        <Card.Content extra>
+                        {/* <Card.Content extra>
                             <Icon name='user'>
                             Go to Profile
                             </Icon>
-                        </Card.Content>
+                        </Card.Content> */}
                     </Grid.Column>
                 </Grid>
             </Card>
