@@ -4,6 +4,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 export default  class ImageCard extends React.Component {
   render() {
     const {name, imageLink} = this.props;
+    console.log(imageLink)
     return (  
     <Card>
       {/* <Image size='large' src={imageLink} /> */}
