@@ -46,25 +46,14 @@ export default class SignUpMentee extends React.Component {
         console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
-        // fetch(`${BACKEND}/imageUpload`, {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     body: file
-        // }).then(
-        //     response => response.json() // if the response is a JSON object
-        // ).then(
-        //     success => console.log(success) // Handle the success response object
-        // ).catch(
-        //     error => console.log(error) // Handle the error response object
-        // );
         axios.post(`${BACKEND}/imageUpload`, data, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
         }).then(
-            response => response.json() // if the response is a JSON object
-        ).then(
-            success => console.log(success) // Handle the success response object
+            success => {
+                console.log(success) // Handle the success response object
+            }
         ).catch(
             error => console.log(error) // Handle the error response object
         );
