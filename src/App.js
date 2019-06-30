@@ -70,6 +70,7 @@ export default class App extends Component {
   }
 
   renderLogin() {
+    console.log(this.state.menteePayload);
     let loggedInView =
       this.state.isMentor ? 
         <NavBarMentor

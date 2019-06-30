@@ -23,7 +23,6 @@ export default class NavBarMentee extends Component {
             mentorPicked: false,
             mentorId: ''
         }
-        this.getSchedule = this.getSchedule.bind(this);
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
     }
@@ -31,19 +30,10 @@ export default class NavBarMentee extends Component {
     componentDidMount() {
         this.setState({
             data: this.props.payload.mentee
-        }, async () => {
-            await this.getSchedule(this.state.data.id)
-        }, () => {
-            console.log(this.state.data)
         })
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-    async getSchedule(menteeId) {
-        //TODO: get list of requests for mentee from backend
-        console.log("getSchedule called")
-    }
 
     handleNewSchedule(e) {
         e.preventDefault();
