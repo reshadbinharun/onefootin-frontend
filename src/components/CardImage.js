@@ -6,7 +6,8 @@ export default  class ImageCard extends React.Component {
     const {name, imageLink} = this.props;
     return (  
     <Card>
-      <Image size='large' src={imageLink} />
+      {/* <Image size='large' src={imageLink} /> */}
+      <Image size='large' src='https://onefootin-images.s3.amazonaws.com/user-1561934037471-lg.jpg' />
       <Card.Content>
         <Card.Header>{name}</Card.Header>
       </Card.Content>
