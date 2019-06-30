@@ -5,7 +5,7 @@ import { Grid, Card, Image } from 'semantic-ui-react'
 export default class MentorCard extends React.Component {
     render() {
         //TODO: Include link to mentor profile page
-        const {name, school, position, location, imageLink} = this.props;
+        const {name, school, position, location, image} = this.props;
         const cardStyle ={
             width: '100%',
             padding: '5px',
@@ -15,7 +15,7 @@ export default class MentorCard extends React.Component {
             <Card centered={true} style={cardStyle}>
                 <Grid columns={2}>
                     <Grid.Column width={4}>
-                        <Image size='medium' src={imageLink} />
+                        <Image size='medium' src={image} />
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Card.Content>

@@ -14,7 +14,7 @@ export default class Profile extends React.Component {
                         <CardImage
                         name = {this.props.name}
                         // TODO: Add image after storing in database
-                        imageLink = {this.props.imageLink}
+                        image = {this.props.image}
                         />
                     </Grid.Column>
                     <Grid.Column>
