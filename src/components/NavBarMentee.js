@@ -33,6 +33,8 @@ export default class NavBarMentee extends Component {
             data: this.props.payload.mentee
         }, async () => {
             await this.getSchedule(this.state.data.id)
+        }, () => {
+            console.log(this.state.data)
         })
     }
 
