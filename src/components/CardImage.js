@@ -7,7 +7,6 @@ export default  class ImageCard extends React.Component {
     return (  
     <Card>
       <Image size='large' src={image} />
-      <Image size='large' src='https://onefootin-images.s3.amazonaws.com/user-1561934037471-lg.jpg' />
       <Card.Content>
         <Card.Header>{name}</Card.Header>
       </Card.Content>
