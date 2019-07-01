@@ -43,8 +43,7 @@ export function convertToViewerTimeZone(time, viewerGMT, otherGMT) {
         day = moveDay(parts[0], false);
         timeIn24h = 2400+adjustedTime;
     }
-    let timeDisplay = `${day} ${convertTo12h(timeIn24h)}`
-    console.log(timeDisplay)
+    let timeDisplay = `${day} ${convertTo12h(timeIn24h)}`.replace('{"','');
     return (timeDisplay);
 }
 
