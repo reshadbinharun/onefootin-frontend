@@ -43,7 +43,9 @@ export function convertToViewerTimeZone(time, viewerGMT, otherGMT) {
         day = moveDay(parts[0], false);
         timeIn24h = 2400+adjustedTime;
     }
-    return (`${day} ${convertTo12h(timeIn24h)}`);
+    let timeDisplay = `${day} ${convertTo12h(timeIn24h)}`
+    console.log(timeDisplay)
+    return (timeDisplay);
 }
 
 export default class CallCard extends React.Component {
