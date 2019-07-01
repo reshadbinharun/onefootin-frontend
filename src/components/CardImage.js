@@ -1,12 +1,12 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 
-export default  class ImageCard extends React.Component {
+export default class ImageCard extends React.Component {
   render() {
     const {name, image} = this.props;
     let imageAspect = {
-      'width': '200px',
-      'height': '150px'
+      'width': '400x',
+      'height': '500px'
     }
     return (  
     <Card>

@@ -9,11 +9,15 @@ export default class MentorNetworkCard extends React.Component {
             padding: '5px',
             margin: '5px',
         }
+        let imageAspect = {
+            'width': '200px',
+            'height': '150px'
+        }
         return (
             <Card centered={true} style={cardStyle}>
                 <Grid columns={3}>
                     <Grid.Column width={4}>
-                        <Image size='medium' src={image} />
+                        <Image style={imageAspect} src={image} />
                     </Grid.Column>
                     <Grid.Column width={9}>
                         <Card.Content>
@@ -25,7 +29,7 @@ export default class MentorNetworkCard extends React.Component {
                             School: {school}
                         </Card.Description>
                         <Card.Description>
-                            Position {position}
+                            Position: {position}
                         </Card.Description>
                         <Card.Description>
                             Location: {location}
