@@ -67,7 +67,7 @@ export default class MentorNetwork extends React.Component {
                 school={mentor.school}
                 position={mentor.position}
                 location={mentor.location}
-                // image={mentor.image}
+                image={mentor.image}
                 pickMentor={this.props.pickMentor}
                 />
             )
