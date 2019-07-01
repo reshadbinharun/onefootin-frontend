@@ -7,6 +7,10 @@ import CardDetails from './CardDetails';
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
     render() {
+        let imageAspect = {
+            'width' : '450px',
+            'height' : '500px',
+        }
         return (  
             <Container>
                 <Grid columns={2}>

@@ -92,6 +92,6 @@ export default class MentorNetwork extends React.Component {
                     this.renderUserCards(this.filterResults(this.state.mentors)) : this.renderUserCards(this.state.mentors)}
                 </Container>
             </Container>
-          )
+        )
     }
 }

@@ -4,9 +4,13 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 export default  class ImageCard extends React.Component {
   render() {
     const {name, image} = this.props;
+    let imageAspect = {
+      'width': '200px',
+      'height': '150px'
+    }
     return (  
     <Card>
-      <Image size='large' src={image} />
+      <Image style={imageAspect} src={image} />
       <Card.Content>
         <Card.Header>{name}</Card.Header>
       </Card.Content>
