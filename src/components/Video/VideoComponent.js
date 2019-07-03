@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Button } from "semantic-ui-react"
 
 export default class VideoComponent extends Component {
     constructor(props) {
@@ -170,21 +168,28 @@ render() {
      show `Leave Room` button.
     */
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ? (
-        <RaisedButton label="Leave Room" secondary={true} onClick={this.leaveRoom} />
+        <Button  onClick={this.leaveRoom} > Leave Room </Button>
         ) : (
-        <RaisedButton label="Join Room" primary={true} onClick={this.joinRoom} />);
+        <Button onClick={this.joinRoom} > Join Room </Button>);
     return (
-        <Card>
-            <CardText>
-                <div className="flex-container">
+        <Container>
+            <div className="flex-container">
                 {showLocalTrack} {/* Show local track if available */}
                 <div className="flex-item">
                     {/* 
                 The following text field is used to enter a room name. It calls  `handleRoomNameChange` method when the text changes which sets the `roomName` variable initialized in the state.
                     */}
-                <TextField hintText="Room Name" onChange={this.handleRoomNameChange} 
-                    errorText = {this.state.roomNameErr ? 'Room Name is required' : undefined} 
-                /><br />
+                    <Form>
+                        <Form.Field
+                        type="text"
+                        required="true"
+                        style={fieldStyle}
+                        >
+                            <label>Name</label>
+                            <input placeholder='Room Name' name="name" onChange={this.handleRoomNameChange} />
+                        </Form.Field>
+                    </Form>
+                <br />
                 {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                 </div>
                     {/* 
@@ -192,8 +197,7 @@ render() {
                     */}
                 <div className="flex-item" ref="remoteMedia" id="remote-media" />
             </div>
-            </CardText>
-        </Card>
+        </Container>
     );
   }
 }
