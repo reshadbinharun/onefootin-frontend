@@ -5,12 +5,14 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
+import VideoComponent from "./Video/VideoComponent";
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
 export const SCHEDULINGS = 'Schedulings';
 export const MENTOR_PROFILE = 'Mentor Profile'
 export const NEW_CALL = 'New Call'
+export const MY_OFFICE = 'My Office'
 
 //TODO: adapt to mentee login model --> currently copied from mentor login
 export default class NavBarMentee extends Component {
@@ -84,6 +86,8 @@ export default class NavBarMentee extends Component {
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
                     />)
+            case MY_OFFICE:
+                return <VideoComponent/>
             case MENTOR_PROFILE:
                 return null
             default:
@@ -106,6 +110,11 @@ export default class NavBarMentee extends Component {
                 <Menu.Item
                     name={SCHEDULINGS}
                     active={activeItem === SCHEDULINGS}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name={MY_OFFICE}
+                    active={activeItem === MY_OFFICE}
                     onClick={this.handleItemClick}
                 />
                 </Menu>

@@ -3,12 +3,15 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Profile from '../Profile'
 import { BACKEND } from "../../App"
 import Backlog from "./Backlog";
+import VideoComponent from "../Video/VideoComponent";
+
 // TODO: Deprecated, remove
 // import ConfirmedCalls from "./ConfirmedCalls"
 
 export const MY_PROFILE = 'My Profile';
 export const BACKLOG = 'Backlog';
 export const CONFIRMED_CALLS = 'Confirmed Calls';
+export const MY_OFFICE = 'My Office'
 
 export default class NavBarMentor extends Component {
     constructor(props){
@@ -91,6 +94,8 @@ export default class NavBarMentor extends Component {
                     mentorTimeZone = {this.state.data.timeZone}
                     confirmed = {true}
                 />
+            case MY_OFFICE:
+                return <VideoComponent/>
             default:
                 return null
         }
@@ -110,6 +115,11 @@ export default class NavBarMentor extends Component {
                 <Menu.Item
                     name={CONFIRMED_CALLS}
                     active={activeItem === CONFIRMED_CALLS}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name={MY_OFFICE}
+                    active={activeItem === MY_OFFICE}
                     onClick={this.handleItemClick}
                 />
                 </Menu>
