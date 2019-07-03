@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button } from "semantic-ui-react"
+import { Button, Container, Form } from "semantic-ui-react"
 
 export default class VideoComponent extends Component {
     constructor(props) {
@@ -183,7 +183,6 @@ render() {
                         <Form.Field
                         type="text"
                         required="true"
-                        style={fieldStyle}
                         >
                             <label>Name</label>
                             <input placeholder='Room Name' name="name" onChange={this.handleRoomNameChange} />
