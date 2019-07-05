@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button, Container, Form } from "semantic-ui-react"
+import { Button, Container, Form, Grid } from "semantic-ui-react"
 import {BACKEND} from "../../App"
+
+// Code inspired by Twilio Blogs --> https://www.twilio.com/blog/2018/03/video-chat-react.html
 
 export default class VideoComponent extends Component {
     constructor(props) {
@@ -175,10 +177,16 @@ render() {
         ) : (
         <Button onClick={this.joinRoom} > Join Room </Button>);
     return (
-        <Container>
-            <div className="flex-container">
+        <Container centered>
+          <Grid columns={2}>
+            <Grid.Column width={9}>
+              <Grid.Row>
+              <div className="flex-container">
                 {showLocalTrack} {/* Show local track if available */}
-                <div className="flex-item">
+                </div>
+              </Grid.Row>
+              <Grid.Row>
+              <div className="flex-item">
                     {/* 
                 The following text field is used to enter a room name. It calls  `handleRoomNameChange` method when the text changes which sets the `roomName` variable initialized in the state.
                     */}
@@ -194,11 +202,15 @@ render() {
                 <br />
                 {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                 </div>
+              </Grid.Row>
+            </Grid.Column>
+            <Grid.Column width={7}>
                     {/* 
-                The following div element shows all remote media (other participant’s tracks) 
+                    The following div element shows all remote media (other participant’s tracks) 
                     */}
-                <div className="flex-item" ref="remoteMedia" id="remote-media" />
-            </div>
+              <div className="flex-item" ref="remoteMedia" id="remote-media" />
+            </Grid.Column>
+          </Grid>
         </Container>
     );
   }
