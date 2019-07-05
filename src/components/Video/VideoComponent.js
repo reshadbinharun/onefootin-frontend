@@ -24,7 +24,7 @@ export default class VideoComponent extends Component {
     }
 
 componentDidMount() {
-    axios.get('/token').then(results => {
+    axios.get(`${BACKEND}/token`).then(results => {
         /*
         Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
         */
