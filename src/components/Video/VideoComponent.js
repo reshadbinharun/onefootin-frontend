@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
 import { Button, Container, Form } from "semantic-ui-react"
+import {BACKEND} from "../../App"
 
 export default class VideoComponent extends Component {
     constructor(props) {
