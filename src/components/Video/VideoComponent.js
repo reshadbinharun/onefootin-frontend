@@ -25,7 +25,9 @@ export default class VideoComponent extends Component {
     }
 
 componentDidMount() {
-    axios.get(`${BACKEND}/token`).then(results => {
+    axios.post(`${BACKEND}/getTwilioToken`, {
+      email: this.props.email,
+    }).then(results => {
         /*
         Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
         */
@@ -115,7 +117,7 @@ roomJoined(room) {
 
 joinRoom() {
      /* 
-  Show an error message on room name text field if user tries         joining a room without providing a room name. This is enabled by setting `roomNameErr` to true
+  Show an error message on room name text field if user tries joining a room without providing a room name. This is enabled by setting `roomNameErr` to true
     */
     if (!this.state.roomName.trim()) {
         this.setState({ roomNameErr: true });
@@ -132,7 +134,7 @@ joinRoom() {
     }
 
     /* 
-  Connect to a room by providing the token and connection    options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
+  Connect to a room by providing the token and connection options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
   */  
   Video.connect(this.state.token, connectOptions).then(this.roomJoined, error => {
     alert('Could not connect to Twilio: ' + error.message);

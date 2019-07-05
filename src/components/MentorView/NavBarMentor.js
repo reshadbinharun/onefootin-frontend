@@ -95,7 +95,9 @@ export default class NavBarMentor extends Component {
                     confirmed = {true}
                 />
             case MY_OFFICE:
-                return <VideoComponent/>
+                return <VideoComponent
+                    email={this.state.data.email}
+                    />
             default:
                 return null
         }
