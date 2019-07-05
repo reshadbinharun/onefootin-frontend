@@ -90,7 +90,7 @@ roomJoined(room) {
   
       // Detach participant’s track from DOM when they remove a track.
       room.on('trackRemoved', (track, participant) => {
-        this.log(participant.identity + ' removed track: ' + track.kind);
+        console.log(participant.identity + ' removed track: ' + track.kind);
         this.detachTracks([track]);
       });
   
