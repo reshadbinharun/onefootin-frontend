@@ -96,9 +96,9 @@ export default class CallCard extends React.Component {
                 <Card.Content extra>
                     <div className='ui two buttons'>
                     <Button 
-                        onClick={this.props.confirmed ? null : this.handleConfirm}
+                        onClick={this.props.confirmed ? this.props.getRequestForVideo(this.props.requestId) : this.handleConfirm}
                         basic color='dark orange'>
-                        {this.props.confirmed ? 'Reschedule' : 'Confirm'}
+                        {this.props.confirmed ? 'Join Video Call' : 'Confirm'}
                     </Button>
                     {/* TODO: Include ability to cancell requests for mentors */}
                     <Button basic color='yellow' disabled>

@@ -16,7 +16,8 @@ export default class VideoComponent extends Component {
             previewTracks: null,
             localMediaAvailable: false, /* Represents the availability of a LocalAudioTrack(microphone) and a LocalVideoTrack(camera) */
             hasJoinedRoom: false,
-            activeRoom: null // Track the current active room
+            activeRoom: null, // Track the current active room
+            participantCount: 1,
         };
         this.joinRoom = this.joinRoom.bind(this);
         this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
@@ -27,17 +28,26 @@ export default class VideoComponent extends Component {
     }
 
 componentDidMount() {
-    axios.post(`${BACKEND}/getTwilioToken`, {
-      email: this.props.email,
+    axios.post(`${BACKEND}/getRoomName`, {
+      requestId: this.props.requestId,
     }).then(results => {
-        /*
-        Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
-        */
-        const { identity, token } = results.data;
-        this.setState({ identity, token });
-    });
+      const { roomName } = results.data;
+      this.setState({ roomName });
+    }).then(()=> {
+      axios.post(`${BACKEND}/getTwilioToken`, {
+        email: this.props.email,
+      }).then(results => {
+          /*
+          Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
+          */
+          const { identity, token } = results.data;
+          this.setState({ identity, token });
+      });
+    })
+    
 }
 
+// TODO: Remove this function as room-naming is no longer possible using 
 handleRoomNameChange(e) {
     /* Fetch room name from text field and update state */
         let roomName = e.target.value; 
@@ -55,6 +65,11 @@ attachTracks(tracks, container) {
 attachParticipantTracks(participant, container) {
     var tracks = Array.from(participant.tracks.values());
     this.attachTracks(tracks, container);
+    this.setState({
+      participantCount: this.state.participantCount++,
+    }, () => {
+      this.props.destroyVideoWindow(this.state.participantCount);
+    })
 }
 
 roomJoined(room) {
@@ -144,7 +159,10 @@ joinRoom() {
 }
 leaveRoom() {
     this.state.activeRoom.disconnect();
-    this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
+    this.setState({ hasJoinedRoom: false, localMediaAvailable: false, 
+      participantCount: this.state.participantCount--, },() => {
+        this.props.destroyVideoWindow(this.state.participantCount);
+      });
 }
 
 detachTracks(tracks) {
@@ -158,6 +176,11 @@ detachTracks(tracks) {
 detachParticipantTracks(participant) {
   var tracks = Array.from(participant.tracks.values());
   this.detachTracks(tracks);
+  this.setState({
+    participantCount: this.state.participantCount--,
+  },() => {
+    this.props.destroyVideoWindow(this.state.participantCount);
+  })
 }
 
 render() {
