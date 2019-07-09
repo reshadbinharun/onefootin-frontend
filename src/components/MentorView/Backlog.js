@@ -67,11 +67,11 @@ export default class Backlog extends React.Component {
     render() {
         return (  
             <Container>
-                {this.state.showVideo? this.renderRequestCards(this.props.calls) :
-                <VideoComponent
+                {this.state.showVideo? <VideoComponent
                     requestId={this.state.requestIdForVideo}
                     leaveRoom={this.leaveRoom}
-                />}
+                /> : this.renderRequestCards(this.props.calls)
+                }
             </Container>
           )
     }
