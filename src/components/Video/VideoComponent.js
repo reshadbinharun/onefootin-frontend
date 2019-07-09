@@ -19,7 +19,6 @@ export default class VideoComponent extends Component {
             activeRoom: null, // Track the current active room
         };
         this.joinRoom = this.joinRoom.bind(this);
-        this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
         this.roomJoined = this.roomJoined.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
         this.detachTracks = this.detachTracks.bind(this);
