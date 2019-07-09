@@ -52,7 +52,7 @@ export default class Backlog extends React.Component {
             return (
                 <CallCard
                     // TODO: fetch info about mentor on getAllRequests backend call + adjust to Mentor's timezone
-                    getRequestForVideo={this.props.confirmed ? this.getRequestForVideo : null}
+                    getRequestForVideo={this.getRequestForVideo}
                     mentorTimeZone={this.props.mentorTimeZone}
                     topic={call.topic}
                     time={call.dateTime}
