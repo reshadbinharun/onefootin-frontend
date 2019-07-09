@@ -50,7 +50,7 @@ export default class Backlog extends React.Component {
     renderRequestCards(calls) {
         return calls.map(call => {
             return (
-                this.state.showVideo? <CallCard
+                <CallCard
                     // TODO: fetch info about mentor on getAllRequests backend call + adjust to Mentor's timezone
                     getRequestForVideo={this.props.confirmed ? this.getRequestForVideo : null}
                     mentorTimeZone={this.props.mentorTimeZone}
@@ -59,10 +59,6 @@ export default class Backlog extends React.Component {
                     requestId={call.id}
                     mentee={call.mentee}
                     confirmed={this.props.confirmed}
-                /> :
-                <VideoComponent
-                    requestId={this.state.requestIdForVideo}
-                    leaveRoom={this.leaveRoom}
                 />
             )
         })
@@ -71,7 +67,11 @@ export default class Backlog extends React.Component {
     render() {
         return (  
             <Container>
-                {this.renderRequestCards(this.props.calls)}
+                {this.state.showVideo? this.renderRequestCards(this.props.calls) :
+                <VideoComponent
+                    requestId={this.state.requestIdForVideo}
+                    leaveRoom={this.leaveRoom}
+                />}
             </Container>
           )
     }
