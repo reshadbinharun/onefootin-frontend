@@ -40,6 +40,7 @@ componentDidMount() {
           Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
           */
           const { identity, token } = results.data;
+          console.log("participant identity is", identity)
           this.setState({ identity, token });
       });
     })

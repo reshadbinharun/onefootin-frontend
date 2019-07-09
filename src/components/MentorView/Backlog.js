@@ -37,7 +37,6 @@ export default class Backlog extends React.Component {
                 })
             }
         }).then(() => {
-            console.log("setting show room")
             this.setState({
                 showVideo: true,
                 requestIdForVideo: requestId,
