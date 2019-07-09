@@ -14,16 +14,14 @@ export default class Backlog extends React.Component {
             requestIdForVideo: null,
         }
         this.renderRequestCards = this.renderRequestCards.bind(this);
-        this.destroyVideo = this.destroyVideo.bind(this);
         this.getRequestForVideo = this.getRequestForVideo.bind(this);
+        this.leaveRoom = this.leaveRoom.bind(this);
     }
 
-    destroyVideo(participantCount) {
-        if (participantCount < 1) {
-            this.setState({
-                showVideo: false,
-            });
-        }
+    leaveRoom() {
+        this.setState({
+            showVideo: false,
+        })
     }
 
     getRequestForVideo(requestId) {
@@ -39,6 +37,7 @@ export default class Backlog extends React.Component {
                 })
             }
         }).then(() => {
+            console.log("setting show room")
             this.setState({
                 showVideo: true,
                 requestIdForVideo: requestId,
@@ -63,7 +62,7 @@ export default class Backlog extends React.Component {
                 /> :
                 <VideoComponent
                     requestId={this.state.requestIdForVideo}
-                    destroyVideoWindow={this.destroyVideo}
+                    leaveRoom={this.leaveRoom}
                 />
             )
         })

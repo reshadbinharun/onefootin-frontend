@@ -17,7 +17,6 @@ export default class VideoComponent extends Component {
             localMediaAvailable: false, /* Represents the availability of a LocalAudioTrack(microphone) and a LocalVideoTrack(camera) */
             hasJoinedRoom: false,
             activeRoom: null, // Track the current active room
-            participantCount: 1,
         };
         this.joinRoom = this.joinRoom.bind(this);
         this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
@@ -65,11 +64,6 @@ attachTracks(tracks, container) {
 attachParticipantTracks(participant, container) {
     var tracks = Array.from(participant.tracks.values());
     this.attachTracks(tracks, container);
-    this.setState({
-      participantCount: this.state.participantCount++,
-    }, () => {
-      this.props.destroyVideoWindow(this.state.participantCount);
-    })
 }
 
 roomJoined(room) {
@@ -160,8 +154,8 @@ joinRoom() {
 leaveRoom() {
     this.state.activeRoom.disconnect();
     this.setState({ hasJoinedRoom: false, localMediaAvailable: false, 
-      participantCount: this.state.participantCount--, },() => {
-        this.props.destroyVideoWindow(this.state.participantCount);
+      }, () => {
+        this.props.leaveRoom();
       });
 }
 
@@ -176,11 +170,6 @@ detachTracks(tracks) {
 detachParticipantTracks(participant) {
   var tracks = Array.from(participant.tracks.values());
   this.detachTracks(tracks);
-  this.setState({
-    participantCount: this.state.participantCount--,
-  },() => {
-    this.props.destroyVideoWindow(this.state.participantCount);
-  })
 }
 
 render() {
