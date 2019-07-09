@@ -47,13 +47,6 @@ componentDidMount() {
     
 }
 
-// TODO: Remove this function as room-naming is no longer possible using 
-handleRoomNameChange(e) {
-    /* Fetch room name from text field and update state */
-        let roomName = e.target.value; 
-        this.setState({ roomName });
-      }
-
 // Attach the Tracks to the DOM.
 attachTracks(tracks, container) {
     tracks.forEach(track => {
@@ -200,19 +193,6 @@ render() {
               </Grid.Row>
               <Grid.Row>
               <div className="flex-item">
-                    {/* 
-                The following text field is used to enter a room name. It calls  `handleRoomNameChange` method when the text changes which sets the `roomName` variable initialized in the state.
-                    */}
-                    <Form>
-                        <Form.Field
-                        type="text"
-                        required="true"
-                        >
-                            <label>Name</label>
-                            <input placeholder='Room Name' name="name" onChange={this.handleRoomNameChange} />
-                        </Form.Field>
-                    </Form>
-                <br />
                 {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                 </div>
               </Grid.Row>

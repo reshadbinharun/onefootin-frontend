@@ -32,6 +32,7 @@ export default class Backlog extends React.Component {
             // Add room only if room does not exist
             const { roomName } = results.data;
             if (roomName === '') {
+                console.log("roomName not set, adding room...")
                 axios.post(`${BACKEND}/addRoom`, {
                     requestId: requestId,
                 })
