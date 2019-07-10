@@ -48,6 +48,13 @@ export default class Schedule extends React.Component {
             })
         );
     }
+
+    getRequestForVideo(requestId) {
+        this.setState({
+            showVideo: true,
+            requestIdForVideo: requestId,
+        })
+    }
     
     leaveRoom() {
         this.setState({
