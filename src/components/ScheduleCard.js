@@ -21,11 +21,13 @@ export default class ScheduleCard extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                     <div className='ui two buttons'>
-                    <Button basic color='dark orange'>
-                        Cancel
+                    <Button basic color='dark orange'
+                        onClick={() => this.props.getRequestForVideo(this.props.requestId)}
+                    >
+                        Join Video Call
                     </Button>
                     <Button basic color='yellow' disabled>
-                        Reschedule
+                        Cancel
                     </Button>
                     </div>
                 </Card.Content>

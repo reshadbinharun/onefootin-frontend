@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Button, Container, Form, Grid } from "semantic-ui-react"
 import {BACKEND} from "../../App"
 
+const VIDEO_WIDTH = 640;
+
 // Code inspired by Twilio Blogs --> https://www.twilio.com/blog/2018/03/video-chat-react.html
 
 export default class VideoComponent extends Component {
@@ -130,7 +132,8 @@ joinRoom() {
 
     console.log("Joining room '" + this.state.roomName + "'...");
     let connectOptions = {
-        name: this.state.roomName
+        name: this.state.roomName,
+        video: {width: VIDEO_WIDTH}
     };
 
     if (this.state.previewTracks) {

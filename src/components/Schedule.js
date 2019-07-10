@@ -4,6 +4,7 @@ import { Container, Button, Segment, Icon } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
 import { BACKEND } from "../App"
 import { convertToViewerTimeZone } from "./MentorView/CallCard"
+import VideoComponent from './Video/VideoComponent';
 
 export default class Schedule extends React.Component {
     constructor(props){
@@ -11,8 +12,12 @@ export default class Schedule extends React.Component {
         this.state = {
             schedules: [],
             menteeId: null,
+            showVideo: false,
+            requestIdForVideo: null,
         }
         this.renderScheduleCards = this.renderScheduleCards.bind(this);
+        this.getRequestForVideo = this.getRequestForVideo.bind(this);
+        this.leaveRoom = this.leaveRoom.bind(this);
     }
     
     // TODO: use BACKEND to list confirmed calls
@@ -44,6 +49,12 @@ export default class Schedule extends React.Component {
         );
     }
     
+    leaveRoom() {
+        this.setState({
+            showVideo: false,
+        })
+    }
+
     renderScheduleCards() {
         return this.state.schedules && this.state.schedules.map(request => {
             return (
@@ -51,6 +62,8 @@ export default class Schedule extends React.Component {
                     time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone, request.mentor.timeZone)}
                     topic={request.topic}
                     mentor={request.mentor.name}
+                    requestId={request.id}
+                    getRequestForVideo={this.getRequestForVideo}
                 />
             )
         })
@@ -58,6 +71,12 @@ export default class Schedule extends React.Component {
 
     render() {
         return (  
+            this.state.showVideo ? 
+            <VideoComponent
+                requestId={this.state.requestIdForVideo}
+                leaveRoom={this.leaveRoom}
+                email={this.props.menteeEmail}
+            /> :
             <Container>
                 <Container>
                     <Segment attached='top'>
