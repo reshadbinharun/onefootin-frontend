@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button, Container, Form, Grid } from "semantic-ui-react"
+import { Button, Container, Grid, Divider } from "semantic-ui-react"
 import {BACKEND} from "../../App"
 
 const VIDEO_WIDTH = 640;
@@ -186,8 +186,7 @@ render() {
         <Button onClick={this.joinRoom} > Join Room </Button>);
     return (
         <Container centered>
-          <Grid columns={2}>
-            <Grid.Column width={9}>
+          <Grid columns={1}>
               <Grid.Row>
               <div className="flex-container">
                 {showLocalTrack} {/* Show local track if available */}
@@ -198,13 +197,13 @@ render() {
                 {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                 </div>
               </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={7}>
-                    {/* 
-                    The following div element shows all remote media (other participant’s tracks) 
-                    */}
-              <div className="flex-item" ref="remoteMedia" id="remote-media" />
-            </Grid.Column>
+              <Divider/>
+              <Grid.Row>
+                {/* 
+                The following div element shows all remote media (other participant’s tracks) 
+                */}
+                <div className="flex-item" ref="remoteMedia" id="remote-media" />
+              </Grid.Row>
           </Grid>
         </Container>
     );

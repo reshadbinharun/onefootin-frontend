@@ -3,7 +3,7 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Profile from '../Profile'
 import { BACKEND } from "../../App"
 import Backlog from "./Backlog";
-import VideoComponent from "../Video/VideoComponent";
+// import VideoComponent from "../Video/VideoComponent";
 
 // TODO: Deprecated, remove
 // import ConfirmedCalls from "./ConfirmedCalls"
@@ -11,7 +11,7 @@ import VideoComponent from "../Video/VideoComponent";
 export const MY_PROFILE = 'My Profile';
 export const BACKLOG = 'Backlog';
 export const CONFIRMED_CALLS = 'Confirmed Calls';
-export const MY_OFFICE = 'My Office'
+// export const MY_OFFICE = 'My Office'
 
 export default class NavBarMentor extends Component {
     constructor(props){
@@ -95,11 +95,11 @@ export default class NavBarMentor extends Component {
                     confirmed = {true}
                     mentorEmail={this.state.data.email}
                 />
-            case MY_OFFICE:
-                return <VideoComponent
-                    email={this.state.data.email}
-                    request={this.state.requestForVideo}
-                    />
+            // case MY_OFFICE:
+            //     return <VideoComponent
+            //         email={this.state.data.email}
+            //         request={this.state.requestForVideo}
+            //         />
             default:
                 return null
         }
@@ -121,11 +121,11 @@ export default class NavBarMentor extends Component {
                     active={activeItem === CONFIRMED_CALLS}
                     onClick={this.handleItemClick}
                 />
-                <Menu.Item
+                {/* <Menu.Item
                     name={MY_OFFICE}
                     active={activeItem === MY_OFFICE}
                     onClick={this.handleItemClick}
-                />
+                /> */}
                 </Menu>
             <Segment>
                 {this.renderNavSelection()}

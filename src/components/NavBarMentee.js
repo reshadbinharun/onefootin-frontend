@@ -12,7 +12,7 @@ export const MENTOR_NETWORK = 'Mentor Network';
 export const SCHEDULINGS = 'Schedulings';
 export const MENTOR_PROFILE = 'Mentor Profile'
 export const NEW_CALL = 'New Call'
-export const MY_APPT = 'My Appointment'
+// export const MY_APPT = 'My Appointment'
 
 //TODO: adapt to mentee login model --> currently copied from mentor login
 export default class NavBarMentee extends Component {
@@ -87,10 +87,10 @@ export default class NavBarMentee extends Component {
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
                     />)
-            case MY_APPT:
-                return <VideoComponent
-                    email={this.state.data.email}
-                    />
+            // case MY_APPT:
+            //     return <VideoComponent
+            //         email={this.state.data.email}
+            //         />
             case MENTOR_PROFILE:
                 return null
             default:
@@ -115,11 +115,11 @@ export default class NavBarMentee extends Component {
                     active={activeItem === SCHEDULINGS}
                     onClick={this.handleItemClick}
                 />
-                <Menu.Item
+                {/* <Menu.Item
                     name={MY_APPT}
                     active={activeItem === MY_APPT}
                     onClick={this.handleItemClick}
-                />
+                /> */}
                 </Menu>
             <Segment>
                 {this.renderNavSelection()}
