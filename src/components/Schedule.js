@@ -14,9 +14,10 @@ export default class Schedule extends React.Component {
             menteeId: null,
             showVideo: false,
             requestIdForVideo: null,
+            mentorName: '',
         }
         this.renderScheduleCards = this.renderScheduleCards.bind(this);
-        this.getRequestForVideo = this.getRequestForVideo.bind(this);
+        this.getRequestForVideoMentee = this.getRequestForVideoMentee.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
     }
     
@@ -49,10 +50,11 @@ export default class Schedule extends React.Component {
         );
     }
 
-    getRequestForVideo(requestId) {
+    getRequestForVideoMentee(requestId, mentorName) {
         this.setState({
             showVideo: true,
             requestIdForVideo: requestId,
+            mentorName: mentorName,
         })
     }
     
@@ -83,6 +85,8 @@ export default class Schedule extends React.Component {
                 requestId={this.state.requestIdForVideo}
                 leaveRoom={this.leaveRoom}
                 email={this.props.menteeEmail}
+                otherName={this.state.mentorName}
+                myName={this.props.menteeName}
             /> :
             <Container>
                 <Container>

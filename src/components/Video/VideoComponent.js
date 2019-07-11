@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button, Container, Grid, Divider, GridColumn } from "semantic-ui-react"
+import { Button, Container, Grid, Message } from "semantic-ui-react"
 import {BACKEND} from "../../App"
 
 const VIDEO_WIDTH = 450;
@@ -189,9 +189,14 @@ render() {
           <Grid columns={1}>
               <Grid.Column>
                 <Grid.Row>
-                <div className="flex-container">
-                  {showLocalTrack} {/* Show local track if available */}
-                  </div>
+                  <Container>
+                    <div className="flex-container"></div>
+                    <Message
+                      content={this.props.myName}
+                      icon='user circle'
+                    />
+                  </Container>
+                  {showLocalTrack} {/* Show local track if available */} 
                 </Grid.Row>
                 <Grid.Row>
                 <div className="flex-item">
@@ -199,13 +204,19 @@ render() {
                   </div>
                 </Grid.Row>
               </Grid.Column>
-              <Divider/>
               <Grid.Column>
                 <Grid.Row>
                   {/* 
                   The following div element shows all remote media (other participant’s tracks) 
                   */}
-                  <div className="flex-item" ref="remoteMedia" id="remote-media" />
+                  <Container>
+                    <div className="flex-item" ref="remoteMedia" id="remote-media" />
+                    <Message
+                      content={this.props.otherName}
+                      icon='user circle'
+                    />
+                  </Container>
+                  
                 </Grid.Row>
               </Grid.Column>
           </Grid>

@@ -94,6 +94,7 @@ export default class NavBarMentor extends Component {
                     mentorTimeZone = {this.state.data.timeZone}
                     confirmed = {true}
                     mentorEmail={this.state.data.email}
+                    mentorName={this.state.data.name}
                 />
             // case MY_OFFICE:
             //     return <VideoComponent

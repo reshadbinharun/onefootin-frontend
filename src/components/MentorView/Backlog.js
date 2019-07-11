@@ -12,9 +12,10 @@ export default class Backlog extends React.Component {
         this.state = {
             showVideo: false,
             requestIdForVideo: null,
+            menteeName: '',
         }
         this.renderRequestCards = this.renderRequestCards.bind(this);
-        this.getRequestForVideo = this.getRequestForVideo.bind(this);
+        this.getRequestForVideoMentor = this.getRequestForVideoMentor.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
     }
 
@@ -24,7 +25,7 @@ export default class Backlog extends React.Component {
         })
     }
 
-    getRequestForVideo(requestId) {
+    getRequestForVideoMentor(requestId, menteeName) {
         // TODO: add corresponding "Join Call" Button from mentor that gets roomName
         axios.post(`${BACKEND}/getRoomName`, {
             requestId: this.props.requestId,
@@ -41,6 +42,7 @@ export default class Backlog extends React.Component {
             this.setState({
                 showVideo: true,
                 requestIdForVideo: requestId,
+                menteeName: menteeName,
             })
         }).catch(err => {
             throw(err)
@@ -52,7 +54,7 @@ export default class Backlog extends React.Component {
             return (
                 <CallCard
                     // TODO: fetch info about mentor on getAllRequests backend call + adjust to Mentor's timezone
-                    getRequestForVideo={this.getRequestForVideo}
+                    getRequestForVideoMentor={this.getRequestForVideoMentor}
                     mentorTimeZone={this.props.mentorTimeZone}
                     topic={call.topic}
                     time={call.dateTime}
@@ -68,6 +70,8 @@ export default class Backlog extends React.Component {
         return (  
             <Container>
                 {this.state.showVideo? <VideoComponent
+                    otherName={this.state.menteeName}
+                    myName={this.props.mentorName}
                     requestId={this.state.requestIdForVideo}
                     leaveRoom={this.leaveRoom}
                     email={this.props.mentorEmail}

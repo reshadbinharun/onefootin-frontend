@@ -75,6 +75,7 @@ export default class NavBarMentee extends Component {
                     getForm={this.handleNewSchedule}
                     menteeId={this.state.data.id}
                     menteeEmail={this.state.data.email}
+                    menteeName={this.state.data.name}
                 />
             case NEW_CALL:
                 return (this.state.mentorPicked? 
