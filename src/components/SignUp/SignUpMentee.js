@@ -27,6 +27,7 @@ export default class SignUpMentee extends React.Component {
             // TODO: include stock image if image link is empty, IMAGE LINK is optional
             imageLink: '',
             signUpDone: false,
+            submitting: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,6 +63,9 @@ export default class SignUpMentee extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({
+            submitting: true,
+        })
         let readyForSubmit = this.state.name && this.state.email && this.state.password && this.state.school && this.state.location && this.state.aboutYourself
         if (readyForSubmit) {
             let timeZone = `GMT${getTimezoneOffset()}`;
@@ -163,7 +167,8 @@ export default class SignUpMentee extends React.Component {
                                 </Form.Field>
                             <Button 
                                 color="blue" 
-                                type='submit'>
+                                type='submit'
+                                loading={this.state.submitting}>
                                 <Icon name="unlock"/>
                                 Submit
                             </Button>

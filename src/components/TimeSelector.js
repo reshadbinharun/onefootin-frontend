@@ -18,6 +18,7 @@ export default class TimeSelector extends React.Component {
         this.state = {
             timesOptions: [],
             timeSelection: [],
+            submitting: false,
         }
         this.handleChangeTime = this.handleChangeTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,6 +26,9 @@ export default class TimeSelector extends React.Component {
 
     async handleSubmit(e) {
         e.preventDefault();
+        this.setState({
+            submitting: true,
+        })
         let payload = {
             times: this.state.timeSelection,
             topics: this.props.topics
@@ -87,7 +91,7 @@ export default class TimeSelector extends React.Component {
                                 <Dropdown placeholder='Preferred Times' fluid multiple selection options={this.state.timesOptions} onChange={this.handleChangeTime} name="preferredTimes"/>
                             </Form.Field>
                             <Grid.Row>
-                                <Button onClick={this.handleSubmit}>Submit</Button>
+                                <Button loading = {this.state.submitting} onClick={this.handleSubmit}>Submit</Button>
                             </Grid.Row>
                             </Form>
                             </Grid.Row>

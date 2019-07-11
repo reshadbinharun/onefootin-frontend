@@ -21,7 +21,9 @@ export default class LoginForm extends React.Component {
             email: '',
             password: '',
             incorrectCredentials: false,
-            error: null
+            error: null,
+            menteeLoginLoading: false,
+            mentorLoginLoading: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitAsMentee = this.handleSubmitAsMentee.bind(this);
@@ -32,6 +34,7 @@ export default class LoginForm extends React.Component {
     //TODO: combine both handleSubmit functions into one which takes a bool for isMentor
     handleSubmitAsMentor(e) {
         e.preventDefault();
+        this.setState({mentorLoginLoading: true});
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -65,7 +68,7 @@ export default class LoginForm extends React.Component {
 
     handleSubmitAsMentee(e) {
         e.preventDefault();
-        console.log("mentee sign in")
+        this.setState({menteeLoginLoading: true});
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -156,6 +159,7 @@ export default class LoginForm extends React.Component {
                         style={buttonStyle}
                         onClick={this.handleSubmitAsMentee}
                         color="yellow" 
+                        loading={this.state.menteeLoginLoading}
                     >
                         <Icon name="unlock"/>
                         Login as Mentee
@@ -166,6 +170,7 @@ export default class LoginForm extends React.Component {
                         style={buttonStyle}                        
                         onClick={this.handleSubmitAsMentor}
                         color="orange"
+                        loading={this.state.mentorLoginLoading}
                     >
                         <Icon name="unlock"/>
                         Login as Mentor
