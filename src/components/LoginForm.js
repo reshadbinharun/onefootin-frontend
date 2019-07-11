@@ -52,6 +52,7 @@ export default class LoginForm extends React.Component {
                 this.setState({
                     incorrectCredentials: true,
                     error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    mentorLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
@@ -86,6 +87,7 @@ export default class LoginForm extends React.Component {
                 this.setState({
                     incorrectCredentials: true,
                     error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    menteeLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
