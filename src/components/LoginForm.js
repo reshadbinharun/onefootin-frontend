@@ -2,6 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { BACKEND, PATHS } from "../App";
+import { Link } from 'react-router-dom'
 
 let fieldStyle = {
    width: '100%',
@@ -165,7 +166,7 @@ export default class LoginForm extends React.Component {
                        loading={this.state.menteeLoginLoading}
                    >
                        <Icon name="unlock"/>
-                       <Link to={PATHS.home}>
+                       <Link to={PATHS.home} style={{ color: 'white' }}>
                            Login as Mentee
                        </Link>
                    </Button>
@@ -178,7 +179,7 @@ export default class LoginForm extends React.Component {
                        loading={this.state.mentorLoginLoading}
                    >
                        <Icon name="unlock"/>
-                       <Link to={PATHS.home}>
+                       <Link to={PATHS.home} style={{ color: 'white' }}>
                            Login as Mentor
                        </Link>  
                    </Button>
