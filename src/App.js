@@ -18,7 +18,6 @@ const PATHS = {
   root: "/",
   signupMentor: "/signupMentor",
   signupMentee: "/signupMentee",
-  home: "/home",
 }
 
 export default class App extends Component {
@@ -73,59 +72,58 @@ export default class App extends Component {
   }
 
   renderLogin() {
-    let signUpButtons = 
-    <div>
-      <div>
-        <Grid centered rows={1}>
-          <Grid.Row left>
-            <Button
-            >
-              <Link to={PATHS.signupMentor}>
-                Sign up as Mentor
-              </Link>
-            </Button>
-            <Button
-            >
-              <Link to={PATHS.signupMentee}>
-                Sign up as Mentee
-              </Link>
-            </Button>
-          </Grid.Row>
-        </Grid>
-      </div>
-      <Divider/>
-    </div>
-    return (
-<Grid centered>
-  <Router>
-  <Switch>
-      <Route exact path={PATHS.root} render={(props) => 
-        <div>
-          {signUpButtons}
-          <LoginForm {...props} 
-            toggleTest = {this.toggleTest}
-            login = {this.login}
-            liftPayload = {this.liftPayload}
-          /> 
-        </div>
-      }/>
-      <Route exact path={PATHS.signupMentor} render={() => 
-        <SignUpMentor />}/>
-      <Route exact path={PATHS.signupMentee} render={() => 
-        <SignUpMentee /> }/>
-      <Route exact path={PATHS.home} render={() => 
-        this.state.isMentor ? 
+    let loggedInView =
+      this.state.isMentor ? 
         <NavBarMentor
           payload = {this.state.mentorPayload}
         /> : 
         <NavBarMentee
           payload = {this.state.menteePayload}
         />
-        } />
-    </Switch>
-  </Router>
-  </Grid>
-  )}
+    let navigation =
+    <Grid centered>
+      <Router>
+            <div>
+              <div>
+              <Grid centered rows={1}>
+                <Grid.Row left>
+                  <Button
+                  >
+                    <Link to={PATHS.signupMentor}>
+                      Sign up as Mentor
+                    </Link>
+                  </Button>
+                  <Button
+                  >
+                    <Link to={PATHS.signupMentee}>
+                      Sign up as Mentee
+                    </Link>
+                  </Button>
+                </Grid.Row>
+              </Grid>
+              </div>
+              <Divider/>
+              
+              <Switch>
+                <Route exact path={PATHS.root} render={(props) => 
+                  <LoginForm {...props} 
+                    toggleTest = {this.toggleTest}
+                    login = {this.login}
+                    liftPayload = {this.liftPayload}
+                  /> 
+                }/>
+                <Route exact path={PATHS.signupMentor} render={() => 
+                  <SignUpMentor />}/>
+                <Route exact path={PATHS.signupMentee} render={() => 
+                  <SignUpMentee /> }/>
+              </Switch>
+              
+            </div>
+          </Router>
+    </Grid>
+    
+    return this.state.loggedIn ? loggedInView : navigation;
+  }
 
   render() {
     return (
