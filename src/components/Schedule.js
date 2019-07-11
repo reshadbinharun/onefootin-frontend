@@ -72,7 +72,7 @@ export default class Schedule extends React.Component {
                     topic={request.topic}
                     mentor={request.mentor.name}
                     requestId={request.id}
-                    getRequestForVideo={this.getRequestForVideo}
+                    getRequestForVideoMentee={this.getRequestForVideoMentee}
                 />
             )
         })
