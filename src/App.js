@@ -4,7 +4,8 @@ import Header from './components/Header';
 import NavBarMentor from './components/MentorView/NavBarMentor';
 import NavBarMentee from "./components/NavBarMentee";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
-import Test from './components/connectTest';
+// TODO: clean up and remove test mode
+// import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
@@ -28,30 +29,12 @@ export default class App extends Component {
       menteePayload: {},
       loggedIn: false,
       testMode: false,
-      mentorSignUpLoading: false,
-      menteeSignUpLoading: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
-    this.handleMenteeSignUpClick = this.handleMenteeSignUpClick.bind(this);
-    this.handleMentorSignUpClick = this.handleMentorSignUpClick.bind(this);
-  }
-
-  handleMenteeSignUpClick(e) {
-    e.preventDefault();
-    this.setState({
-      menteeSignUpLoading: true,
-    })
-  }
-
-  handleMentorSignUpClick(e) {
-    e.preventDefault();
-    this.setState({
-      mentorSignUpLoading: true,
-    })
   }
 
   toggleTest(e) {
@@ -105,16 +88,12 @@ export default class App extends Component {
               <Grid centered rows={1}>
                 <Grid.Row left>
                   <Button
-                    loading={this.state.mentorSignUpLoading}
-                    onClick={this.handleMentorSignUpClick}
                   >
                     <Link to={PATHS.signupMentor}>
                       Sign up as Mentor
                     </Link>
                   </Button>
                   <Button
-                    loading={this.state.menteeSignUpLoading}
-                    onClick={this.handleMenteeSignUpClick}
                   >
                     <Link to={PATHS.signupMentee}>
                       Sign up as Mentee
@@ -154,7 +133,7 @@ export default class App extends Component {
           logout={this.logout}
           />
         <Container>{this.renderLogin()}</Container>
-        {this.state.testMode? <Test/> : null}
+        {/* {this.state.testMode? <Test/> : null} */}
       </div>
     )
   }
