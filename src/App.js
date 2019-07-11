@@ -14,7 +14,7 @@ import SignUpMentee from './components/SignUp/SignUpMentee';
 // export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
-const PATHS = {
+export const PATHS = {
  root: "/",
  signupMentor: "/signupMentor",
  signupMentee: "/signupMentee",
