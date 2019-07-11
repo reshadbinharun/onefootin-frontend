@@ -63,10 +63,10 @@ export default class SignUpMentee extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({
-            submitting: true,
-        })
         let readyForSubmit = this.state.name && this.state.email && this.state.password && this.state.school && this.state.location && this.state.aboutYourself
+        this.setState({
+            submitting: readyForSubmit,
+        })
         if (readyForSubmit) {
             let timeZone = `GMT${getTimezoneOffset()}`;
             let payload = {

@@ -28,12 +28,30 @@ export default class App extends Component {
       menteePayload: {},
       loggedIn: false,
       testMode: false,
+      mentorSignUpLoading: false,
+      menteeSignUpLoading: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
+    this.handleMenteeSignUpClick = this.handleMenteeSignUpClick.bind(this);
+    this.handleMentorSignUpClick = this.handleMentorSignUpClick.bind(this);
+  }
+
+  handleMenteeSignUpClick(e) {
+    e.preventDefault();
+    this.setState({
+      menteeSignUpLoading: true,
+    })
+  }
+
+  handleMentorSignUpClick(e) {
+    e.preventDefault();
+    this.setState({
+      mentorSignUpLoading: true,
+    })
   }
 
   toggleTest(e) {
@@ -86,12 +104,18 @@ export default class App extends Component {
               <div>
               <Grid centered rows={1}>
                 <Grid.Row left>
-                  <Button>
+                  <Button
+                    loading={this.state.mentorSignUpLoading}
+                    onClick={this.handleMentorSignUpClick}
+                  >
                     <Link to={PATHS.signupMentor}>
                       Sign up as Mentor
                     </Link>
                   </Button>
-                  <Button>
+                  <Button
+                    loading={this.state.menteeSignUpLoading}
+                    onClick={this.handleMenteeSignUpClick}
+                  >
                     <Link to={PATHS.signupMentee}>
                       Sign up as Mentee
                     </Link>
