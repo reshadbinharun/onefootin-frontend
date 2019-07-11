@@ -5,7 +5,7 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
-import VideoComponent from "./Video/VideoComponent";
+// import VideoComponent from "./Video/VideoComponent";
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
