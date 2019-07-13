@@ -179,12 +179,6 @@ export default class LoginForm extends React.Component {
                     </Button>
                 </Grid.Column>
             </Grid.Row>
-
-            <Grid.Row centered>
-                <Button onClick={this.props.toggleTest}>
-                Toggle Test Mode
-                </Button>
-            </Grid.Row>
             </Grid>
             
         </div>)
