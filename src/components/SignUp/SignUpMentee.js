@@ -21,6 +21,7 @@ export default class SignUpMentee extends React.Component {
             name: '',
             email: '',
             password: '',
+            confirmPassword: '',
             school: '',
             location: '',
             aboutYourself: '',
@@ -63,7 +64,8 @@ export default class SignUpMentee extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let readyForSubmit = this.state.name && this.state.email && this.state.password && this.state.school && this.state.location && this.state.aboutYourself
+        let readyForSubmit = (this.state.name && this.state.email && this.state.password && this.state.school && 
+        this.state.location && this.state.aboutYourself && this.state.confirmPassword) && (this.state.confirmPassword === this.state.password);
         this.setState({
             submitting: readyForSubmit,
         })
@@ -93,7 +95,7 @@ export default class SignUpMentee extends React.Component {
             });
         } else {
             //TODO: Replace with React-alert
-            alert("Please fill in all fields");
+            alert("Please fill in all fields. Confirm your passwords match.");
         }
         
     }
@@ -127,8 +129,24 @@ export default class SignUpMentee extends React.Component {
                                 style={fieldStyle}
                             >
                                 <label>Password</label>
-                                <input placeholder='***' name="password" onChange={this.handleChange} />
+                                <input placeholder='***' name="password" type="password" onChange={this.handleChange} />
                             </Form.Field>
+                            <Form.Field
+                                type="password"
+                                required="true"
+                                style={fieldStyle}
+                            >
+                                <label>Confirm Password</label>
+                                <input placeholder='***' name="confirmPassword" type="password" onChange={this.handleChange} />
+                            </Form.Field>
+                            {this.state.password !== this.state.confirmPassword ? 
+                            <Message
+                                attached
+                                centered
+                                error
+                                content="Your passwords do not match!"
+                            /> 
+                            : null}
                             <Form.Field
                                 type="text"
                                 required="true"

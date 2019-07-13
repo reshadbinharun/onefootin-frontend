@@ -151,7 +151,7 @@ export default class LoginForm extends React.Component {
                     style={fieldStyle}
                 >
                     <label>Password</label>
-                    <input placeholder='***' name="password" onChange={this.handleChange} />
+                    <input placeholder='***' name="password" type="password" onChange={this.handleChange} />
                 </Form.Field>
                 </Form>
             </Grid.Row>
