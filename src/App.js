@@ -4,21 +4,19 @@ import Header from './components/Header';
 import NavBarMentor from './components/MentorView/NavBarMentor';
 import NavBarMentee from "./components/NavBarMentee";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
-// TODO: clean up and remove test mode
-// import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
-// export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
 export const PATHS = {
  root: "/",
  signupMentor: "/signupMentor",
  signupMentee: "/signupMentee",
- home: "/home",
+ mentor: "/mentor",
+ mentee: "/mentee"
 }
 
 export default class App extends Component {
@@ -29,7 +27,6 @@ export default class App extends Component {
      mentorPayload: {},
      menteePayload: {},
      loggedIn: false,
-     testMode: false,
    };
    this.renderLogin = this.renderLogin.bind(this);
    this.logout = this.logout.bind(this);
@@ -100,28 +97,34 @@ export default class App extends Component {
  <Router>
  <Switch>
      <Route exact path={PATHS.root} render={(props) =>
-       <div>
-         {signUpButtons}
-         <LoginForm {...props}
-           toggleTest = {this.toggleTest}
-           login = {this.login}
-           liftPayload = {this.liftPayload}
-         />
-       </div>
+       this.state.loggedIn ? 
+        this.state.isMentor ? <Redirect to={PATHS.mentor}/> : <Redirect to={PATHS.mentee}/>
+       :
+        <div>
+          {signUpButtons}
+          <LoginForm {...props}
+            toggleTest = {this.toggleTest}
+            login = {this.login}
+            liftPayload = {this.liftPayload}
+          />
+        </div>
      }/>
      <Route exact path={PATHS.signupMentor} render={() =>
        <SignUpMentor />}/>
      <Route exact path={PATHS.signupMentee} render={() =>
-       <SignUpMentee /> }/>
-     <Route exact path={PATHS.home} render={() =>
-       this.state.isMentor ?
+       <SignUpMentee />}/>
+     <Route exact path={PATHS.mentor} render={() =>
        <NavBarMentor
          payload = {this.state.mentorPayload}
-       /> :
+       />
+       } 
+      />
+    <Route exact path={PATHS.mentee} render={() =>
        <NavBarMentee
          payload = {this.state.menteePayload}
        />
-       } />
+       } 
+      />
    </Switch>
  </Router>
  </Grid>
