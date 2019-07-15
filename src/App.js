@@ -97,7 +97,7 @@ export default class App extends Component {
  <Router>
  <Switch>
      <Route exact path={PATHS.root} render={(props) =>
-       this.state.loggedIn ? 
+       this.state.loggedIn ?
         this.state.isMentor ? <Redirect to={PATHS.mentor}/> : <Redirect to={PATHS.mentee}/>
        :
         <div>
@@ -117,13 +117,13 @@ export default class App extends Component {
        <NavBarMentor
          payload = {this.state.mentorPayload}
        />
-       } 
+       }
       />
     <Route exact path={PATHS.mentee} render={() =>
        <NavBarMentee
          payload = {this.state.menteePayload}
        />
-       } 
+       }
       />
    </Switch>
  </Router>
