@@ -31,7 +31,6 @@ export default class App extends Component {
    this.renderLogin = this.renderLogin.bind(this);
    this.logout = this.logout.bind(this);
    this.login = this.login.bind(this);
-   this.toggleTest = this.toggleTest.bind(this);
    this.liftPayload = this.liftPayload.bind(this);
  }
 
