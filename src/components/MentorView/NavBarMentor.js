@@ -17,9 +17,9 @@ export default class NavBarMentor extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: MY_PROFILE,
-            data: {},
-            requests: null,
+            activeItem: JSON.parse(localStorage.getItem('NavBarMentor_activeItem')) || MY_PROFILE,
+            data: JSON.parse(localStorage.getItem('NavBarMentor_data')) || {},
+            requests: JSON.parse(localStorage.getItem('NavBarMentor_requests')) || null,
         }
         this.getRequests = this.getRequests.bind(this);
         this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
@@ -53,7 +53,9 @@ export default class NavBarMentor extends Component {
                 resolvedRes = await resolvedRes.json()
                 this.setState({
                     requests: resolvedRes
-                })
+                }, () => {
+                    localStorage.setItem('NavBarMentor_requests', JSON.stringify(this.state.requests));
+                  })
             }
         });
 
@@ -62,12 +64,16 @@ export default class NavBarMentor extends Component {
     componentDidMount() {
         this.setState({
             data: this.props.payload.mentor
+        }, () => {
+            localStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
         }, async () => {
             await this.getRequests(this.state.data.id)
         })
 
     }
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name }, () => {
+        localStorage.setItem('NavBarMentor_activeItem', JSON.stringify(this.state.activeItem));
+    })
 
     renderNavSelection() {
         switch(this.state.activeItem) {

@@ -23,10 +23,10 @@ export default class App extends Component {
  constructor(){
    super();
    this.state = {
-     isMentor: false,
-     mentorPayload: {},
-     menteePayload: {},
-     loggedIn: false,
+     isMentor: JSON.parse(localStorage.getItem('App_isMentor')) || false,
+     mentorPayload: JSON.parse(localStorage.getItem('App_mentorPayload')) || {},
+     menteePayload: JSON.parse(localStorage.getItem('App_menteePayload')) || {},
+     loggedIn: JSON.parse(localStorage.getItem('App_loggedIn')) || false,
    };
    this.renderLogin = this.renderLogin.bind(this);
    this.logout = this.logout.bind(this);
@@ -35,24 +35,21 @@ export default class App extends Component {
    this.liftPayload = this.liftPayload.bind(this);
  }
 
- toggleTest(e) {
-   e.preventDefault();
-   this.setState({
-     testMode: !this.state.testMode
-   })
- }
-
  logout(e){
    e.preventDefault();
    this.setState({
      loggedIn: false
-   })
+   }, () => {
+    localStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
+  })
  }
 
  login(){
    this.setState({
      loggedIn: true
-   })
+   }, () => {
+    localStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
+  })
  }
 
  liftPayload(payload, isMentor) {
@@ -60,12 +57,18 @@ export default class App extends Component {
      this.setState({
        isMentor: true,
        mentorPayload: payload
-     })
+     }, () => {
+      localStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
+      localStorage.setItem('App_mentorPayload', JSON.stringify(this.state.mentorPayload));
+    });
    } else {
      this.setState({
        isMentor: false,
        menteePayload: payload
-     })
+     }, () => {
+      localStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
+      localStorage.setItem('App_menteePayload', JSON.stringify(this.state.menteePayload));
+    })
    }
  }
 
