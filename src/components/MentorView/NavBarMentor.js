@@ -21,6 +21,7 @@ export default class NavBarMentor extends Component {
             data: JSON.parse(localStorage.getItem('NavBarMentor_data')) || {},
             requests: JSON.parse(localStorage.getItem('NavBarMentor_requests')) || null,
         }
+        console.log(localStorage)
         this.getRequests = this.getRequests.bind(this);
         this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
         this.getBacklog = this.getBacklog.bind(this);
