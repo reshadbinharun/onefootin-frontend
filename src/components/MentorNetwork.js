@@ -9,9 +9,9 @@ export default class MentorNetwork extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            mentors: JSON.parse(localStorage.getItem('MentorNetwork_mentors')) || [],
-            searchMode: JSON.parse(localStorage.getItem('MentorNetwork_searchMode')) || false,
-            searchTerms: JSON.parse(localStorage.getItem('MentorNetwork_searchTerms')) || '',
+            mentors: JSON.parse(sessionStorage.getItem('MentorNetwork_mentors')) || [],
+            searchMode: JSON.parse(sessionStorage.getItem('MentorNetwork_searchMode')) || false,
+            searchTerms: JSON.parse(sessionStorage.getItem('MentorNetwork_searchTerms')) || '',
         }
         this.updateSearchTerms = this.updateSearchTerms.bind(this);
     }
@@ -30,7 +30,7 @@ export default class MentorNetwork extends React.Component {
             this.setState({
                 mentors: resolvedRes && resolvedRes.mentors
             }, () => {
-                localStorage.setItem('MentorNetwork_mentors', JSON.stringify(this.state.mentors));
+                sessionStorage.setItem('MentorNetwork_mentors', JSON.stringify(this.state.mentors));
             });
         });
     }
@@ -41,8 +41,8 @@ export default class MentorNetwork extends React.Component {
             searchTerms: searchTerms,
             searchMode: true
         }, () => {
-            localStorage.setItem('MentorNetwork_searchTerms', JSON.stringify(this.state.searchTerms));
-            localStorage.setItem('MentorNetwork_searchMode', JSON.stringify(this.state.searchMode));
+            sessionStorage.setItem('MentorNetwork_searchTerms', JSON.stringify(this.state.searchTerms));
+            sessionStorage.setItem('MentorNetwork_searchMode', JSON.stringify(this.state.searchMode));
         })
     }
 

@@ -23,11 +23,12 @@ export default class App extends Component {
  constructor(){
    super();
    this.state = {
-     isMentor: JSON.parse(localStorage.getItem('App_isMentor')) || false,
-     mentorPayload: JSON.parse(localStorage.getItem('App_mentorPayload')) || {},
-     menteePayload: JSON.parse(localStorage.getItem('App_menteePayload')) || {},
-     loggedIn: JSON.parse(localStorage.getItem('App_loggedIn')) || false,
+     isMentor: JSON.parse(sessionStorage.getItem('App_isMentor')) || false,
+     mentorPayload: JSON.parse(sessionStorage.getItem('App_mentorPayload')) || {},
+     menteePayload: JSON.parse(sessionStorage.getItem('App_menteePayload')) || {},
+     loggedIn: JSON.parse(sessionStorage.getItem('App_loggedIn')) || false,
    };
+   console.log(sessionStorage)
    this.renderLogin = this.renderLogin.bind(this);
    this.logout = this.logout.bind(this);
    this.login = this.login.bind(this);
@@ -39,7 +40,7 @@ export default class App extends Component {
    this.setState({
      loggedIn: false
    }, () => {
-    localStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
+    sessionStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
   })
  }
 
@@ -47,7 +48,7 @@ export default class App extends Component {
    this.setState({
      loggedIn: true
    }, () => {
-    localStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
+    sessionStorage.setItem('App_loggedIn', JSON.stringify(this.state.loggedIn))
   })
  }
 
@@ -57,16 +58,16 @@ export default class App extends Component {
        isMentor: true,
        mentorPayload: payload
      }, () => {
-      localStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
-      localStorage.setItem('App_mentorPayload', JSON.stringify(this.state.mentorPayload));
+      sessionStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
+      sessionStorage.setItem('App_mentorPayload', JSON.stringify(this.state.mentorPayload));
     });
    } else {
      this.setState({
        isMentor: false,
        menteePayload: payload
      }, () => {
-      localStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
-      localStorage.setItem('App_menteePayload', JSON.stringify(this.state.menteePayload));
+      sessionStorage.setItem('App_isMentor', JSON.stringify(this.state.isMentor));
+      sessionStorage.setItem('App_menteePayload', JSON.stringify(this.state.menteePayload));
     })
    }
  }

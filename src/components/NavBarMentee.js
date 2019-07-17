@@ -19,11 +19,11 @@ export default class NavBarMentee extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: JSON.parse(localStorage.getItem('NavBarMentee_activeItem')) || MY_PROFILE,
-            data: JSON.parse(localStorage.getItem('NavBarMentee_data')) || {},
-            schedule: JSON.parse(localStorage.getItem('NavBarMentee_schedule')) || null,
-            mentorPicked: JSON.parse(localStorage.getItem('NavBarMentee_mentorPicked')) || false,
-            mentorId: JSON.parse(localStorage.getItem('NavBarMentee_mentorId')) || ''
+            activeItem: JSON.parse(sessionStorage.getItem('NavBarMentee_activeItem')) || MY_PROFILE,
+            data: JSON.parse(sessionStorage.getItem('NavBarMentee_data')) || {},
+            schedule: JSON.parse(sessionStorage.getItem('NavBarMentee_schedule')) || null,
+            mentorPicked: JSON.parse(sessionStorage.getItem('NavBarMentee_mentorPicked')) || false,
+            mentorId: JSON.parse(sessionStorage.getItem('NavBarMentee_mentorId')) || ''
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
@@ -33,12 +33,12 @@ export default class NavBarMentee extends Component {
         this.setState({
             data: this.props.payload.mentee
         }, () => {
-            localStorage.setItem('NavBarMentee_data', JSON.stringify(this.state.data));
+            sessionStorage.setItem('NavBarMentee_data', JSON.stringify(this.state.data));
           })
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name }, () => {
-        localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+        sessionStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
       })
 
     handleNewSchedule(e) {
@@ -48,9 +48,9 @@ export default class NavBarMentee extends Component {
             mentorPicked: false,
             mentorId: ''
         }, () => {
-            localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
-            localStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
-            localStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
+            sessionStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+            sessionStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
+            sessionStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
           })
     }
 
@@ -60,9 +60,9 @@ export default class NavBarMentee extends Component {
             mentorPicked: true,
             mentorId: value
         }, () => {
-            localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
-            localStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
-            localStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
+            sessionStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+            sessionStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
+            sessionStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
           })
     }
 

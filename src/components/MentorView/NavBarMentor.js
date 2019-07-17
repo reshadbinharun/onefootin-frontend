@@ -17,11 +17,11 @@ export default class NavBarMentor extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: JSON.parse(localStorage.getItem('NavBarMentor_activeItem')) || MY_PROFILE,
-            data: JSON.parse(localStorage.getItem('NavBarMentor_data')) || {},
-            requests: JSON.parse(localStorage.getItem('NavBarMentor_requests')) || null,
+            activeItem: JSON.parse(sessionStorage.getItem('NavBarMentor_activeItem')) || MY_PROFILE,
+            data: JSON.parse(sessionStorage.getItem('NavBarMentor_data')) || {},
+            requests: JSON.parse(sessionStorage.getItem('NavBarMentor_requests')) || null,
         }
-        console.log(localStorage)
+        console.log(sessionStorage)
         this.getRequests = this.getRequests.bind(this);
         this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
         this.getBacklog = this.getBacklog.bind(this);
@@ -55,7 +55,7 @@ export default class NavBarMentor extends Component {
                 this.setState({
                     requests: resolvedRes
                 }, () => {
-                    localStorage.setItem('NavBarMentor_requests', JSON.stringify(this.state.requests));
+                    sessionStorage.setItem('NavBarMentor_requests', JSON.stringify(this.state.requests));
                   })
             }
         });
@@ -66,14 +66,14 @@ export default class NavBarMentor extends Component {
         this.setState({
             data: this.props.payload.mentor
         }, () => {
-            localStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
+            sessionStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
         }, async () => {
             await this.getRequests(this.state.data.id)
         })
 
     }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name }, () => {
-        localStorage.setItem('NavBarMentor_activeItem', JSON.stringify(this.state.activeItem));
+        sessionStorage.setItem('NavBarMentor_activeItem', JSON.stringify(this.state.activeItem));
     })
 
     renderNavSelection() {

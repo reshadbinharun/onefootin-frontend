@@ -6,7 +6,7 @@ export default class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: JSON.parse(localStorage.getItem('Header_loggedIn')) || false,
+            loggedIn: JSON.parse(sessionStorage.getItem('Header_loggedIn')) || false,
         }
     }
     renderLoginStateInfo() {

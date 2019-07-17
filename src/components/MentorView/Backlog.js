@@ -10,12 +10,12 @@ export default class Backlog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            showVideo: JSON.parse(localStorage.getItem('Backlog_showVideo')) || false,
-            requestIdForVideo: JSON.parse(localStorage.getItem('Backlog_requestIdForVideo')) || null,
-            menteeName: JSON.parse(localStorage.getItem('Backlog_menteeName')) || '',
+            showVideo: JSON.parse(sessionStorage.getItem('Backlog_showVideo')) || false,
+            requestIdForVideo: JSON.parse(sessionStorage.getItem('Backlog_requestIdForVideo')) || null,
+            menteeName: JSON.parse(sessionStorage.getItem('Backlog_menteeName')) || '',
         }
         console.log("state is", this.state)
-        console.log("localStorage is", localStorage)
+        console.log("sessionStorage is", sessionStorage)
         this.renderRequestCards = this.renderRequestCards.bind(this);
         this.getRequestForVideoMentor = this.getRequestForVideoMentor.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
@@ -25,7 +25,7 @@ export default class Backlog extends React.Component {
         this.setState({
             showVideo: false,
         }, () => {
-            localStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
+            sessionStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
         })
     }
 
@@ -48,9 +48,9 @@ export default class Backlog extends React.Component {
                 requestIdForVideo: requestId,
                 menteeName: menteeName,
             }, () => {
-                localStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
-                localStorage.setItem('Backlog_requestIdForVideo', JSON.stringify(this.state.requestIdForVideo));
-                localStorage.setItem('Backlog_menteeName', JSON.stringify(this.state.menteeName));
+                sessionStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
+                sessionStorage.setItem('Backlog_requestIdForVideo', JSON.stringify(this.state.requestIdForVideo));
+                sessionStorage.setItem('Backlog_menteeName', JSON.stringify(this.state.menteeName));
             })
         }).catch(err => {
             throw(err)
