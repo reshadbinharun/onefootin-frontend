@@ -52,12 +52,10 @@ export default class NavBarMentor extends Component {
                 console.log("Request getRequests failed");
             } else {
                 resolvedRes = await resolvedRes.json()
-                console.log("setting requests in NavBarMentor")
                 this.setState({
                     requests: resolvedRes
                 }, () => {
                     sessionStorage.setItem('NavBarMentor_requests', JSON.stringify(this.state.requests));
-                    console.log("requests set in NavBarMentor")
                   })
             }
         });
@@ -65,15 +63,13 @@ export default class NavBarMentor extends Component {
     }
 
     componentWillMount() {
-        this.setState({
-            data: this.props.payload.mentor
-        }, () => {
-            sessionStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
-        }, async () => {
-            console.log("making getRequests call in componentWillMount");
-            await this.getRequests(this.state.data.id)
+        this.getRequests(this.state.data.id).then(() => {
+            this.setState({
+                data: this.props.payload.mentor
+            }, () => {
+                sessionStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
+            })
         })
-
     }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name }, () => {
         sessionStorage.setItem('NavBarMentor_activeItem', JSON.stringify(this.state.activeItem));
