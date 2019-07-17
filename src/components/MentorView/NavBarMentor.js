@@ -31,6 +31,7 @@ export default class NavBarMentor extends Component {
     }
 
     getBacklog() {
+        console.log("requests in backlog is", this.state.requests)
         return this.state.requests && this.state.requests.filter(request => !request.confirmed);
     }
 
