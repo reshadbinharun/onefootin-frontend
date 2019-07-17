@@ -52,6 +52,7 @@ export default class NavBarMentor extends Component {
                 console.log("Request getRequests failed");
             } else {
                 resolvedRes = await resolvedRes.json()
+                console.log("setting requests in NavBarMentor")
                 this.setState({
                     requests: resolvedRes
                 }, () => {
@@ -69,6 +70,7 @@ export default class NavBarMentor extends Component {
         }, () => {
             sessionStorage.setItem('NavBarMentor_data', JSON.stringify(this.state.data));            
         }, async () => {
+            console.log("making getRequests call in componentWillMount");
             await this.getRequests(this.state.data.id)
         })
 
