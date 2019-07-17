@@ -14,6 +14,8 @@ export default class Backlog extends React.Component {
             requestIdForVideo: JSON.parse(localStorage.getItem('Backlog_requestIdForVideo')) || null,
             menteeName: JSON.parse(localStorage.getItem('Backlog_menteeName')) || '',
         }
+        console.log("state is", this.state)
+        console.log("localStorage is", localStorage)
         this.renderRequestCards = this.renderRequestCards.bind(this);
         this.getRequestForVideoMentor = this.getRequestForVideoMentor.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
