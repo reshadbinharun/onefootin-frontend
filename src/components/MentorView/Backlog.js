@@ -16,6 +16,7 @@ export default class Backlog extends React.Component {
         }
         console.log("state is", this.state)
         console.log("sessionStorage is", sessionStorage)
+        console.log(props);
         this.renderRequestCards = this.renderRequestCards.bind(this);
         this.getRequestForVideoMentor = this.getRequestForVideoMentor.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
