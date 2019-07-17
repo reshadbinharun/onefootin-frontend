@@ -22,6 +22,7 @@ export default class NavBarMentor extends Component {
             requests: JSON.parse(sessionStorage.getItem('NavBarMentor_requests')) || null,
         }
         console.log(sessionStorage)
+        console.log("state is", this.state)
         this.getRequests = this.getRequests.bind(this);
         this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
         this.getBacklog = this.getBacklog.bind(this);
@@ -63,6 +64,7 @@ export default class NavBarMentor extends Component {
     }
 
     componentDidMount() {
+        console.log("in navbar mentor props is", this.props.payload.mentor);
         this.setState({
             data: this.props.payload.mentor
         }, () => {
