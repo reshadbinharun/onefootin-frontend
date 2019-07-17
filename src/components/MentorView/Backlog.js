@@ -10,9 +10,9 @@ export default class Backlog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            showVideo: false,
-            requestIdForVideo: null,
-            menteeName: '',
+            showVideo: JSON.parse(localStorage.getItem('Backlog_showVideo')) || false,
+            requestIdForVideo: JSON.parse(localStorage.getItem('Backlog_requestIdForVideo')) || null,
+            menteeName: JSON.parse(localStorage.getItem('Backlog_menteeName')) || '',
         }
         this.renderRequestCards = this.renderRequestCards.bind(this);
         this.getRequestForVideoMentor = this.getRequestForVideoMentor.bind(this);
@@ -22,6 +22,8 @@ export default class Backlog extends React.Component {
     leaveRoom() {
         this.setState({
             showVideo: false,
+        }, () => {
+            localStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
         })
     }
 
@@ -43,6 +45,10 @@ export default class Backlog extends React.Component {
                 showVideo: true,
                 requestIdForVideo: requestId,
                 menteeName: menteeName,
+            }, () => {
+                localStorage.setItem('Backlog_showVideo', JSON.stringify(this.state.showVideo));
+                localStorage.setItem('Backlog_requestIdForVideo', JSON.stringify(this.state.requestIdForVideo));
+                localStorage.setItem('Backlog_menteeName', JSON.stringify(this.state.menteeName));
             })
         }).catch(err => {
             throw(err)

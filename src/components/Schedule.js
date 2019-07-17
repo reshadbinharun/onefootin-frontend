@@ -10,11 +10,11 @@ export default class Schedule extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            schedules: [],
-            menteeId: null,
-            showVideo: false,
-            requestIdForVideo: null,
-            mentorName: '',
+            schedules: JSON.parse(localStorage.getItem('Schedule_schedules')) || [],
+            menteeId: JSON.parse(localStorage.getItem('Schedule_menteeId')) || null,
+            showVideo: JSON.parse(localStorage.getItem('Schedule_showVideo')) || false,
+            requestIdForVideo: JSON.parse(localStorage.getItem('Schedule_requestIdForVideo')) || null,
+            mentorName: JSON.parse(localStorage.getItem('Schedule_mentorName')) || '',
         }
         this.renderScheduleCards = this.renderScheduleCards.bind(this);
         this.getRequestForVideoMentee = this.getRequestForVideoMentee.bind(this);
@@ -28,6 +28,8 @@ export default class Schedule extends React.Component {
         headers.append('Accept', 'application/json');
         this.setState({
             menteeId: this.props.menteeId
+        },() => {
+            localStorage.setItem('Schedule_menteeId', JSON.stringify(this.state.menteeId));
         }, async () => 
             await fetch(`${BACKEND}/getConfirmedRequestsForMentee`, {
                 method: 'post',
@@ -44,6 +46,8 @@ export default class Schedule extends React.Component {
                     resolvedRes = await res.json()
                     this.setState({
                         schedules: resolvedRes
+                    }, () => {
+                        localStorage.setItem('Schedule_schedules', JSON.stringify(this.state.schedules));
                     })
                 }
             })
@@ -55,12 +59,18 @@ export default class Schedule extends React.Component {
             showVideo: true,
             requestIdForVideo: requestId,
             mentorName: mentorName,
+        }, () => {
+            localStorage.setItem('Schedule_showVideo', JSON.stringify(this.state.showVideo));
+            localStorage.setItem('Schedule_requestIdForVideo', JSON.stringify(this.state.requestIdForVideo));
+            localStorage.setItem('Schedule_mentorName', JSON.stringify(this.state.mentorName));
         })
     }
     
     leaveRoom() {
         this.setState({
             showVideo: false,
+        }, () => {
+            localStorage.setItem('Schedule_showVideo', JSON.stringify(this.state.showVideo));
         })
     }
 

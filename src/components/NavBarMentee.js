@@ -19,11 +19,11 @@ export default class NavBarMentee extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: MY_PROFILE,
-            data: {},
-            schedule: null,
-            mentorPicked: false,
-            mentorId: ''
+            activeItem: JSON.parse(localStorage.getItem('NavBarMentee_activeItem')) || MY_PROFILE,
+            data: JSON.parse(localStorage.getItem('NavBarMentee_data')) || {},
+            schedule: JSON.parse(localStorage.getItem('NavBarMentee_schedule')) || null,
+            mentorPicked: JSON.parse(localStorage.getItem('NavBarMentee_mentorPicked')) || false,
+            mentorId: JSON.parse(localStorage.getItem('NavBarMentee_mentorId')) || ''
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
@@ -32,10 +32,14 @@ export default class NavBarMentee extends Component {
     componentDidMount() {
         this.setState({
             data: this.props.payload.mentee
-        })
+        }, () => {
+            localStorage.setItem('NavBarMentee_data', JSON.stringify(this.state.data));
+          })
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name }, () => {
+        localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+      })
 
     handleNewSchedule(e) {
         e.preventDefault();
@@ -43,7 +47,11 @@ export default class NavBarMentee extends Component {
             activeItem: NEW_CALL,
             mentorPicked: false,
             mentorId: ''
-        })
+        }, () => {
+            localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+            localStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
+            localStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
+          })
     }
 
     handleNewScheduleWithMentor(value) {
@@ -51,7 +59,11 @@ export default class NavBarMentee extends Component {
             activeItem: NEW_CALL,
             mentorPicked: true,
             mentorId: value
-        })
+        }, () => {
+            localStorage.setItem('NavBarMentee_activeItem', JSON.stringify(this.state.activeItem));
+            localStorage.setItem('NavBarMentee_mentorPicked', JSON.stringify(this.state.mentorPicked));
+            localStorage.setItem('NavBarMentee_mentorId', JSON.stringify(this.state.mentorId));
+          })
     }
 
     renderNavSelection() {
