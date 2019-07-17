@@ -31,8 +31,7 @@ export default class NavBarMentor extends Component {
     }
 
     getBacklog() {
-        console.log("session Storage in get backlog", sessionStorage)
-        return this.state.requests && this.state.requests.filter(request => !request.confirmed) || JSON.parse(sessionStorage.getItem("NavBarMentor_requests")).filter(request => !request.confirmed)
+        return this.state.requests && this.state.requests.filter(request => !request.confirmed);
     }
 
     async getRequests(mentorId) {
@@ -63,7 +62,7 @@ export default class NavBarMentor extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.setState({
             data: this.props.payload.mentor
         }, () => {
