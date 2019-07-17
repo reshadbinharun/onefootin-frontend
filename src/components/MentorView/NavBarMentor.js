@@ -56,6 +56,7 @@ export default class NavBarMentor extends Component {
                     requests: resolvedRes
                 }, () => {
                     sessionStorage.setItem('NavBarMentor_requests', JSON.stringify(this.state.requests));
+                    console.log("requests set in NavBarMentor")
                   })
             }
         });
