@@ -132,6 +132,7 @@ joinRoom() {
 
     console.log("Joining room '" + this.state.roomName + "'...");
     let connectOptions = {
+        audio: true,
         name: this.state.roomName,
         video: {width: VIDEO_WIDTH}
     };
