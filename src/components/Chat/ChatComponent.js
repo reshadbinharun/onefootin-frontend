@@ -139,7 +139,7 @@ export default class ChatComponent extends Component {
     return (
         <div>
           <h3>Messages</h3>
-          <p>Logged in as {this.props.me}</p>
+          <p>Logged in as {this.props.myName}</p>
           <ul className="messages">
             {messages}
           </ul>
