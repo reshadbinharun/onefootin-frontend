@@ -54,9 +54,10 @@ export default class ChatComponent extends Component {
         }).then(results => {
             const { identity, token } = results.data;
             console.log("participant identity for chat is", identity)
-            console.log("state after getting chat token is", this.state)
             this.setState({ identity, token },
                 this.initChat);
+        }, () => {
+            console.log("state after getting chat token is", this.state)
         });
       })
   };
