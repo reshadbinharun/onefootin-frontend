@@ -9,11 +9,7 @@ export default class ChatComponent extends Component {
   constructor(props) {
     // TODO: props --> requestId, email as identity to get token with, self, other, showChat
     super(props);
-    // const name = localStorage.getItem('name') || '';
-    // const loggedIn = name !== '';
     this.state = {
-    //   name,
-    //   loggedIn,
         identity: '',
         token: '',
         chatReady: false,
@@ -21,13 +17,9 @@ export default class ChatComponent extends Component {
         newMessage: '',
         roomName: '',
     };
-    // this.channelName = 'general';
   }
 
   componentWillMount = () => {
-    // if (this.state.loggedIn) {
-    //   this.getToken();
-    // }
     this.getToken();
   };
 
@@ -35,28 +27,18 @@ export default class ChatComponent extends Component {
     this.setState({ name: event.target.value });
   };
 
-//   logIn = event => {
-//     event.preventDefault();
-//     if (this.state.name !== '') {
-//       localStorage.setItem('name', this.state.name);
-//       this.setState({ loggedIn: true }, this.getToken);
-//     }
-//   };
-
-//   logOut = event => {
-//     event.preventDefault();
-//     this.setState({
-//       name: '',
-//       loggedIn: false,
-//       token: '',
-//       chatReady: false,
-//       messages: [],
-//       newMessage: ''
-//     });
-//     localStorage.removeItem('name');
-//     this.chatClient.shutdown();
-//     this.channel = null;
-//   };
+  closeChat = event => {
+    event.preventDefault();
+    this.setState({
+      token: '',
+      chatReady: false,
+      messages: [],
+      newMessage: ''
+    });
+    this.chatClient.shutdown();
+    this.channel = null;
+    this.props.showChat(event);
+  };
 
   getToken = () => {
     axios.post(`${BACKEND}/getRoomName`, {
@@ -89,6 +71,7 @@ export default class ChatComponent extends Component {
       this.chatClient
         .getChannelByUniqueName(this.roomName)
         .then(channel => {
+            console.log("gotten channel")
           if (channel) {
             return (this.channel = channel);
           }

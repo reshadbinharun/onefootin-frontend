@@ -248,7 +248,7 @@ render() {
                 otherName={this.props.otherName}
               /> : 
               <Button onClick={(e) => this.showChat(e)}>
-                Enter Chat.
+                Enter Chat
               </Button>}
             </Grid.Row>
           </Grid>
