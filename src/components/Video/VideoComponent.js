@@ -20,6 +20,7 @@ export default class VideoComponent extends Component {
             localMediaAvailable: false, /* Represents the availability of a LocalAudioTrack(microphone) and a LocalVideoTrack(camera) */
             hasJoinedRoom: false,
             activeRoom: null, // Track the current active room
+            showChat: false,
         };
         this.joinRoom = this.joinRoom.bind(this);
         this.roomJoined = this.roomJoined.bind(this);
@@ -246,7 +247,7 @@ render() {
                 myName={this.props.myName}
                 otherName={this.props.otherName}
               /> : 
-              <Button onClick={() => showChat(e)}>
+              <Button onClick={(e) => showChat(e)}>
                 Enter Chat.
               </Button>}
             </Grid.Row>
