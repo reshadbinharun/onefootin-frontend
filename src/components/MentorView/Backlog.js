@@ -33,6 +33,7 @@ export default class Backlog extends React.Component {
             // Add room only if room does not exist
             const { roomName } = results.data;
             if (roomName === '') {
+                //TODO: remove, only exists as legacy requests did not have video room added with them
                 console.log("roomName not set, adding room...")
                 axios.post(`${BACKEND}/addRoom`, {
                     requestId: requestId,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Chat from 'twilio-chat';
-import BACKEND from '../../App'
+import {BACKEND} from '../../App'
 import axios from 'axios';
 
 // Chat component implementation inspired by --> https://github.com/philnash/react-programmable-chat/blob/master/client/src/ChatApp.js
