@@ -37,7 +37,7 @@ export default class ChatComponent extends Component {
       newMessage: ''
     });
     this.chatClient.shutdown();
-    this.channel = null;
+    this.state.channel = null;
     this.props.showChat(event);
   };
 
@@ -76,21 +76,22 @@ export default class ChatComponent extends Component {
           }
         })
         .catch(err => {
+            console.log("error is ", err)
           if(err.body.code === 50300){
             return this.chatClient.createChannel({
               uniqueName: this.state.roomName
             });
           }
         })
-        .then(channel => {
+        .then(channelNew => {
             console.log("creating new channel...")
-          this.channel = channel;
-          window.channel = channel;
-          return this.channel.join();
+          this.state.channel = channelNew;
+          window.channel = channelNew;
+          return this.state.channel.join();
         })
         .then(() => {
-          this.channel.getMessages().then(this.messagesLoaded);
-          this.channel.on('messageAdded', this.messageAdded);
+          this.state.channel.getMessages().then(this.messagesLoaded);
+          this.state.channel.on('messageAdded', this.messageAdded);
         });
     });
   };
@@ -113,7 +114,7 @@ export default class ChatComponent extends Component {
     event.preventDefault();
     const message = this.state.newMessage;
     this.setState({ newMessage: '' });
-    this.channel.sendMessage(message);
+    this.state.channel.sendMessage(message);
   };
 
   newMessageAdded = li => {
