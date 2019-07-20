@@ -3,6 +3,7 @@ import Video from 'twilio-video';
 import axios from 'axios';
 import { Button, Container, Grid, Message } from "semantic-ui-react"
 import {BACKEND} from "../../App"
+import ChatComponent from '../Chat/ChatComponent';
 
 const VIDEO_WIDTH = 450;
 
@@ -144,8 +145,9 @@ joinRoom() {
   Connect to a room by providing the token and connection options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
   */  
   Video.connect(this.state.token, connectOptions).then(this.roomJoined, error => {
-    alert('Could not connect to Twilio: ' + error.message);
+    alert('Could not connect to Twilio: ' + error.message + 'Please try joining room again.');
   });
+
 }
 leaveRoom() {
     this.state.activeRoom.disconnect();
@@ -168,6 +170,13 @@ detachParticipantTracks(participant) {
   this.detachTracks(tracks);
 }
 
+showChat(e) {
+  e.preventDefault();
+  this.setState({
+    showChat: !this.state.showChat
+  });
+}
+
 render() {
     /* 
      Controls showing of the local track
@@ -184,41 +193,62 @@ render() {
         <Button  onClick={this.leaveRoom} > Leave Room </Button>
         ) : (
         <Button onClick={this.joinRoom} > Join Room </Button>);
+    let videoWindowStyle  = {
+      width: '600px'
+    }
     return (
         <Container centered>
-          <Grid columns={1}>
-              <Grid.Column>
-                <Grid.Row>
-                  <Container>
-                    <div className="flex-container"></div>
-                    <Message
-                      content={this.props.myName}
-                      icon='user circle'
-                    />
-                  </Container>
-                  {showLocalTrack} {/* Show local track if available */} 
-                </Grid.Row>
-                <Grid.Row>
-                <div className="flex-item">
-                  {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
-                  </div>
-                </Grid.Row>
-              </Grid.Column>
-              <Grid.Column>
-                <Grid.Row>
-                  {/* 
-                  The following div element shows all remote media (other participant’s tracks) 
-                  */}
-                  <Container>
-                    <div className="flex-item" ref="remoteMedia" id="remote-media" />
-                    <Message
-                      content={this.props.otherName}
-                      icon='user circle'
-                    />
-                  </Container>
-                  
-                </Grid.Row>
-              </Grid.Column>
+          <Grid rows={2}>
+            <Grid.Row>
+              <Grid columns={2}>
+                  <Grid.Column>
+                    <Grid.Row style={videoWindowStyle}>
+                      <Container>
+                        <div className="flex-container"></div>
+                        <Message
+                          content={this.props.myName}
+                          icon='user circle'
+                        />
+                      </Container>
+                      {showLocalTrack} {/* Show local track if available */} 
+                    </Grid.Row>
+                    <Grid.Row >
+                    <div className="flex-item">
+                      {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
+                      </div>
+                    </Grid.Row>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Grid.Row style={videoWindowStyle}>
+                      {/* 
+                      The following div element shows all remote media (other participant’s tracks) 
+                      */}
+                      <Container>
+                        <div className="flex-item" ref="remoteMedia" id="remote-media" />
+                        <Message
+                          content={this.props.otherName}
+                          icon='user circle'
+                        />
+                      </Container>
+                      
+                    </Grid.Row>
+                  </Grid.Column>
+              </Grid>
+            </Grid.Row>
+            <Grid.Row>
+              {this.state.showChat? 
+              <ChatComponent
+                requestId={this.props.requestId}
+                roomName={this.state.roomName}
+                showChat={this.showChat}
+                email={this.props.email}
+                myName={this.props.myName}
+                otherName={this.props.otherName}
+              /> : 
+              <Button onClick={() => showChat(e)}>
+                Enter Chat.
+              </Button>}
+            </Grid.Row>
           </Grid>
         </Container>
     );
