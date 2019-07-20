@@ -18,6 +18,7 @@ export default class ChatComponent extends Component {
         roomName: '',
         channel: null,
     };
+    this.clientInitiated = this.clientInitiated.bind(this);
   }
 
   componentWillMount = () => {
@@ -53,6 +54,7 @@ export default class ChatComponent extends Component {
         }).then(results => {
             const { identity, token } = results.data;
             console.log("participant identity for chat is", identity)
+            console.log("state after getting chat token is", this.state)
             this.setState({ identity, token },
                 this.initChat);
         });
@@ -61,11 +63,14 @@ export default class ChatComponent extends Component {
 
   initChat = () => {
     this.chatClient = new Chat(this.state.token);
-    this.chatClient.initialize().then(this.clientInitiated.bind(this));
+    // this.chatClient.initialize().then(this.clientInitiated.bind(this));
+    this.chatClient.initialize();
+    this.clientInitiated();
     console.log("chat initialized")
   };
 
   clientInitiated = () => {
+      console.log("client initiated is called")
     this.setState({ chatReady: true }, () => {
       this.chatClient
         .getChannelByUniqueName(this.roomName)
