@@ -50,11 +50,8 @@ export default class ChatComponent extends Component {
         axios.post(`${BACKEND}/getTwilioChatToken`, {
           email: this.props.email,
         }).then(results => {
-            /*
-            Make an API call to get the token and identity(fake name) and  update the corresponding state variables.
-            */
             const { identity, token } = results.data;
-            console.log("participant identity is", identity)
+            console.log("participant identity for chat is", identity)
             this.setState({ identity, token },
                 this.initChat);
         });
@@ -64,6 +61,7 @@ export default class ChatComponent extends Component {
   initChat = () => {
     this.chatClient = new Chat(this.state.token);
     this.chatClient.initialize().then(this.clientInitiated.bind(this));
+    console.log("chat initialized")
   };
 
   clientInitiated = () => {
@@ -71,7 +69,7 @@ export default class ChatComponent extends Component {
       this.chatClient
         .getChannelByUniqueName(this.roomName)
         .then(channel => {
-            console.log("gotten channel")
+            console.log("gotten channel", channel)
           if (channel) {
             return (this.channel = channel);
           }
