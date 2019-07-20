@@ -16,6 +16,7 @@ export default class ChatComponent extends Component {
         messages: [],
         newMessage: '',
         roomName: '',
+        channel: null,
     };
   }
 
@@ -68,20 +69,21 @@ export default class ChatComponent extends Component {
     this.setState({ chatReady: true }, () => {
       this.chatClient
         .getChannelByUniqueName(this.roomName)
-        .then(channel => {
-            console.log("gotten channel", channel)
-          if (channel) {
-            return (this.channel = channel);
+        .then(channelRes => {
+            console.log("gotten channel", channelRes)
+          if (channelRes) {
+            return (this.state.channel = channelRes);
           }
         })
         .catch(err => {
           if(err.body.code === 50300){
             return this.chatClient.createChannel({
-              uniqueName: this.channelName
+              uniqueName: this.state.roomName
             });
           }
         })
         .then(channel => {
+            console.log("creating new channel...")
           this.channel = channel;
           window.channel = channel;
           return this.channel.join();
