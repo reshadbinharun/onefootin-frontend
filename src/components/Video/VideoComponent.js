@@ -261,16 +261,17 @@ render() {
                 <label>Meeting Notes...</label>
                 <input style={{
                   width: "500px",
-                  height: "300px"
+                  height: "300px",
+                  margin: "10px"
                 }} placeholder='My follow-up from this call is...' name="notes" onChange={this.handleChange} />
             </Form.Field>
-            </Form>
             <Button 
               color="yellow" 
               type='submit'>
               <Icon name="tasks"/>
               Send Notes!
-          </Button>
+            </Button>
+            </Form>
           </Grid.Row>  
         </Grid> 
         </Container>
