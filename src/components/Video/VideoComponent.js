@@ -46,6 +46,7 @@ export default class VideoComponent extends Component {
       axios.post(`${BACKEND}/sendNotes`, {
         payload
       }).then(res => {
+        console.log("received res", res);
         if (res.status === 200) {
           alert(`Successfully sent notes to mentee!`)
         } else {
