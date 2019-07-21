@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button, Container, Grid, Message, Form, Icon } from "semantic-ui-react"
+import { Button, Container, Grid, Message, Form, Icon, TextArea } from "semantic-ui-react"
 import {BACKEND} from "../../App"
 
 const VIDEO_WIDTH = 450;
@@ -255,19 +255,25 @@ render() {
           </Grid.Row>
           <Grid.Row>
             <Form onSubmit={this.handleSubmit}>
-            <Form.Field
-                type="text"
-            >
-                <label>Meeting Notes...</label>
-                <input style={{
+            <Form.Field>
+              <TextArea
+                placeholder="Please enter any notes you\'d like to send the mentee by email here..."
+                centered
+                style={{
                   width: "500px",
-                  height: "300px",
+                  height: "200px",
                   margin: "10px"
-                }} placeholder='My follow-up from this call is...' name="notes" onChange={this.handleChange} />
+                }}  name="notes" onChange={this.handleChange}
+              />
+                <label>Meeting Notes...</label>
+                <input  />
             </Form.Field>
             <Button 
               color="yellow" 
-              type='submit'>
+              type='submit'
+              style={{
+                margin: "10px"
+              }}>
               <Icon name="tasks"/>
               Send Notes!
             </Button>
