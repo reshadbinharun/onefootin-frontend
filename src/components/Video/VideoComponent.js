@@ -43,7 +43,7 @@ export default class VideoComponent extends Component {
         notes: this.state.notes,
         requestId: this.props.requestId,
       }
-      axios.post(`${BACKEND}/getRoomName`, {
+      axios.post(`${BACKEND}/sendNotes`, {
         payload
       }).then(res => {
         if (res.status === 200) {
