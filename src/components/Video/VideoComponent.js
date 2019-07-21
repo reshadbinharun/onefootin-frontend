@@ -259,6 +259,7 @@ render() {
                 </Grid.Column>
             </Grid>
           </Grid.Row>
+          {this.props.isMentor ? 
           <Grid.Row>
             <Form onSubmit={this.handleSubmit}>
             <Form.Field>
@@ -282,7 +283,8 @@ render() {
               Send Notes!
             </Button>
             </Form>
-          </Grid.Row>  
+          </Grid.Row> : null
+        }
         </Grid> 
         </Container>
     );

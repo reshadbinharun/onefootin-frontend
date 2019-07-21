@@ -3,7 +3,6 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Profile from '../Profile'
 import { BACKEND } from "../../App"
 import Backlog from "./Backlog";
-// import VideoComponent from "../Video/VideoComponent";
 
 // TODO: Deprecated, remove
 // import ConfirmedCalls from "./ConfirmedCalls"
@@ -96,11 +95,6 @@ export default class NavBarMentor extends Component {
                     mentorEmail={this.state.data.email}
                     mentorName={this.state.data.name}
                 />
-            // case MY_OFFICE:
-            //     return <VideoComponent
-            //         email={this.state.data.email}
-            //         request={this.state.requestForVideo}
-            //         />
             default:
                 return null
         }

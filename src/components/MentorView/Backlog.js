@@ -75,6 +75,7 @@ export default class Backlog extends React.Component {
                     requestId={this.state.requestIdForVideo}
                     leaveRoom={this.leaveRoom}
                     email={this.props.mentorEmail}
+                    isMentor={true}
                 /> : this.renderRequestCards(this.props.calls)
                 }
             </Container>

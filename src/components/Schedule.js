@@ -87,6 +87,7 @@ export default class Schedule extends React.Component {
                 email={this.props.menteeEmail}
                 otherName={this.state.mentorName}
                 myName={this.props.menteeName}
+                isMentor={false}
             /> :
             <Container>
                 <Container>

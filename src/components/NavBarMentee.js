@@ -5,7 +5,6 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
-import VideoComponent from "./Video/VideoComponent";
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
@@ -88,10 +87,6 @@ export default class NavBarMentee extends Component {
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
                     />)
-            // case MY_APPT:
-            //     return <VideoComponent
-            //         email={this.state.data.email}
-            //         />
             case MENTOR_PROFILE:
                 return null
             default:
