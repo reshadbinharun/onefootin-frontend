@@ -19,13 +19,40 @@ export default class VideoComponent extends Component {
             localMediaAvailable: false, /* Represents the availability of a LocalAudioTrack(microphone) and a LocalVideoTrack(camera) */
             hasJoinedRoom: false,
             activeRoom: null, // Track the current active room
+            notes: '',
         };
         this.joinRoom = this.joinRoom.bind(this);
         this.roomJoined = this.roomJoined.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
         this.detachTracks = this.detachTracks.bind(this);
         this.detachParticipantTracks =this.detachParticipantTracks.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleChange(e) {
+      e.preventDefault();
+      let change = {}
+      change[e.target.name] = e.target.value
+      this.setState(change)
+  }
+
+    handleSubmit(e) {
+      e.preventDefault();
+      let payload = {
+        notes: this.state.notes,
+        requestId: this.props.requestId,
+      }
+      axios.post(`${BACKEND}/getRoomName`, {
+        payload
+      }).then(res => {
+        if (res.status === 200) {
+          alert(`Successfully sent notes to mentee!`)
+        } else {
+          alert(`Something went wrong. Please try again.`)
+        }
+      })
+  }
 
 componentDidMount() {
     axios.post(`${BACKEND}/getRoomName`, {
@@ -145,7 +172,7 @@ joinRoom() {
   Connect to a room by providing the token and connection options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
   */  
   Video.connect(this.state.token, connectOptions).then(this.roomJoined, error => {
-    alert('Could not connect to Twilio: ' + error.message);
+    alert('Could not connect to Twilio: ' + error.message + 'Please try joining call again.');
   });
 }
 leaveRoom() {
@@ -187,40 +214,65 @@ render() {
         <Button onClick={this.joinRoom} > Join Room </Button>);
     return (
         <Container centered>
-          <Grid columns={1}>
-              <Grid.Column>
-                <Grid.Row>
-                  <Container>
-                    <div className="flex-container"></div>
-                    <Message
-                      content={this.props.myName}
-                      icon='user circle'
-                    />
-                  </Container>
-                  {showLocalTrack} {/* Show local track if available */} 
-                </Grid.Row>
-                <Grid.Row>
-                <div className="flex-item">
-                  {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
-                  </div>
-                </Grid.Row>
-              </Grid.Column>
-              <Grid.Column>
-                <Grid.Row>
-                  {/* 
-                  The following div element shows all remote media (other participant’s tracks) 
-                  */}
-                  <Container>
-                    <div className="flex-item" ref="remoteMedia" id="remote-media" />
-                    <Message
-                      content={this.props.otherName}
-                      icon='user circle'
-                    />
-                  </Container>
-                  
-                </Grid.Row>
-              </Grid.Column>
-          </Grid>
+        <Grid row={2}>
+          <Grid.Row>
+          <Grid columns={2}>
+                <Grid.Column>
+                  <Grid.Row>
+                    <Container style={{width:"510px"}}>
+                      <div className="flex-container"></div>
+                      <Message
+                        style={{width:"500px"}}
+                        content={this.props.myName}
+                        icon='user circle'
+                      />
+                    </Container>
+                    {showLocalTrack} {/* Show local track if available */} 
+                  </Grid.Row>
+                  <Grid.Row>
+                  <div className="flex-item">
+                    {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
+                    </div>
+                  </Grid.Row>
+                </Grid.Column>
+                <Grid.Column>
+                  <Grid.Row>
+                    {/* 
+                    The following div element shows all remote media (other participant’s tracks) 
+                    */}
+                    <Container style={{width:"510px"}}>
+                      <div className="flex-item" ref="remoteMedia" id="remote-media" />
+                      <Message
+                        style={{width:"500px"}}
+                        content={this.props.otherName}
+                        icon='user circle'
+                      />
+                    </Container>
+                    
+                  </Grid.Row>
+                </Grid.Column>
+            </Grid>
+          </Grid.Row>
+          <Grid.Row>
+            <Form onSubmit={this.handleSubmit}>
+            <Form.Field
+                type="text"
+            >
+                <label>Meeting Notes...</label>
+                <input style={{
+                  width: "500px",
+                  height: "300px"
+                }} placeholder='My follow-up from this call is...' name="notes" onChange={this.handleChange} />
+            </Form.Field>
+            </Form>
+            <Button 
+              color="yellow" 
+              type='submit'>
+              <Icon name="tasks"/>
+              Send Notes!
+          </Button>
+          </Grid.Row>  
+        </Grid> 
         </Container>
     );
   }
