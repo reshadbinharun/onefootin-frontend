@@ -39,12 +39,17 @@ export default class VideoComponent extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
-      let payload = {
-        notes: this.state.notes,
-        requestId: this.props.requestId,
-      }
-      axios.post(`${BACKEND}/sendNotes`, {
-        payload
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+      fetch(`${BACKEND}/sendNotes`, {
+        method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify({
+              notes: this.state.notes,
+              requestId: this.props.requestId,
+            })
       }).then(res => {
         console.log("received res", res);
         if (res.status === 200) {
@@ -266,8 +271,6 @@ render() {
                   margin: "10px"
                 }}  name="notes" onChange={this.handleChange}
               />
-                <label>Meeting Notes...</label>
-                <input  />
             </Form.Field>
             <Button 
               color="yellow" 
