@@ -51,7 +51,6 @@ export default class VideoComponent extends Component {
               requestId: this.props.requestId,
             })
       }).then(res => {
-        console.log("received res", res);
         if (res.status === 200) {
           alert(`Successfully sent notes to mentee!`)
         } else {
@@ -215,7 +214,12 @@ render() {
      show `Leave Room` button.
     */
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ? (
-        <Button  onClick={this.leaveRoom} > Leave Room </Button>
+        <Button
+        style={{
+          margin: "10px"
+        }}
+        onClick={this.leaveRoom} 
+        > Leave Room </Button>
         ) : (
         <Button onClick={this.joinRoom} > Join Room </Button>);
     return (
@@ -264,7 +268,7 @@ render() {
             <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <TextArea
-                placeholder="Please enter any notes you\'d like to send the mentee by email here..."
+                placeholder="Please enter any notes you would like to send the mentee by email here..."
                 centered
                 style={{
                   width: "500px",
