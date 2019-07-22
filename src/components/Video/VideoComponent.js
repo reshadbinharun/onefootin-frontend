@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
 import { Button, Container, Grid, Message, Form, Icon, TextArea } from "semantic-ui-react"
-import {BACKEND} from "../../App"
+import {BACKEND} from "../../App";
+import Timer from "react-compound-timer";
 
 const VIDEO_WIDTH = 450;
 
@@ -240,9 +241,40 @@ render() {
                     {showLocalTrack} {/* Show local track if available */} 
                   </Grid.Row>
                   <Grid.Row>
-                  <div className="flex-item">
+                    <Grid columns={2}>
+                    <Grid.Column>
+                    <div className="flex-item">
                     {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                     </div>
+                    </Grid.Column>
+                    <Grid.Column>
+                    <Timer
+                      initialTime={0}
+                      direction="forward"
+                      checkpoints={[
+                          {
+                              time: 30 * 60 * 1000,
+                              callback: () => alert('You have already used 30 minutes. Call will end in another 15 minutes!'),
+                          },
+                          {
+                              time: 45 * 60 * 1000,
+                              callback: () => {
+                                alert('Call is now terminating in 3 seconds...');
+                                setTimeout(() => { this.leaveRoom() }, 3000);
+                              },
+                          }
+                      ]}
+                      >
+                          {() => (
+                              <React.Fragment>
+                                  <Timer.Minutes /> minutes
+                                  <Timer.Seconds /> seconds
+                                  <Timer.Milliseconds /> milliseconds
+                              </React.Fragment>
+                          )}
+                      </Timer>
+                    </Grid.Column>
+                    </Grid>
                   </Grid.Row>
                 </Grid.Column>
                 <Grid.Column>
