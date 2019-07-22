@@ -268,6 +268,7 @@ render() {
                           {() => (
                               <React.Fragment>
                                 <Label style={{margin: "10px"}} color="orange" tag>
+                                  <Icon name="stopwatch"/>
                                   <Timer.Minutes />:
                                   <Timer.Seconds />
                                 </Label>
