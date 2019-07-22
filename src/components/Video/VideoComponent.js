@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
-import { Button, Container, Grid, Message, Form, Icon, TextArea } from "semantic-ui-react"
+import { Button, Container, Grid, Message, Form, Icon, TextArea, Label } from "semantic-ui-react"
 import {BACKEND} from "../../App";
 import Timer from "react-compound-timer";
 
@@ -267,9 +267,10 @@ render() {
                       >
                           {() => (
                               <React.Fragment>
-                                  <Timer.Minutes /> minutes
-                                  <Timer.Seconds /> seconds
-                                  <Timer.Milliseconds /> milliseconds
+                                <Label style={{margin: "10px"}} color="orange" tag>
+                                  <Timer.Minutes />:
+                                  <Timer.Seconds />
+                                </Label>
                               </React.Fragment>
                           )}
                       </Timer>
