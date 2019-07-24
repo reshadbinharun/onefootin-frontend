@@ -246,7 +246,7 @@ render() {
                   </React.Fragment>
               )}
           </Timer>
-        </Containter>) : '';   
+        </Containter>) : '';
     /*
      Controls showing of ‘Join Room’ or ‘Leave Room’ button.  
      Hide 'Join Room' button if user has already joined a room otherwise 
@@ -284,9 +284,6 @@ render() {
                     <div className="flex-item">
                     {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                     </div>
-                    </Grid.Column>
-                    <Grid.Column>
-                    
                     </Grid.Column>
                     </Grid>
                   </Grid.Row>
