@@ -209,7 +209,7 @@ render() {
      Only show video track after user has joined a room else show nothing 
     */
     let showLocalTrack = this.state.localMediaAvailable ? (
-      <Containter>
+      <Container>
         <div ref="localMedia" />
         <Timer
           initialTime={0}
@@ -246,7 +246,7 @@ render() {
                   </React.Fragment>
               )}
           </Timer>
-        </Containter>) : '';
+        </Container>) : '';
     /*
      Controls showing of ‘Join Room’ or ‘Leave Room’ button.  
      Hide 'Join Room' button if user has already joined a room otherwise 
@@ -275,8 +275,9 @@ render() {
                         content={this.props.myName}
                         icon='user circle'
                       />
+                      {showLocalTrack}
                     </Container>
-                    {showLocalTrack} {/* Show local track if available */} 
+                   {/* Show local track if available */} 
                   </Grid.Row>
                   <Grid.Row>
                     <Grid columns={2}>
@@ -294,12 +295,12 @@ render() {
                     The following div element shows all remote media (other participant’s tracks) 
                     */}
                     <Container style={{width:"510px"}}>
-                      <div className="flex-item" ref="remoteMedia" id="remote-media" />
                       <Message
                         style={{width:"500px"}}
                         content={this.props.otherName}
                         icon='user circle'
                       />
+                      <div ref="remoteMedia" id="remote-media" />
                     </Container>
                     
                   </Grid.Row>
