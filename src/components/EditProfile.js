@@ -2,17 +2,10 @@
 import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 
+//TODO: Write handleSubmit functions and backend API to update database
+
 let menteeEditForm = 
     <Form onSubmit={this.handleMenteeEditSubmit}>
-        <Form.Field
-        type="email"
-        required="true"
-        style={fieldStyle}
-        disabled={true}
-        >
-            <label>Email</label>
-            <input placeholder='Email' name="email" value={this.props.email} />
-        </Form.Field>
         <Form.Field
             type="password"
             required="true"
@@ -77,7 +70,7 @@ let menteeEditForm =
         <Button 
             color="blue" 
             type='submit'
-            loading={this.state.menteeEditSubmitting}>
+            loading={this.state.submitting}>
             <Icon name="unlock"/>
             Submit
         </Button>
@@ -88,16 +81,7 @@ let menteeEditForm =
     </Form>
 
 let mentorEditForm = 
-    <Form >
-        <Form.Field
-        type="email"
-        required="true"
-        style={fieldStyle}
-        disabled={true}
-        >
-            <label>Email</label>
-            <input placeholder='Email' name="email" value={this.props.email} />
-        </Form.Field>
+    <Form onSubmit={handleMentorEditSubmit}>
         <Form.Field
             type="password"
             required="true"
@@ -182,11 +166,11 @@ let mentorEditForm =
         <Button 
             color="blue" 
             type='submit'
-            loading={this.state.mentorEditSubmitting}>
+            loading={this.state.submitting}>
             <Icon name="unlock"/>
             Submit
         </Button>
-        <Button onClick={(e) => this.goBack(e)}>
+        <Button onClick={(e) => this.props.goBack(e)}>
             <Icon name="backward"/>
             Go Back.
         </Button>
@@ -199,15 +183,60 @@ export default class EditProfile extends React.Component {
         // isMentor
         // email
         // name
+        // function props --> goBack
         this.state = {
-            
+            password: '',
+            confirmPassword: '',
+            school: '',
+            major: '', // mentor
+            location: '',
+            preferredTopics: [],
+            position: '', // mentor
+            aboutYourself: '',
+            imageLink: '',
+            submitting: false,
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleMentorEditSubmit = this.handleMentorEditSubmit.bind(this);
+        this.handleMenteeEditSubmit = this.handleMenteeEditSubmit.bind(this);
     }
+
+    handleMentorEditSubmit(e) {
+        e.preventDefault();
+        this.setState({
+            submitting: true,
+        }, async () => {
+            // form mentor payload and submit
+        }).then(() => {
+            // alert, wait 2 secs
+            this.props.goBack(e);
+        })
+    }
+
+    handleMenteeEditSubmit(e) {
+        e.preventDefault();
+        this.setState({
+            submitting: true,
+        }, async () => {
+            // form mentee payload and submit
+        }).then(() => {
+            // alert, wait 2 secs
+            this.props.goBack(e);
+        })
+    }
+
+    handleChange(e) {
+        e.preventDefault();
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
+    }
+
     render() {
         return (  
             <Container>
                 <Grid centered>
-                {this.props.isMentor ? menteeEditForm : menteeEditForm}
+                {this.props.isMentor ? mentorEditForm : menteeEditForm}
                 </Grid>
             </Container>
           )
