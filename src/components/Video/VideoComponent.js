@@ -277,7 +277,7 @@ render() {
                       />
                       {showLocalTrack}
                     </Container>
-                   {/* Show local track if available */} 
+                   {/* Show local track if available */}
                   </Grid.Row>
                   <Grid.Row>
                     <Grid columns={2}>
