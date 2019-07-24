@@ -216,18 +216,18 @@ render() {
           direction="forward"
           checkpoints={[
               {
-                  time: 2 * 60 * 1000,
-                  callback: () => swal("You have already used 30 minutes. Call will end in another 15 minutes!", {
-                    timer: 3000,
+                  time: 30 * 60 * 1000,
+                  callback: () => swal("You have already used 30 minutes. Call will end in another 5 minutes!", {
+                    timer: 5000,
                     icon: "info",
                     showConfirmButton: false,
                   }),
               },
               {
-                  time: 3 * 60 * 1000,
+                  time: 35 * 60 * 1000,
                   callback: () => {
-                    swal("Call will end in 3 seconds...", {
-                      timer: 3000,
+                    swal("Call will end in 5 seconds...", {
+                      timer: 5000,
                       icon: "warning",
                       showConfirmButton: false,
                     })
