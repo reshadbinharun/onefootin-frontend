@@ -269,7 +269,6 @@ render() {
                 <Grid.Column>
                   <Grid.Row>
                     <Container style={{width:"510px"}}>
-                      <div className="flex-container"></div>
                       <Message
                         style={{width:"500px"}}
                         content={this.props.myName}
