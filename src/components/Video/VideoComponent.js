@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button, Container, Grid, Message, Form, Icon, TextArea, Label } from "semantic-ui-react"
 import {BACKEND} from "../../App";
 import Timer from "react-compound-timer";
+import swal from "sweetalert";
 
 const VIDEO_WIDTH = 450;
 
@@ -208,7 +209,44 @@ render() {
      Only show video track after user has joined a room else show nothing 
     */
     let showLocalTrack = this.state.localMediaAvailable ? (
-      <div className="flex-item"><div ref="localMedia" /> </div>) : '';   
+      <Containter>
+        <div ref="localMedia" />
+        <Timer
+          initialTime={0}
+          direction="forward"
+          checkpoints={[
+              {
+                  time: 2 * 60 * 1000,
+                  callback: () => swal("You have already used 30 minutes. Call will end in another 15 minutes!", {
+                    timer: 3000,
+                    icon: "info",
+                    showConfirmButton: false,
+                  }),
+              },
+              {
+                  time: 3 * 60 * 1000,
+                  callback: () => {
+                    swal("Call will end in 3 seconds...", {
+                      timer: 3000,
+                      icon: "warning",
+                      showConfirmButton: false,
+                    })
+                    setTimeout(() => {this.leaveRoom()}, 3000);
+                  },
+              }
+          ]}
+          >
+              {() => (
+                  <React.Fragment>
+                    <Label style={{margin: "10px"}} color="orange" tag>
+                      <Icon name="stopwatch"/>
+                      <Timer.Minutes />:
+                      <Timer.Seconds />
+                    </Label>
+                  </React.Fragment>
+              )}
+          </Timer>
+        </Containter>) : '';   
     /*
      Controls showing of ‘Join Room’ or ‘Leave Room’ button.  
      Hide 'Join Room' button if user has already joined a room otherwise 
@@ -248,33 +286,7 @@ render() {
                     </div>
                     </Grid.Column>
                     <Grid.Column>
-                    <Timer
-                      initialTime={0}
-                      direction="forward"
-                      checkpoints={[
-                          {
-                              time: 30 * 60 * 1000,
-                              callback: () => alert('You have already used 30 minutes. Call will end in another 15 minutes!'),
-                          },
-                          {
-                              time: 45 * 60 * 1000,
-                              callback: () => {
-                                alert('Call is now terminating in 3 seconds...');
-                                setTimeout(() => { this.leaveRoom() }, 3000);
-                              },
-                          }
-                      ]}
-                      >
-                          {() => (
-                              <React.Fragment>
-                                <Label style={{margin: "10px"}} color="orange" tag>
-                                  <Icon name="stopwatch"/>
-                                  <Timer.Minutes />:
-                                  <Timer.Seconds />
-                                </Label>
-                              </React.Fragment>
-                          )}
-                      </Timer>
+                    
                     </Grid.Column>
                     </Grid>
                   </Grid.Row>
