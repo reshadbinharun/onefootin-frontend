@@ -66,6 +66,7 @@ export default class Schedule extends React.Component {
 
     renderScheduleCards() {
         return this.state.schedules && this.state.schedules.map(request => {
+            console.log("converting to mentee timezone ", convertToViewerTimeZone(request.dateTime, request.mentee.timeZone, request.mentor.timeZone));
             return (
                 <ScheduleCard
                     time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone, request.mentor.timeZone)}

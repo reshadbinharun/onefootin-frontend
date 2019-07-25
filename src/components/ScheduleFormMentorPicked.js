@@ -31,7 +31,8 @@ export function generateTimesfromStartOfSlot(day, startTimeIn24h, slotsNum) {
     return allTimes;
 }
 
-export function convertTo24hours(time) {
+// Input of form 9pm
+export function convertTo24hoursSlot(time) {
     let pm = time.substring(time.length-2) === 'pm'
     let mentorAdjustedTime = 0;
     let hours = time.length > 3 ? parseInt(time.substring(0,2))*100 : parseInt(time[0])*100;
@@ -53,13 +54,14 @@ export function moveDay(day, moveDayForward) {
 /*
 Returns an array of 6 time slots of form Day-11.00am
 */
+//TODO: use adjust time to only convert time of format Sunday-9am-12pm to Sunday-9.00am, use convertToViewerTimezone to do rest
 export function adjustTime(mentorTime, menteeTimeZone, mentorTimeZone) {
     let parts = mentorTime.split('-');
     let GMTOffset = 0;
     GMTOffset = parseInt(menteeTimeZone.substring(3)) - parseInt(mentorTimeZone.substring(3)); //from perspective of mentee --> mentee GMT - mentor GMT
     let adjustedTime = 0;
     // adjusted time is brought to mentee's timeZone, postive when mentee ahead
-    adjustedTime = convertTo24hours(parts[1])+GMTOffset;
+    adjustedTime = convertTo24hoursSlot(parts[1])+GMTOffset;
     let day = parts[0];
     let timeIn24h = adjustedTime;
     // move day forward
@@ -133,6 +135,7 @@ export default class ScheduleFormMentorPicked extends Component {
                         }
                     );
                 let menteeTimes = menteeTimeZoneAdjustedTimes.flat();
+                console.log("viewing mentor's time during pick in mentee timezone (adjustTime)", menteeTimes);
                 this.setState({
                     timeOptions: _.map(menteeTimes, option => ({
                         key: option,
