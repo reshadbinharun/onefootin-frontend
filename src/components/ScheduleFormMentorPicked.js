@@ -131,6 +131,7 @@ export default class ScheduleFormMentorPicked extends Component {
             },() => {
                 let menteeTimeZoneAdjustedTimes = this.state.mentor && this.state.mentor.preferredTimes.map(
                         time => {
+                            console.log(`adjusting time ${time} to mentee timezone ${this.props.menteeTimeZone} and mentorTimeZone ${this.state.mentor.timeZone}`)
                             return [...adjustTime(time, this.props.menteeTimeZone, this.state.mentor.timeZone)]
                         }
                     );

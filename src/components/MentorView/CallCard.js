@@ -82,7 +82,7 @@ export default class CallCard extends React.Component {
             padding: '5px',
             margin: '5px',
         }
-        console.log("converting to mentor timezone ", convertToViewerTimeZone(time, mentorTimeZone, mentee.timeZone));
+        console.log(`converting to mentor timezone from time ${time} with mentortimezone ${mentorTimeZone} and menteeTimeZone ${mentee.timeZone} `, convertToViewerTimeZone(time, mentorTimeZone, mentee.timeZone));
         return (
             // TODO: update confirm/dismiss with backend calls
             // TODO: adjustTime to mentor's timeZone
