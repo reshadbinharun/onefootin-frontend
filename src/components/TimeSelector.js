@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Message, Dropdown, Button, Grid, Form } from 'semantic-ui-react';
 import { adjustTime } from "./ScheduleFormMentorPicked";
 import { BACKEND } from "../App"
+import swal from "sweetalert";
 
 let messageStyle = {
     padding: '20px',

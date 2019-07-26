@@ -5,6 +5,7 @@ import PreferredTimeSelector from '../PreferredTimeSelector';
 import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../../topics"
 import axios from 'axios';
 import { BACKEND } from "../../App"
+import swal from "sweetalert";
 
 const PREFERRED_TOPICS = [ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
