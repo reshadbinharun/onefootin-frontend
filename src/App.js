@@ -14,23 +14,7 @@ import SignUpMentee from './components/SignUp/SignUpMentee';
 // export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
-export const restoreState = (componentState) => {
-  const persistState = sessionStorage.getItem(componentState);
-    if (persistState) {
-      console.log("persisted state is retrieved as ", persistState);
-      try {
-        this.setState(JSON.parse(persistState));
-      } catch (e) {
-        console.log("Could not get fetch state from local storage for", componentState);
-      }
-    }
-}
-
-export const storeState = (componentState) => {
-  sessionStorage.setItem(componentState, JSON.stringify(this.state));
-}
-
-const appName = 'App_LS';
+const compName = 'App_LS';
 
 const PATHS = {
   root: "/",
@@ -56,11 +40,19 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    restoreState(appName);
+    const persistState = sessionStorage.getItem(compName);
+    if (persistState) {
+      console.log("persisted state is retrieved as ", persistState);
+      try {
+        this.setState(JSON.parse(persistState));
+      } catch (e) {
+        console.log("Could not get fetch state from local storage for", compName);
+      }
+    }
   }
 
   componentWillUnmount() {
-    storeState(appName);
+    sessionStorage.setItem(compName, JSON.stringify(this.state));
   }
 
   toggleTest(e) {

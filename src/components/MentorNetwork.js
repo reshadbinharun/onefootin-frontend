@@ -20,7 +20,15 @@ export default class MentorNetwork extends React.Component {
 
     componentDidMount(){
         // TODO: await on restore before making calls? Do not make calls if state is restored?
-        restoreState(compName);
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          console.log("persisted state is retrieved as ", persistState);
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -38,7 +46,7 @@ export default class MentorNetwork extends React.Component {
     }
 
     componentWillUnmount() {
-        storeState(compName);
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     updateSearchTerms(e, searchObject) {

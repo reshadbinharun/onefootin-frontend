@@ -38,11 +38,19 @@ export default class SignUpMentee extends React.Component {
     }
 
     componentDidMount() {
-        restoreState(compName);
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          console.log("persisted state is retrieved as ", persistState);
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
     }
 
     componentWillUnmount() {
-        storeState(compName);
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     handleChange(e) {

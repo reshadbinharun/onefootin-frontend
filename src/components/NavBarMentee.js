@@ -31,14 +31,22 @@ export default class NavBarMentee extends Component {
     }
 
     componentDidMount() {
-        restoreState(compName);
+        const persistState = sessionStorage.getItem(compName);
+            if (persistState) {
+            console.log("persisted state is retrieved as ", persistState);
+            try {
+                this.setState(JSON.parse(persistState));
+            } catch (e) {
+                console.log("Could not get fetch state from local storage for", compName);
+            }
+        }
         this.setState({
             data: this.props.payload.mentee
         })
     }
 
     componentWillUnmount() {
-        storeState(compName);
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })

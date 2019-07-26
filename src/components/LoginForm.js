@@ -15,7 +15,7 @@ let buttonStyle = {
     width: '80%',
 }
 
-const appName = 'LoginForm_LS';
+const compName = 'LoginForm_LS';
 
 export default class LoginForm extends React.Component {
     constructor() {
@@ -71,11 +71,19 @@ export default class LoginForm extends React.Component {
     }
 
     componentDidMount() {
-        restoreState(appName);
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          console.log("persisted state is retrieved as ", persistState);
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
     }
 
     componentWillUnmount() {
-        storeState(appName);
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     handleSubmitAsMentee(e) {
