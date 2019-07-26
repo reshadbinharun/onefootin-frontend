@@ -15,7 +15,7 @@ import SignUpMentee from './components/SignUp/SignUpMentee';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
 export const restoreState = (componentState) => {
-  const persistState = localStorage.get(componentState);
+  const persistState = localStorage.getItem(componentState);
     if (persistState) {
       console.log("persisted state is retrieved as ", persistState);
       try {
