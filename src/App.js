@@ -14,6 +14,23 @@ import SignUpMentee from './components/SignUp/SignUpMentee';
 // export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
+export const restoreState = (componentState) => {
+  const persistState = localStorage.get(componentState);
+    if (persistState) {
+      try {
+        this.setState(JSON.parse(pesistState));
+      } catch (e) {
+        console.log("Could not get fetch state from local storage for", componentState);
+      }
+    }
+}
+
+export const storeState = (componentState) => {
+  localStorage.set(componentState, JSON.stringify(this.state));
+}
+
+const appName = 'App_LS';
+
 const PATHS = {
   root: "/",
   signupMentor: "/signupMentor",
@@ -35,6 +52,15 @@ export default class App extends Component {
     this.login = this.login.bind(this);
     this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
+  }
+
+  componentDidMount() {
+    restoreState(appName);
+    console.log("app state");
+  }
+
+  componentWillUnMount() {
+    storeState(appName);
   }
 
   toggleTest(e) {
