@@ -5,7 +5,9 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
-// import { storeState, restoreState } from "../App";
+import { storeState, restoreState } from "../App";
+
+const compName = 'NavBarMentee_LS';
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
@@ -29,9 +31,14 @@ export default class NavBarMentee extends Component {
     }
 
     componentDidMount() {
+        restoreState(compName);
         this.setState({
             data: this.props.payload.mentee
         })
+    }
+
+    componentWillUnmount() {
+        storeState(compName);
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })

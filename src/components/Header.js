@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import { restoreState, storeState } from "../App";
+
+const compName = 'Header_LS';
 
 export default class Header extends Component {
     constructor(props) {
@@ -9,6 +12,15 @@ export default class Header extends Component {
             loggedIn: false,
         }
     }
+
+    componentDidMount() {
+        restoreState(compName);
+    }
+
+    componentWillUnmount() {
+        storeState(compName);
+    }
+    
     renderLoginStateInfo() {
         let loggedIn = this.props.loggedIn;
         // let refLink = loggedIn ? '/logout' : '/login'

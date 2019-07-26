@@ -3,7 +3,9 @@ import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 import SearchBar from './SearchBar';
 import MentorNetworkCard from './MentorNetworkCard';
-import { BACKEND } from "../App";
+import { BACKEND, restoreState, storeState } from "../App";
+
+const compName = 'MentorNetwork_LS';
 
 export default class MentorNetwork extends React.Component {
     constructor(props){
@@ -17,6 +19,8 @@ export default class MentorNetwork extends React.Component {
     }
 
     componentDidMount(){
+        // TODO: await on restore before making calls? Do not make calls if state is restored?
+        restoreState(compName);
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -32,6 +36,11 @@ export default class MentorNetwork extends React.Component {
             });
         });
     }
+
+    componentWillUnmount() {
+        storeState(compName);
+    }
+
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
         e.preventDefault();

@@ -2,9 +2,11 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
-import { BACKEND } from "../../App"
+import { BACKEND, restoreState, storeState } from "../../App"
 import { Redirect } from "react-router-dom"
 import axios from 'axios';
+
+const compName = 'SignUpMentee_LS';
 
 let fieldStyle = {
     width: '100%',
@@ -33,6 +35,14 @@ export default class SignUpMentee extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+    }
+
+    componentDidMount() {
+        restoreState(compName);
+    }
+
+    componentWillUnmount() {
+        storeState(compName);
     }
 
     handleChange(e) {

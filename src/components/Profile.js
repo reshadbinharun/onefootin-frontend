@@ -4,8 +4,11 @@ import { Container, Grid } from 'semantic-ui-react'
 import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 
+const compName = 'Profile_LS';
+
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
+    // TODO: do props need to be restored on refresh?
     render() {
         return (  
             <Container>
