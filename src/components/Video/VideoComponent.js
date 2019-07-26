@@ -54,9 +54,17 @@ export default class VideoComponent extends Component {
             })
       }).then(res => {
         if (res.status === 200) {
-          alert(`Successfully sent notes to mentee!`)
+          swal({
+            title: "Thanks!",
+            text: "Your follow-up notes help mentees stay on track!",
+            icon: "success",
+          });
         } else {
-          alert(`Something went wrong. Please try again.`)
+          swal({
+            title: "Oops!",
+            text: "Something went wrong. Please try again.",
+            icon: "error",
+          });
         }
       })
   }
@@ -179,7 +187,11 @@ joinRoom() {
   Connect to a room by providing the token and connection options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
   */  
   Video.connect(this.state.token, connectOptions).then(this.roomJoined, error => {
-    alert('Could not connect to Twilio: ' + error.message + 'Please try joining call again.');
+    swal({
+      title: "Oops!",
+      text: "This is embarrassing... Please try joining the call again.",
+      icon: "warning",
+    });
   });
 }
 leaveRoom() {

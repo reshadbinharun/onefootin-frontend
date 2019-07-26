@@ -3,6 +3,7 @@ import { Grid, Form, Message, Button, Dropdown } from 'semantic-ui-react'
 import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../topics"
 import {BACKEND} from "../App"
 import TimeSelector from "./TimeSelector"
+import swal from "sweetalert";
 
 const TOPIC_OPTIONS = [ECA_STRATEGY, ESSAY_CRITIQUE, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let topicsOptions = TOPIC_OPTIONS.map(val => {
@@ -35,8 +36,11 @@ export default class ScheduleForm extends React.Component {
                 selectTimes: !this.state.selectTimes
             })
         } else {
-            // react-alert
-            alert("Please fill in all fields");
+            swal({
+                title: "Slow down there!",
+                text: "Please fill in all fields to continue.",
+                icon: "warning",
+            });
         }
     }
 

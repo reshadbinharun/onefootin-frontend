@@ -68,8 +68,11 @@ export default class SignUpMentor extends React.Component {
                 selectTimes: !this.state.selectTimes
             })
         } else {
-            // react-alert
-            alert("Please fill in all fields. Please confirm your passwords match.");
+            swal({
+                title: "Yikes!",
+                text: "Please fill in all fields to continue. Confirm that passwords match",
+                icon: "error",
+            });
         }
     }
     handleChange(e) {

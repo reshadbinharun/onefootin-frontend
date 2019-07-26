@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
 import { BACKEND } from "../App";
 import { Redirect } from "react-router-dom";
+import swal from "sweetalert";
 
 //time choices
 const PREFERRED_TIMES_SLOTS = ['6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'];
@@ -110,12 +111,18 @@ export default class PreferredTimeSelector extends React.Component {
            }).then(async res => {
                let resolvedRes = await res;
                if (resolvedRes.status !== 200) {
-                   console.log("Request Sign up for mentor was not successful")
+                swal({
+                    title: "Oops!",
+                    text: "Something went wrong... Please try again.",
+                    icon: "error",
+                });
                }
                else {
-                console.log("received response", resolvedRes.json())
-                //TODO: User react-alert
-                alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
+                swal({
+                    title: "Congratulations!",
+                    text: "Your submission was successful! Please check your email to confirm your account.",
+                    icon: "success",
+                  });
                 this.setState({
                     signUpDone: true
                 })

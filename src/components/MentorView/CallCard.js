@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
 import { moveDay, convertTo12h } from "../ScheduleFormMentorPicked"
 import { BACKEND } from "../../App"
+//TODO: Use swal instead of Message to display successful scheduling
 
 // Input of form 9.00am or 11.30pm
 function convertTo24hours(time)
