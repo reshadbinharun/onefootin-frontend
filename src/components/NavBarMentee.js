@@ -5,13 +5,13 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
+import { storeState, restoreState } from "../App";
 
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
 export const SCHEDULINGS = 'Schedulings';
 export const MENTOR_PROFILE = 'Mentor Profile'
 export const NEW_CALL = 'New Call'
-// export const MY_APPT = 'My Appointment'
 
 //TODO: adapt to mentee login model --> currently copied from mentor login
 export default class NavBarMentee extends Component {

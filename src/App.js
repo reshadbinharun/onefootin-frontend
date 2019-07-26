@@ -17,8 +17,9 @@ export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.c
 export const restoreState = (componentState) => {
   const persistState = localStorage.get(componentState);
     if (persistState) {
+      console.log("persisted state is retrieved as ", persistState);
       try {
-        this.setState(JSON.parse(pesistState));
+        this.setState(JSON.parse(persistState));
       } catch (e) {
         console.log("Could not get fetch state from local storage for", componentState);
       }
@@ -56,10 +57,9 @@ export default class App extends Component {
 
   componentDidMount() {
     restoreState(appName);
-    console.log("app state");
   }
 
-  componentWillUnMount() {
+  componentWillUnmount() {
     storeState(appName);
   }
 
