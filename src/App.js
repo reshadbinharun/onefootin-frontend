@@ -15,7 +15,7 @@ import SignUpMentee from './components/SignUp/SignUpMentee';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
 export const restoreState = (componentState) => {
-  const persistState = localStorage.getItem(componentState);
+  const persistState = sessionStorage.getItem(componentState);
     if (persistState) {
       console.log("persisted state is retrieved as ", persistState);
       try {
@@ -27,7 +27,7 @@ export const restoreState = (componentState) => {
 }
 
 export const storeState = (componentState) => {
-  localStorage.set(componentState, JSON.stringify(this.state));
+  sessionStorage.setItem(componentState, JSON.stringify(this.state));
 }
 
 const appName = 'App_LS';
