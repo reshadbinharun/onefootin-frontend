@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 import SearchBar from './SearchBar';
 import MentorNetworkCard from './MentorNetworkCard';
-import { BACKEND, restoreState, storeState } from "../App";
+import { BACKEND } from "../App";
 
 const compName = 'MentorNetwork_LS';
 

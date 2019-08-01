@@ -35,7 +35,6 @@ export default class App extends Component {
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
-    this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
   }
 
@@ -53,13 +52,6 @@ export default class App extends Component {
 
   componentWillUnmount() {
     sessionStorage.setItem(compName, JSON.stringify(this.state));
-  }
-
-  toggleTest(e) {
-    e.preventDefault();
-    this.setState({
-      testMode: !this.state.testMode
-    })
   }
 
   logout(e){
@@ -144,6 +136,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log("logged in state", this.state.loggedIn)
     return (
       <div>
         <Header
@@ -151,7 +144,6 @@ export default class App extends Component {
           logout={this.logout}
           />
         <Container>{this.renderLogin()}</Container>
-        {/* {this.state.testMode? <Test/> : null} */}
       </div>
     )
   }

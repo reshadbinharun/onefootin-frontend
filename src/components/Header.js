@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import { restoreState, storeState } from "../App";
 
 const compName = 'Header_LS';
 
