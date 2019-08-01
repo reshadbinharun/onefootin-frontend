@@ -47,10 +47,13 @@ export default class App extends Component {
       } catch (e) {
         console.log("Could not get fetch state from local storage for", compName);
       }
+    } else {
+      console.log("no persisted state!")
     }
   }
 
   componentWillUnmount() {
+    console.log("persisting state of app as ", this.state)
     sessionStorage.setItem(compName, JSON.stringify(this.state));
   }
 
