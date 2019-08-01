@@ -67,6 +67,7 @@ export default class LoginForm extends React.Component {
                 resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
+                    mentorLoginLoading: false,
                 },() => {
                     this.props.login()
                     this.props.liftPayload(resolvedRes, true);
@@ -120,6 +121,7 @@ export default class LoginForm extends React.Component {
                 resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
+                    menteeLoginLoading: false,
                 },() => {
                     this.props.login()
                     this.props.liftPayload(resolvedRes, false);
