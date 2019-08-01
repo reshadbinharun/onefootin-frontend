@@ -11,7 +11,6 @@ import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
-// export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
 const compName = 'App_LS';
@@ -30,7 +29,6 @@ export default class App extends Component {
       mentorPayload: {},
       menteePayload: {},
       loggedIn: false,
-      testMode: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
@@ -39,22 +37,20 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const persistState = sessionStorage.getItem(compName);
+    const persistState = localStorage.getItem(compName);
     if (persistState) {
-      console.log("persisted state is retrieved as ", persistState);
       try {
         this.setState(JSON.parse(persistState));
       } catch (e) {
         console.log("Could not get fetch state from local storage for", compName);
       }
     } else {
-      console.log("no persisted state!")
+      console.log("could not fetch from local storage for app");
     }
   }
 
   componentWillUnmount() {
-    console.log("persisting state of app as ", this.state)
-    sessionStorage.setItem(compName, JSON.stringify(this.state));
+    localStorage.setItem(compName, JSON.stringify(this.state));
   }
 
   logout(e){
