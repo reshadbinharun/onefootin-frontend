@@ -2,6 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { BACKEND } from "../App";
+
 let fieldStyle = {
     width: '100%',
 }
@@ -13,6 +14,8 @@ let messageStyle = {
 let buttonStyle = {
     width: '80%',
 }
+
+const compName = 'LoginForm_LS';
 
 export default class LoginForm extends React.Component {
     constructor() {
@@ -29,6 +32,11 @@ export default class LoginForm extends React.Component {
         this.handleSubmitAsMentee = this.handleSubmitAsMentee.bind(this);
         this.handleSubmitAsMentor = this.handleSubmitAsMentor.bind(this);
         this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     //TODO: combine both handleSubmit functions into one which takes a bool for isMentor
@@ -59,12 +67,31 @@ export default class LoginForm extends React.Component {
                 resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
+                    mentorLoginLoading: false,
                 },() => {
                     this.props.login()
                     this.props.liftPayload(resolvedRes, true);
                 })
             }
         });
+    }
+
+    componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          console.log("persisted state is retrieved as ", persistState);
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
+    }
+
+    componentWillUnmount() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     handleSubmitAsMentee(e) {
@@ -94,6 +121,7 @@ export default class LoginForm extends React.Component {
                 resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
+                    menteeLoginLoading: false,
                 },() => {
                     this.props.login()
                     this.props.liftPayload(resolvedRes, false);

@@ -5,6 +5,8 @@ import SearchBar from './SearchBar';
 import MentorNetworkCard from './MentorNetworkCard';
 import { BACKEND } from "../App";
 
+const compName = 'MentorNetwork_LS';
+
 export default class MentorNetwork extends React.Component {
     constructor(props){
         super(props);
@@ -14,9 +16,24 @@ export default class MentorNetwork extends React.Component {
             searchTerms: '',
         }
         this.updateSearchTerms = this.updateSearchTerms.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     componentDidMount(){
+        window.addEventListener('beforeunload', this.componentCleanup);
+        // TODO: await on restore before making calls? Do not make calls if state is restored?
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -32,6 +49,12 @@ export default class MentorNetwork extends React.Component {
             });
         });
     }
+
+    componentWillUnmount() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
+    }
+
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
         e.preventDefault();

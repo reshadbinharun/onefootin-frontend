@@ -6,6 +6,7 @@ import CardDetails from './CardDetails';
 
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
+    // TODO: do props need to be restored on refresh?
     render() {
         return (  
             <Container>
