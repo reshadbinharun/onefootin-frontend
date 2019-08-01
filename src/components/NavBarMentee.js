@@ -6,6 +6,7 @@ import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
 
+
 const compName = 'NavBarMentee_LS';
 
 export const MY_PROFILE = 'My Profile';
@@ -27,9 +28,15 @@ export default class NavBarMentee extends Component {
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
             if (persistState) {
             console.log("persisted state is retrieved as ", persistState);
@@ -45,7 +52,8 @@ export default class NavBarMentee extends Component {
     }
 
     componentWillUnmount() {
-        sessionStorage.setItem(compName, JSON.stringify(this.state));
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })

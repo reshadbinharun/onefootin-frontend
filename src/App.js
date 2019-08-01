@@ -34,10 +34,16 @@ export default class App extends Component {
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
+    this.componentCleanup = this.componentCleanup.bind(this);
+  }
+
+  componentCleanup() {
+    sessionStorage.setItem(compName, JSON.stringify(this.state));
   }
 
   componentDidMount() {
-    const persistState = localStorage.getItem(compName);
+    window.addEventListener('beforeunload', this.componentCleanup);
+    const persistState = sessionStorage.getItem(compName);
     if (persistState) {
       try {
         this.setState(JSON.parse(persistState));
@@ -50,7 +56,8 @@ export default class App extends Component {
   }
 
   componentWillUnmount() {
-    localStorage.setItem(compName, JSON.stringify(this.state));
+    this.componentCleanup();
+    window.removeEventListener('beforeunload', this.componentCleanup);
   }
 
   logout(e){

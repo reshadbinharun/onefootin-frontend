@@ -32,6 +32,11 @@ export default class LoginForm extends React.Component {
         this.handleSubmitAsMentee = this.handleSubmitAsMentee.bind(this);
         this.handleSubmitAsMentor = this.handleSubmitAsMentor.bind(this);
         this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     //TODO: combine both handleSubmit functions into one which takes a bool for isMentor
@@ -71,6 +76,7 @@ export default class LoginForm extends React.Component {
     }
 
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
           console.log("persisted state is retrieved as ", persistState);
@@ -83,7 +89,8 @@ export default class LoginForm extends React.Component {
     }
 
     componentWillUnmount() {
-        sessionStorage.setItem(compName, JSON.stringify(this.state));
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     handleSubmitAsMentee(e) {

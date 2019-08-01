@@ -35,9 +35,16 @@ export default class SignUpMentee extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
           console.log("persisted state is retrieved as ", persistState);

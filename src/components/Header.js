@@ -10,9 +10,15 @@ export default class Header extends Component {
         this.state = {
             loggedIn: false,
         }
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
           console.log("persisted state is retrieved as ", persistState);
@@ -25,7 +31,8 @@ export default class Header extends Component {
     }
 
     componentWillUnmount() {
-        sessionStorage.setItem(compName, JSON.stringify(this.state));
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
     
     renderLoginStateInfo() {
