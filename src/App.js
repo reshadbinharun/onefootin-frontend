@@ -50,8 +50,6 @@ export default class App extends Component {
       } catch (e) {
         console.log("Could not get fetch state from local storage for", compName);
       }
-    } else {
-      console.log("could not fetch from local storage for app");
     }
   }
 

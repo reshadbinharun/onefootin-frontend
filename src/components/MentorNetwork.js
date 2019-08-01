@@ -28,7 +28,6 @@ export default class MentorNetwork extends React.Component {
         // TODO: await on restore before making calls? Do not make calls if state is restored?
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
-          console.log("persisted state is retrieved as ", persistState);
           try {
             this.setState(JSON.parse(persistState));
           } catch (e) {

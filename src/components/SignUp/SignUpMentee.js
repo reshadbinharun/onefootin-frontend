@@ -47,7 +47,6 @@ export default class SignUpMentee extends React.Component {
         window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
-          console.log("persisted state is retrieved as ", persistState);
           try {
             this.setState(JSON.parse(persistState));
           } catch (e) {
@@ -70,7 +69,6 @@ export default class SignUpMentee extends React.Component {
     uploadImage(e) {
         e.preventDefault();
         let file = e.target.files[0];
-        console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
         axios.post(`${BACKEND}/imageUpload`, data, {
