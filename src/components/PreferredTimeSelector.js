@@ -11,14 +11,6 @@ let preferredTimesSlots = PREFERRED_TIMES_SLOTS.map( val => {
     return {key: val, text: val, value: val}
 })
 
-// function getTimeSlots(day, preferredSlots) {
-//     let slots = preferredSlots;
-//     for (let i = 0; i < slots.length; i++) {
-//         slots[i].value = `${day}-${slots[i].value}`
-//     }
-//     return slots;
-// }
-
 let messageStyle = {
     padding: '20px',
     margin: '10px',
@@ -141,6 +133,12 @@ export default class PreferredTimeSelector extends React.Component {
                             style = {messageStyle}
                         />
                         <Divider/>
+                        <Grid.Row centered>
+                            <Button onClick={(e)=>{this.props.back(e)}}>
+                                Back
+                            </Button>
+                        </Grid.Row>
+                        <Grid.Row style={{"padding": "14px"}}></Grid.Row>
                         <Grid columns={7}>
                             <Grid.Column>
                                 <Header>Sunday</Header>
@@ -192,6 +190,7 @@ export default class PreferredTimeSelector extends React.Component {
                                     onChange={this.handleChangeSaturdayTime} name='Saturday'/>
                             </Grid.Column>
                         </Grid>
+                        <Grid.Row style={{"padding": "14px"}}></Grid.Row>
                         <Button 
                             color="blue" 
                             type='submit'
