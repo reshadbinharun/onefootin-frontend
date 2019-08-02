@@ -15,7 +15,7 @@ export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.c
 
 const compName = 'App_LS';
 
-const PATHS = {
+export const PATHS = {
   root: "/",
   signupMentor: "/signupMentor",
   signupMentee: "/signupMentee",
