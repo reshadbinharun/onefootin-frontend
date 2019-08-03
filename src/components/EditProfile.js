@@ -296,7 +296,7 @@ export default class EditProfile extends React.Component {
                 <Icon name="unlock"/>
                 Submit
             </Button>
-            <Button onClick={(e) => this.goBack(e)}>
+            <Button onClick={(e) => this.props.goBack(e)}>
                 <Icon name="backward"/>
                 Go Back.
             </Button>
