@@ -180,14 +180,26 @@ export default class PreferredTimeEditor extends React.Component {
                                     onChange={this.handleChangeSaturdayTime} name='Saturday'/>
                             </Grid.Column>
                         </Grid>
-                        <Button 
-                            color="blue" 
-                            type='submit'
-                            onClick={this.handleSubmit}
-                            >
-                            <Icon name="unlock"/>
-                            Submit
-                        </Button>
+                        <Grid.Row style={{"padding": "14px"}}></Grid.Row>
+                        <Grid.Row columns={2}>
+                            <Grid.Column>
+                                <Button onClick={(e) => this.props.goBack(e)}>
+                                    <Icon name="backward"/>
+                                    Go Back.
+                                </Button>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Button 
+                                    color="blue" 
+                                    type='submit'
+                                    onClick={this.handleSubmit}
+                                    >
+                                    <Icon name="unlock"/>
+                                    Submit
+                                </Button>
+                            </Grid.Column>
+                        </Grid.Row>
+
                     </Container>
                 }
             </div>
