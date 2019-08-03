@@ -181,7 +181,7 @@ export default class PreferredTimeEditor extends React.Component {
                             </Grid.Column>
                         </Grid>
                         <Grid.Row style={{"padding": "14px"}}></Grid.Row>
-                        <Grid.Row columns={2}>
+                        <Grid columns={2}>
                             <Grid.Column>
                                 <Button onClick={(e) => this.props.goBack(e)}>
                                     <Icon name="backward"/>
@@ -198,7 +198,7 @@ export default class PreferredTimeEditor extends React.Component {
                                     Submit
                                 </Button>
                             </Grid.Column>
-                        </Grid.Row>
+                        </Grid>
 
                     </Container>
                 }
