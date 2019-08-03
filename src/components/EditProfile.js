@@ -1,8 +1,17 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Form, Message, Dropdown, Icon, Button } from 'semantic-ui-react'
+import { BACKEND } from "../App"
+import swal from "sweetalert";
+import { PREFERRED_TOPICS } from "./SignUp/SignUpMentor";
+let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
+    return {key: val, text: val, value: val}
+})
 
 //TODO: Write handleSubmit functions and backend API to update database
+let fieldStyle = {
+    width: '100%',
+}
 
 let menteeEditForm = 
     <Form onSubmit={this.handleMenteeEditSubmit}>
@@ -81,7 +90,7 @@ let menteeEditForm =
     </Form>
 
 let mentorEditForm = 
-    <Form onSubmit={handleMentorEditSubmit}>
+    <Form onSubmit={this.handleMentorEditSubmit}>
         <Form.Field
             type="password"
             required="true"

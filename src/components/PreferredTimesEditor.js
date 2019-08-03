@@ -2,7 +2,6 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
 import { BACKEND } from "../App";
-import { Redirect } from "react-router-dom";
 import swal from "sweetalert";
 
 //time choices
