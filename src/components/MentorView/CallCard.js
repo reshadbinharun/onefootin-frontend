@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
 import { moveDay, convertTo12h } from "../ScheduleFormMentorPicked"
 import { BACKEND } from "../../App"
-//TODO: Use swal instead of Message to display successful scheduling
+import swal from "sweetalert";
 
 // Input of form 9.00am or 11.30pm
 function convertTo24hours(time)
@@ -72,8 +72,11 @@ export default class CallCard extends React.Component {
                 console.log("Request failed")
             } else {
                 console.log("received response", res.json())
-                //TODO: Use react alert
-                alert(`You've confirmed a call with ${this.props.mentee.name}. Your new state of backlog will be reflected upon next login.`)
+                swal({
+                    title: `You've confirmed a call with ${this.props.mentee.name}`,
+                    text: "Please refresh the app, to view current state of appointments.",
+                    icon: "success",
+                  });
             }
         });
     }
