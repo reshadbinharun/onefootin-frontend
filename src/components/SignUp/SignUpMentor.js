@@ -5,6 +5,7 @@ import PreferredTimeSelector from '../PreferredTimeSelector';
 import {ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../../topics"
 import axios from 'axios';
 import { BACKEND } from "../../App"
+import swal from "sweetalert";
 
 const PREFERRED_TOPICS = [ESSAY_BRAINSTORM, ESSAY_CRITIQUE, ECA_STRATEGY, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
@@ -68,8 +69,11 @@ export default class SignUpMentor extends React.Component {
                 selectTimes: !this.state.selectTimes
             })
         } else {
-            // react-alert
-            alert("Please fill in all fields. Please confirm your passwords match.");
+            swal({
+                title: "Yikes!",
+                text: "Please fill in all fields to continue. Confirm that passwords match",
+                icon: "error",
+            });
         }
     }
     handleChange(e) {

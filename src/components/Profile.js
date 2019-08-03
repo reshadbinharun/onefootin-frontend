@@ -4,6 +4,7 @@ import { Container, Grid, Divider } from 'semantic-ui-react'
 import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
+import PreferredTimeEditor from './PreferredTimesEditor';
 
 let buttonCollection = 
 <Button onClick={(e) => this.launchEditMode(e)}>
@@ -90,16 +91,18 @@ export default class Profile extends React.Component {
             {
                 this.state.editMode ? (
                     this.state.timeSelect ?
-                    null : //TODO: add TimeSelector component
+                    <PreferredTimeEditor
+                        mentorEmail={this.props.email}
+                        goBack={this.goBack}
+                    /> :
                     <EditProfile
+                        email={this.props.email}
                         isMentor={this.props.isMentor}
                         name={this.props.name}
                         goBack={this.goBack}
                     />
                 ) : profile
             }
-
-
             </Container>
           )
     }

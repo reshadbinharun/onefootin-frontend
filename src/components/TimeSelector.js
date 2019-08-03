@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Message, Dropdown, Button, Grid, Form } from 'semantic-ui-react';
 import { adjustTime } from "./ScheduleFormMentorPicked";
 import { BACKEND } from "../App"
+import swal from "sweetalert";
 
 let messageStyle = {
     padding: '20px',
@@ -43,11 +44,17 @@ export default class TimeSelector extends React.Component {
             body: JSON.stringify(payload)
         }).then(async res => {
             if (res.status===200){
-                console.log("received response")
-                // TODO: replace with react.alert
-                alert("Thank you your submission has been received!");
+                swal({
+                    title: "Thanks!",
+                    text: "Your submission has been received.",
+                    icon: "success",
+                });
             } else {
-                console.log("res rejected")
+                swal({
+                    title: "Yikes!",
+                    text: "Something went wrong, please try again.",
+                    icon: "error",
+                });
             }
         });
     }

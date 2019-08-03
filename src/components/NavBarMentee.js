@@ -6,12 +6,14 @@ import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
 
+
+const compName = 'NavBarMentee_LS';
+
 export const MY_PROFILE = 'My Profile';
 export const MENTOR_NETWORK = 'Mentor Network';
 export const SCHEDULINGS = 'Schedulings';
 export const MENTOR_PROFILE = 'Mentor Profile'
 export const NEW_CALL = 'New Call'
-// export const MY_APPT = 'My Appointment'
 
 //TODO: adapt to mentee login model --> currently copied from mentor login
 export default class NavBarMentee extends Component {
@@ -26,12 +28,31 @@ export default class NavBarMentee extends Component {
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
+        const persistState = sessionStorage.getItem(compName);
+            if (persistState) {
+            try {
+                this.setState(JSON.parse(persistState));
+            } catch (e) {
+                console.log("Could not get fetch state from local storage for", compName);
+            }
+        }
         this.setState({
             data: this.props.payload.mentee
         })
+    }
+
+    componentWillUnmount() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })

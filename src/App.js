@@ -11,8 +11,9 @@ import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
-// export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com' || 'http://localhost:8080';
 export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
+
+const compName = 'App_LS';
 
 const PATHS = {
   root: "/",
@@ -28,20 +29,33 @@ export default class App extends Component {
       mentorPayload: {},
       menteePayload: {},
       loggedIn: false,
-      testMode: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
-    this.toggleTest = this.toggleTest.bind(this);
     this.liftPayload = this.liftPayload.bind(this);
+    this.componentCleanup = this.componentCleanup.bind(this);
   }
 
-  toggleTest(e) {
-    e.preventDefault();
-    this.setState({
-      testMode: !this.state.testMode
-    })
+  componentCleanup() {
+    sessionStorage.setItem(compName, JSON.stringify(this.state));
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.componentCleanup);
+    const persistState = sessionStorage.getItem(compName);
+    if (persistState) {
+      try {
+        this.setState(JSON.parse(persistState));
+      } catch (e) {
+        console.log("Could not get fetch state from local storage for", compName);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.componentCleanup();
+    window.removeEventListener('beforeunload', this.componentCleanup);
   }
 
   logout(e){
@@ -126,6 +140,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log("logged in state", this.state.loggedIn)
     return (
       <div>
         <Header
@@ -133,7 +148,6 @@ export default class App extends Component {
           logout={this.logout}
           />
         <Container>{this.renderLogin()}</Container>
-        {/* {this.state.testMode? <Test/> : null} */}
       </div>
     )
   }

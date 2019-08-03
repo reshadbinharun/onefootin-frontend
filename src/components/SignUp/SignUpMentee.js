@@ -5,6 +5,9 @@ import { getTimezoneOffset } from "./SignUpMentor"
 import { BACKEND } from "../../App"
 import { Redirect } from "react-router-dom"
 import axios from 'axios';
+import swal from "sweetalert";
+
+const compName = 'SignUpMentee_LS';
 
 let fieldStyle = {
     width: '100%',
@@ -33,6 +36,28 @@ export default class SignUpMentee extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentCleanup() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
+    }
+
+    componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
+        const persistState = sessionStorage.getItem(compName);
+        if (persistState) {
+          try {
+            this.setState(JSON.parse(persistState));
+          } catch (e) {
+            console.log("Could not get fetch state from local storage for", compName);
+          }
+        }
+    }
+
+    componentWillUnmount() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
     handleChange(e) {
@@ -45,7 +70,6 @@ export default class SignUpMentee extends React.Component {
     uploadImage(e) {
         e.preventDefault();
         let file = e.target.files[0];
-        console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
         axios.post(`${BACKEND}/imageUpload`, data, {
@@ -87,15 +111,21 @@ export default class SignUpMentee extends React.Component {
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(payload)
             }).then(res => {
-                console.log("received response", res.json())
-                alert(`Congratulations. Your submission was successful! Please check your email to confirm your account.`)
+                swal({
+                    title: "Congratulations!",
+                    text: "Your submission was successful! Please check your email to confirm your account.",
+                    icon: "success",
+                  });
                 this.setState({
                     signUpDone: true
                 })
             });
         } else {
-            //TODO: Replace with React-alert
-            alert("Please fill in all fields. Confirm your passwords match.");
+            swal({
+                title: "Yikes!",
+                text: "Please fill in all fields to continue. Confirm that passwords match",
+                icon: "error",
+            });
         }
         
     }

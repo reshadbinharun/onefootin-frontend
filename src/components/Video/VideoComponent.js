@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button, Container, Grid, Message, Form, Icon, TextArea, Label } from "semantic-ui-react"
 import {BACKEND} from "../../App";
 import Timer from "react-compound-timer";
+import swal from "sweetalert";
 
 const VIDEO_WIDTH = 450;
 
@@ -53,9 +54,17 @@ export default class VideoComponent extends Component {
             })
       }).then(res => {
         if (res.status === 200) {
-          alert(`Successfully sent notes to mentee!`)
+          swal({
+            title: "Thanks!",
+            text: "Your follow-up notes help mentees stay on track!",
+            icon: "success",
+          });
         } else {
-          alert(`Something went wrong. Please try again.`)
+          swal({
+            title: "Oops!",
+            text: "Something went wrong. Please try again.",
+            icon: "error",
+          });
         }
       })
   }
@@ -178,7 +187,11 @@ joinRoom() {
   Connect to a room by providing the token and connection options that include the room name and tracks. We also show an alert if an error occurs while connecting to the room.    
   */  
   Video.connect(this.state.token, connectOptions).then(this.roomJoined, error => {
-    alert('Could not connect to Twilio: ' + error.message + 'Please try joining call again.');
+    swal({
+      title: "Oops!",
+      text: "This is embarrassing... Please try joining the call again.",
+      icon: "warning",
+    });
   });
 }
 leaveRoom() {
@@ -208,7 +221,44 @@ render() {
      Only show video track after user has joined a room else show nothing 
     */
     let showLocalTrack = this.state.localMediaAvailable ? (
-      <div className="flex-item"><div ref="localMedia" /> </div>) : '';   
+      <Container>
+        <div ref="localMedia" />
+        <Timer
+          initialTime={0}
+          direction="forward"
+          checkpoints={[
+              {
+                  time: 30 * 60 * 1000,
+                  callback: () => swal("You have already used 30 minutes. Call will end in another 15 minutes!", {
+                    timer: 5000,
+                    icon: "info",
+                    showConfirmButton: false,
+                  }),
+              },
+              {
+                  time: 45 * 60 * 1000,
+                  callback: () => {
+                    swal("Call will end in 5 seconds...", {
+                      timer: 5000,
+                      icon: "warning",
+                      showConfirmButton: false,
+                    })
+                    setTimeout(() => {this.leaveRoom()}, 3000);
+                  },
+              }
+          ]}
+          >
+              {() => (
+                  <React.Fragment>
+                    <Label style={{margin: "10px"}} color="orange" tag>
+                      <Icon name="stopwatch"/>
+                      <Timer.Minutes />:
+                      <Timer.Seconds />
+                    </Label>
+                  </React.Fragment>
+              )}
+          </Timer>
+        </Container>) : '';
     /*
      Controls showing of ‘Join Room’ or ‘Leave Room’ button.  
      Hide 'Join Room' button if user has already joined a room otherwise 
@@ -231,14 +281,14 @@ render() {
                 <Grid.Column>
                   <Grid.Row>
                     <Container style={{width:"510px"}}>
-                      <div className="flex-container"></div>
                       <Message
                         style={{width:"500px"}}
                         content={this.props.myName}
                         icon='user circle'
                       />
+                      {showLocalTrack}
                     </Container>
-                    {showLocalTrack} {/* Show local track if available */} 
+                   {/* Show local track if available */}
                   </Grid.Row>
                   <Grid.Row>
                     <Grid columns={2}>
@@ -246,35 +296,6 @@ render() {
                     <div className="flex-item">
                     {joinOrLeaveRoomButton}  {/* Show either ‘Leave Room’ or ‘Join Room’ button */}
                     </div>
-                    </Grid.Column>
-                    <Grid.Column>
-                    <Timer
-                      initialTime={0}
-                      direction="forward"
-                      checkpoints={[
-                          {
-                              time: 30 * 60 * 1000,
-                              callback: () => alert('You have already used 30 minutes. Call will end in another 15 minutes!'),
-                          },
-                          {
-                              time: 45 * 60 * 1000,
-                              callback: () => {
-                                alert('Call is now terminating in 3 seconds...');
-                                setTimeout(() => { this.leaveRoom() }, 3000);
-                              },
-                          }
-                      ]}
-                      >
-                          {() => (
-                              <React.Fragment>
-                                <Label style={{margin: "10px"}} color="orange" tag>
-                                  <Icon name="stopwatch"/>
-                                  <Timer.Minutes />:
-                                  <Timer.Seconds />
-                                </Label>
-                              </React.Fragment>
-                          )}
-                      </Timer>
                     </Grid.Column>
                     </Grid>
                   </Grid.Row>
@@ -285,12 +306,12 @@ render() {
                     The following div element shows all remote media (other participant’s tracks) 
                     */}
                     <Container style={{width:"510px"}}>
-                      <div className="flex-item" ref="remoteMedia" id="remote-media" />
                       <Message
                         style={{width:"500px"}}
                         content={this.props.otherName}
                         icon='user circle'
                       />
+                      <div ref="remoteMedia" id="remote-media" />
                     </Container>
                     
                   </Grid.Row>

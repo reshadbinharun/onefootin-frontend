@@ -180,10 +180,6 @@ export default class EditProfile extends React.Component {
     // TODO: Add a property to show requests serviced
     constructor(props){
         super(props);
-        // isMentor
-        // email
-        // name
-        // function props --> goBack
         this.state = {
             password: '',
             confirmPassword: '',
@@ -203,25 +199,89 @@ export default class EditProfile extends React.Component {
 
     handleMentorEditSubmit(e) {
         e.preventDefault();
+        let payload = {
+            confirmPassword: this.state.password,
+            school: this.state.school,
+            major: this.state.major, // mentor
+            location: this.state.major,
+            preferredTopics: this.state.preferredTopics,
+            position: this.state.position, // mentor
+            aboutYourself: this.state.aboutYourself,
+            imageLink: this.state.imageLink,
+        }
         this.setState({
             submitting: true,
         }, async () => {
-            // form mentor payload and submit
-        }).then(() => {
-            // alert, wait 2 secs
-            this.props.goBack(e);
+            fetch(`${BACKEND}/editMentor`, {
+                method: 'post',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(payload)
+               }).then(async res => {
+                   let resolvedRes = await res;
+                   if (resolvedRes.status !== 200) {
+                    swal({
+                        title: "Oops!",
+                        text: "Something went wrong... Please try again.",
+                        icon: "error",
+                    });
+                   }
+                   else {
+                    swal({
+                        title: "All set!",
+                        text: "You've just updated your profile.",
+                        icon: "success",
+                      });
+                    this.props.goBack();
+                   }
+               }).then(() => {
+                   this.setState({
+                       submitting: false,
+                   }, () => {
+                    this.props.goBack(e);
+                   })
+            })
         })
     }
 
     handleMenteeEditSubmit(e) {
-        e.preventDefault();
+        let payload = {
+            confirmPassword: this.state.password,
+            school: this.state.school,
+            location: this.state.major,
+            aboutYourself: this.state.aboutYourself,
+            imageLink: this.state.imageLink,
+        }
         this.setState({
             submitting: true,
         }, async () => {
-            // form mentee payload and submit
-        }).then(() => {
-            // alert, wait 2 secs
-            this.props.goBack(e);
+            fetch(`${BACKEND}/editMentee`, {
+                method: 'post',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(payload)
+               }).then(async res => {
+                   let resolvedRes = await res;
+                   if (resolvedRes.status !== 200) {
+                    swal({
+                        title: "Oops!",
+                        text: "Something went wrong... Please try again.",
+                        icon: "error",
+                    });
+                   }
+                   else {
+                    swal({
+                        title: "All set!",
+                        text: "You've just updated your profile.",
+                        icon: "success",
+                      });
+                    this.props.goBack();
+                   }
+               }).then(() => {
+                   this.setState({
+                       submitting: false,
+                   }, () => {
+                    this.props.goBack(e);
+                   })
+            })
         })
     }
 

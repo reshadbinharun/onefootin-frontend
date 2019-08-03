@@ -16,7 +16,8 @@ let messageStyle = {
     margin: '10px',
 }
 
-export default class PreferredTimeSelector extends React.Component {
+export default class PreferredTimeEditor extends React.Component {
+    // mentorId --> props
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +28,7 @@ export default class PreferredTimeSelector extends React.Component {
             thursdayPreferredTimes: [],
             fridayPreferredTimes: [],
             saturdayPreferredTimes: [],
-            signUpDone: false,
+            done: false,
         }
         this.handleChangeSundayTime = this.handleChangeSundayTime.bind(this);
         this.handleChangeMondayTime = this.handleChangeMondayTime.bind(this);
@@ -94,8 +95,8 @@ export default class PreferredTimeSelector extends React.Component {
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
 
-        let payload = Object.assign(this.props.payload, {preferredTimes: preferredTimes})
-        fetch(`${BACKEND}/newMentor`, {
+        let payload = Object.assign({email: this.props.email}, {preferredTimes: preferredTimes})
+        fetch(`${BACKEND}/editTimes`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(payload)
@@ -110,13 +111,11 @@ export default class PreferredTimeSelector extends React.Component {
                }
                else {
                 swal({
-                    title: "Congratulations!",
-                    text: "Your submission was successful! Please check your email to confirm your account.",
+                    title: "All set!",
+                    text: "You've just updated your availabilities.",
                     icon: "success",
                   });
-                this.setState({
-                    signUpDone: true
-                })
+                this.props.goBack();
                }
            });
     }
@@ -124,7 +123,6 @@ export default class PreferredTimeSelector extends React.Component {
         return (
             <div>
                 {
-                    this.state.signUpDone? <Redirect to="/" /> :
                     <Container>
                         <Message
                             centered
