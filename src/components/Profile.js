@@ -69,7 +69,7 @@ export default class Profile extends React.Component {
                 image = {this.props.image}
                 />
                 <Divider/>
-                {this.state.isMentor ? 
+                {this.props.isMentor ? 
                 mentorButtonCollection : buttonCollection
                 }
             </Grid.Column>
