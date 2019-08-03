@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Grid, Divider } from 'semantic-ui-react'
+import { Container, Grid, Divider, Icon, Button } from 'semantic-ui-react'
 import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
