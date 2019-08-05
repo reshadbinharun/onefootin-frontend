@@ -68,7 +68,7 @@ export default class Schedule extends React.Component {
         return this.state.schedules && this.state.schedules.map(request => {
             return (
                 <ScheduleCard
-                    time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone, request.mentor.timeZone)}
+                    time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
                     topic={request.topic}
                     mentor={request.mentor.name}
                     requestId={request.id}

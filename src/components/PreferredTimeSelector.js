@@ -4,20 +4,13 @@ import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } fro
 import { BACKEND } from "../App";
 import { Redirect } from "react-router-dom";
 import swal from "sweetalert";
+import { adjustTimeForStorage } from "./TimezoneAdjustmentHelpers";
 
 //time choices
 const PREFERRED_TIMES_SLOTS = ['6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'];
 let preferredTimesSlots = PREFERRED_TIMES_SLOTS.map( val => {
     return {key: val, text: val, value: val}
 })
-
-// function getTimeSlots(day, preferredSlots) {
-//     let slots = preferredSlots;
-//     for (let i = 0; i < slots.length; i++) {
-//         slots[i].value = `${day}-${slots[i].value}`
-//     }
-//     return slots;
-// }
 
 let messageStyle = {
     padding: '20px',
@@ -102,8 +95,9 @@ export default class PreferredTimeSelector extends React.Component {
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
 
-        let payload = Object.assign(this.props.payload, {preferredTimes: preferredTimes})
-        // console.log(payload);
+        // convert preferredTimes to database storage format:
+        let timesToStore = adjustTimeForStorage(preferredTimes, this.props.payload.timeZone);
+        let payload = Object.assign(this.props.payload, {preferredTimes: timesToStore});
         fetch(`${BACKEND}/newMentor`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
