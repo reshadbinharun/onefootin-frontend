@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, Button, Segment, Icon } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
 import { BACKEND } from "../App"
-import { convertToViewerTimeZone } from "./MentorView/CallCard"
+import { convertToViewerTimeZone } from "./TimezoneAdjustmentHelpers"
 import VideoComponent from './Video/VideoComponent';
 
 export default class Schedule extends React.Component {

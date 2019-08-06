@@ -1,9 +1,9 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Message, Dropdown, Button, Grid, Form } from 'semantic-ui-react';
-import { adjustTime } from "./ScheduleFormMentorPicked";
 import { BACKEND } from "../App"
 import swal from "sweetalert";
+import { adjustTimeForStorage } from './TimezoneAdjustmentHelpers';
 
 let messageStyle = {
     padding: '20px',
@@ -72,7 +72,7 @@ export default class TimeSelector extends React.Component {
     componentDidMount() {
         let allTimeObjects = this.props.mentorsByTopic && this.props.mentorsByTopic.map(mentor => {
             return mentor.preferredTimes.map(time => {
-                let menteeAdjustedTime = adjustTime(time, this.props.menteeTimeZone, mentor.timeZone);
+                let menteeAdjustedTime = adjustTimeForStorage(time, this.props.menteeTimeZone);
                 return menteeAdjustedTime.map(menteeAdjustedTimeSlot => {return {key: `${menteeAdjustedTimeSlot},${mentor.id},${this.props.menteeId}`, text: menteeAdjustedTimeSlot, value: `${menteeAdjustedTimeSlot},${mentor.id},${this.props.menteeId}`}})
             })
         })

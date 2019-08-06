@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Form, Container, Message, Button, Dropdown } from 'semantic-ui-react'
 import _ from 'lodash'
 import {BACKEND} from "../App"
-// TODO: import from TimezoneAdjustmentHelpers
+import { convertToViewerTimeZone } from './TimezoneAdjustmentHelpers';
 
 export default class ScheduleFormMentorPicked extends Component {
     constructor(props){
@@ -41,7 +41,7 @@ export default class ScheduleFormMentorPicked extends Component {
                 mentor: resolvedRes
             });
         }).then(() => {
-            // takes mentor and mentorPicked bool as prop
+            // TODO: store request time as GMT-free
             this.setState({
                 topicOptions:  _.map(this.state.mentor && this.state.mentor.preferredTopics, option => ({
                     key: option,
@@ -49,17 +49,19 @@ export default class ScheduleFormMentorPicked extends Component {
                     value: option
                 }))
             },() => {
-                let menteeTimeZoneAdjustedTimes = this.state.mentor && this.state.mentor.preferredTimes.map(
+                let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes.map(
                         time => {
-                            return [...adjustTime(time, this.props.menteeTimeZone, this.state.mentor.timeZone)]
+                            return {
+                                gmtFreeTime: time,
+                                viewTime: convertToViewerTimeZone(time, this.props.menteeTimeZone)
+                            }
                         }
                     );
-                let menteeTimes = menteeTimeZoneAdjustedTimes.flat();
                 this.setState({
-                    timeOptions: _.map(menteeTimes, option => ({
-                        key: option,
-                        text: option,
-                        value: option
+                    timeOptions: _.map(menteeTimeObjects, option => ({
+                        key: option.viewTime,
+                        text: option.viewTime,
+                        value: option.gmtFreeTime
                     }))
                 })
             })
