@@ -49,10 +49,8 @@ export default class ScheduleFormMentorPicked extends Component {
                     value: option
                 }))
             },() => {
-                console.log('preferred times is', this.state.mentor.preferredTimes)
-                let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes.map(
+                let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes[0].map(
                         time => {
-                            console.log("time being viewed is", time)
                             return {
                                 gmtFreeTime: time,
                                 viewTime: convertToViewerTimeZone(time, this.props.menteeTimeZone)
