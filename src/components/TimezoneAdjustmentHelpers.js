@@ -115,12 +115,12 @@ export function adjustTimeForStorage(timeSlots, timezone) {
         let timeIn24h = timezoneStripped24h;
         // move day forward
         if (timezoneStripped24h > 2400) {
-            day = moveDay(dayInfo, true);
+            day = moveDay(day, true);
             timeIn24h = timezoneStripped24h % 2400;
         }
         // move day backward
         if (timezoneStripped24h < 0) {
-            day = moveDay(dayInfo, false);
+            day = moveDay(day, false);
             timeIn24h = 2400+timezoneStripped24h;
         }
         // generate 6 times
