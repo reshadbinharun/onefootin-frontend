@@ -102,16 +102,12 @@ export function adjustTimeForStorage(timeSlots, timezone) {
     let allTimesAdjusted = [];
     let GMTOffset = parseInt(timezone.substring(3));
     timeSlots.forEach((slot) => {
-        console.log("converting slot:", slot)
         let parts = slot.split('-');
         let slotBegin = parts[1];
         let day = parts[0];
         // get 24h beginning of timeSlots
-        console.log("slot begin is", slotBegin)
         let _24hBegin = convertTo24hoursFromSlotBeginning(slotBegin);
-        console.log("24 hr begin is", _24hBegin);
         // strip timezone from 24h time
-        console.log("gmt offset is", GMTOffset)
         let timezoneStripped24h = _24hBegin - GMTOffset;
         // move day forward
         if (timezoneStripped24h > 2400) {
@@ -124,12 +120,9 @@ export function adjustTimeForStorage(timeSlots, timezone) {
             timezoneStripped24h = 2400+timezoneStripped24h;
         }
         // generate 6 times
-        console.log("timezone stripped time in 24h is", timezoneStripped24h);
-
         let timesFromSlot =  generateTimesfromStartOfSlot(day, timezoneStripped24h, 6);
         allTimesAdjusted.push(timesFromSlot.map(timeSlot => {
             let _12hrTime = convertTo12h(timeSlot.time)
-            console.log('time about to be stored is', `${timeSlot.day}-${_12hrTime}`);
             return `${timeSlot.day}-${_12hrTime}`;
         }))
     });
@@ -142,7 +135,6 @@ export function adjustTimeForStorage(timeSlots, timezone) {
  * @returns {string} string of format Sunday 9.30pm
  */
 export function convertToViewerTimeZone(time, viewerGMT) {
-    console.log('time is', time);
     let parts = time.split('-');
     let GMTOffset = 0;
     GMTOffset = parseInt(viewerGMT.substring(3))

@@ -114,7 +114,7 @@ export default class ScheduleFormMentorPicked extends Component {
     renderSubmissionMessage(){
         let message1 = `Your call is scheduled with ${this.state.mentor.name}.`
         let message2 = `Your call will be about ${this.state.topicSelection}. `
-        let message3 = `You have requested your call at ${this.state.timeSelection}.`
+        let message3 = `You have requested your call at ${convertToViewerTimeZone(this.state.timeSelection, this.props.menteeTimeZone)}.`
         return (
             <Message 
                 floating={true}
