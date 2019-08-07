@@ -102,10 +102,12 @@ export function adjustTimeForStorage(timeSlots, timezone) {
     let allTimesAdjusted = [];
     let GMTOffset = parseInt(timezone.substring(3));
     for (let slot in timeSlots) {
+        console.log("converting slot:", slot)
         let parts = slot.split('-');
         let slotBegin = parts[1];
         let dayInfo = parts[0];
         // get 24h beginning of timeSlots
+        console.log("slot begin is", slotBegin)
         let _24hBegin = convertTo24hoursFromSlotBeginning(slotBegin);
         // strip timezone from 24h time
         let timezoneStripped24h = _24hBegin - GMTOffset;
@@ -124,10 +126,9 @@ export function adjustTimeForStorage(timeSlots, timezone) {
         // generate 6 times
         let timesFromSlot =  generateTimesfromStartOfSlot(day, timeIn24h, 6);
         allTimesAdjusted.push(timesFromSlot.map(timeSlot => {
-            let dayTimeSlots = [];
             let _12hrTime = convertTo12h(timeSlot.time)
-            dayTimeSlots.push(`${timeSlot.day}-${_12hrTime}`)
-            return [...dayTimeSlots];
+            console.log('time about to be stored is', `${timeSlot.day}-${_12hrTime}`);
+            return `${timeSlot.day}-${_12hrTime}`;
         }))
     }
     return allTimesAdjusted;
