@@ -49,6 +49,7 @@ export default class ScheduleFormMentorPicked extends Component {
                     value: option
                 }))
             },() => {
+                console.log('preferred times is', this.state.mentor.preferredTimes)
                 let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes.map(
                         time => {
                             console.log("time being viewed is", time)
