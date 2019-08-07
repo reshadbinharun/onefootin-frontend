@@ -101,7 +101,7 @@ export function moveDay(day, moveDayForward) {
 export function adjustTimeForStorage(timeSlots, timezone) {
     let allTimesAdjusted = [];
     let GMTOffset = parseInt(timezone.substring(3));
-    for (let slot in timeSlots) {
+    timeSlots.forEach((slot) => {
         console.log("converting slot:", slot)
         let parts = slot.split('-');
         let slotBegin = parts[1];
@@ -130,7 +130,7 @@ export function adjustTimeForStorage(timeSlots, timezone) {
             console.log('time about to be stored is', `${timeSlot.day}-${_12hrTime}`);
             return `${timeSlot.day}-${_12hrTime}`;
         }))
-    }
+    });
     return allTimesAdjusted;
 }
 
