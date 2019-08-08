@@ -45,6 +45,7 @@ export default class EditProfile extends React.Component {
             position: this.state.position, // mentor
             aboutYourself: this.state.aboutYourself,
             imageLink: this.state.imageLink,
+            email: this.props.email
         }
         this.setState({
             submitting: true,
@@ -87,6 +88,7 @@ export default class EditProfile extends React.Component {
             location: this.state.major,
             aboutYourself: this.state.aboutYourself,
             imageLink: this.state.imageLink,
+            email: this.props.email,
         }
         this.setState({
             submitting: true,
