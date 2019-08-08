@@ -37,7 +37,7 @@ export default class EditProfile extends React.Component {
     handleMentorEditSubmit(e) {
         e.preventDefault();
         let payload = {
-            confirmPassword: this.state.password,
+            password: this.state.password,
             school: this.state.school,
             major: this.state.major, // mentor
             location: this.state.major,
@@ -83,7 +83,7 @@ export default class EditProfile extends React.Component {
 
     handleMenteeEditSubmit(e) {
         let payload = {
-            confirmPassword: this.state.password,
+            password: this.state.password,
             school: this.state.school,
             location: this.state.major,
             aboutYourself: this.state.aboutYourself,
