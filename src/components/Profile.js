@@ -98,6 +98,13 @@ export default class Profile extends React.Component {
                         isMentor={this.props.isMentor}
                         name={this.props.name}
                         goBack={this.goBack}
+                        // props to populate values for edit form
+                        school={this.props.school}
+                        location={this.props.location}
+                        aboutYourself={this.props.aboutYourself}
+                        // mentors only
+                        position={this.props.position}
+                        major={this.props.major}
                     />
                 ) : profile
             }
