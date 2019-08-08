@@ -173,7 +173,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>Major</label>
-                <input placeholder='Major' name="major" onChange={this.handleChange} value={this.props.major}/>
+                <input placeholder={this.props.major} name="major" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                 type="text"
@@ -181,7 +181,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>School</label>
-                <input placeholder='School' name="school" onChange={this.handleChange} value={this.props.school}/>
+                <input placeholder={this.props.school} name="school" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                 type="text"
@@ -189,7 +189,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>Location</label>
-                <input placeholder='Location' name="location" onChange={this.handleChange} value={this.props.location} />
+                <input placeholder={this.props.location} name="location" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                 type="text"
@@ -197,7 +197,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>Professional Position</label>
-                <input placeholder='Position' name="position" onChange={this.handleChange} value={this.props.position}/>
+                <input placeholder={this.props.position} name="position" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                 type="text"
@@ -205,7 +205,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>Tell us a little bit about yourself!</label>
-                <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} value={this.props.aboutYourself}/>
+                <input placeholder={this.props.aboutYourself} name="aboutYourself" maxLength = "500" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field>
                 <label>Select the topics you would like to consult.</label>
@@ -269,7 +269,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>School</label>
-                <input placeholder='School' name="school" onChange={this.handleChange} value={this.props.school}/>
+                <input placeholder={this.props.school} name="school" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                 type="text"
@@ -277,7 +277,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
             >
                 <label>Location</label>
-                <input placeholder='Location' name="location" onChange={this.handleChange} value={this.props.location}/>
+                <input placeholder={this.props.location} name="location" onChange={this.handleChange}/>
             </Form.Field>
             <Form.Field
                     type="text"
@@ -285,7 +285,7 @@ export default class EditProfile extends React.Component {
                     style={fieldStyle}
                 >
                     <label>Tell us a little bit about yourself!</label>
-                    <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} value={this.props.aboutYourself}/>
+                    <input placeholder={this.props.aboutYourself} name="aboutYourself" maxLength = "500" onChange={this.handleChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Let's put a face on you! Please upload an image.</label>
