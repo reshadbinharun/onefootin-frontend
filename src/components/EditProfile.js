@@ -75,7 +75,7 @@ export default class EditProfile extends React.Component {
                    this.setState({
                        submitting: false,
                    }, () => {
-                    this.props.goBack(e);
+                    this.props.goBack(e;
                    })
             })
         })
@@ -118,7 +118,7 @@ export default class EditProfile extends React.Component {
                    this.setState({
                        submitting: false,
                    }, () => {
-                    this.props.goBack(e);
+                    this.props.goBack();
                    })
             })
         })

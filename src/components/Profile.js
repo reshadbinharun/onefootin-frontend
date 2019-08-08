@@ -20,8 +20,7 @@ export default class Profile extends React.Component {
         this.launchTimeSelector = this.launchTimeSelector.bind(this);
     }
 
-    goBack(e) {
-        e.preventDefault();
+    goBack() {
         this.setState({
             editMode : false,
             timeSelect: false,
