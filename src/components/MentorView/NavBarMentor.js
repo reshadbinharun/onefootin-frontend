@@ -81,6 +81,7 @@ export default class NavBarMentor extends Component {
                     isMentor={true}
                     position={this.state.data.position}
                     major={this.state.data.major}
+                    location={this.state.data.location}
                 />
             case BACKLOG:
                 return <Backlog

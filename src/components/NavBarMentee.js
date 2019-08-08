@@ -84,6 +84,7 @@ export default class NavBarMentee extends Component {
                     school={this.state.data.school}
                     memberSince={this.state.data.memberSince}
                     aboutYourself={this.state.data.aboutYourself}
+                    location={this.state.data.location}
                     isMentor={false}
                 />
             case MENTOR_NETWORK:
