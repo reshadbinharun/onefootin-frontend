@@ -30,6 +30,7 @@ export default class EditProfile extends React.Component {
             submitting: false,
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.handleMentorEditSubmit = this.handleMentorEditSubmit.bind(this);
         this.handleMenteeEditSubmit = this.handleMenteeEditSubmit.bind(this);
     }
@@ -129,6 +130,13 @@ export default class EditProfile extends React.Component {
         let change = {}
         change[e.target.name] = e.target.value
         this.setState(change)
+    }
+
+    handleChangeTopic(e, {value}) {
+        e.preventDefault();
+        this.setState({
+            preferredTopics: value
+        })
     }
 
     render() {
