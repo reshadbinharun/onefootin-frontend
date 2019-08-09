@@ -94,7 +94,7 @@ export default class PreferredTimeEditor extends React.Component {
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
 
-        let payload = Object.assign({email: this.props.email}, {preferredTimes: preferredTimes})
+        let payload = Object.assign({email: this.props.mentorEmail}, {preferredTimes: preferredTimes})
         fetch(`${BACKEND}/editTimes`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
