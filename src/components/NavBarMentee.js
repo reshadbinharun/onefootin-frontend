@@ -78,12 +78,13 @@ export default class NavBarMentee extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile 
-                    // TODO: add image when it is present in database
+                    email={this.state.data.email}
                     image={this.state.data.image}
                     name={this.state.data.name}
                     school={this.state.data.school}
                     memberSince={this.state.data.memberSince}
                     aboutYourself={this.state.data.aboutYourself}
+                    location={this.state.data.location}
                     isMentor={false}
                 />
             case MENTOR_NETWORK:

@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
 import { BACKEND } from "../../App"
 import { convertToViewerTimeZone } from "../TimezoneAdjustmentHelpers"
+import swal from "sweetalert";
 
 export default class CallCard extends React.Component {
     constructor(props) {
@@ -27,8 +28,11 @@ export default class CallCard extends React.Component {
                 console.log("Request failed")
             } else {
                 console.log("received response", res.json())
-                //TODO: Use react alert
-                alert(`You've confirmed a call with ${this.props.mentee.name}. Your new state of backlog will be reflected upon next login.`)
+                swal({
+                    title: `You've confirmed a call with ${this.props.mentee.name}`,
+                    text: "Please refresh the app, to view current state of appointments.",
+                    icon: "success",
+                  });
             }
         });
     }

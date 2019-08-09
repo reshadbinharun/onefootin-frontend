@@ -72,7 +72,7 @@ export default class NavBarMentor extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile
-                    // TODO: add image when it is present in database
+                    email={this.state.data.email} //for profile editing purposes
                     image={this.state.data.image}
                     name={this.state.data.name}
                     school={this.state.data.school}
@@ -80,6 +80,8 @@ export default class NavBarMentor extends Component {
                     aboutYourself={this.state.data.aboutYourself}
                     isMentor={true}
                     position={this.state.data.position}
+                    major={this.state.data.major}
+                    location={this.state.data.location}
                 />
             case BACKLOG:
                 return <Backlog

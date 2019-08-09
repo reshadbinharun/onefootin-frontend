@@ -80,7 +80,6 @@ export default class LoginForm extends React.Component {
         window.addEventListener('beforeunload', this.componentCleanup);
         const persistState = sessionStorage.getItem(compName);
         if (persistState) {
-          console.log("persisted state is retrieved as ", persistState);
           try {
             this.setState(JSON.parse(persistState));
           } catch (e) {
