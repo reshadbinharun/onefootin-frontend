@@ -36,7 +36,6 @@ export default class EditProfile extends React.Component {
     }
 
     handleMentorEditSubmit(e) {
-        console.log("preferredTopics to be submitted is", this.state.preferredTopics);
         e.preventDefault();
         let payload = {
             password: this.state.password,
@@ -134,7 +133,6 @@ export default class EditProfile extends React.Component {
     }
 
     handleChangeTopic(e, {value}) {
-        console.log("preferred Topic value is", value);
         e.preventDefault();
         this.setState({
             preferredTopics: value
