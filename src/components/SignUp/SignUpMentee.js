@@ -2,8 +2,8 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
-import { BACKEND } from "../../App"
-import { Redirect } from "react-router-dom"
+import { BACKEND, PATHS } from "../../App"
+import { Redirect, Link } from "react-router-dom"
 import axios from 'axios';
 import swal from "sweetalert";
 
@@ -123,7 +123,7 @@ export default class SignUpMentee extends React.Component {
         } else {
             swal({
                 title: "Yikes!",
-                text: "Please fill in all fields to continue. Confirm that passwords match",
+                text: "Please fill in all fields to continue. Confirm that passwords match!",
                 icon: "error",
             });
         }
@@ -143,6 +143,13 @@ export default class SignUpMentee extends React.Component {
                         content="Welcome! We're excited to have you on board."
                     />
                         <Grid>
+                        <Grid.Row centered>
+                            <Button>
+                                <Link to={PATHS.root}>
+                                    Back
+                                </Link>
+                            </Button>
+                        </Grid.Row>
                         <Grid.Row centered>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Field

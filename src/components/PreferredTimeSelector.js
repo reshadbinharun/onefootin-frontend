@@ -132,6 +132,12 @@ export default class PreferredTimeSelector extends React.Component {
                             style = {messageStyle}
                         />
                         <Divider/>
+                        <Grid.Row centered>
+                            <Button onClick={(e)=>{this.props.back(e)}}>
+                                Back
+                            </Button>
+                        </Grid.Row>
+                        <Grid.Row style={{"padding": "14px"}}></Grid.Row>
                         <Grid columns={7}>
                             <Grid.Column>
                                 <Header>Sunday</Header>
@@ -183,6 +189,7 @@ export default class PreferredTimeSelector extends React.Component {
                                     onChange={this.handleChangeSaturdayTime} name='Saturday'/>
                             </Grid.Column>
                         </Grid>
+                        <Grid.Row style={{"padding": "14px"}}></Grid.Row>
                         <Button 
                             color="blue" 
                             type='submit'
