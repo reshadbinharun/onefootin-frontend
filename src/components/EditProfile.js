@@ -36,12 +36,13 @@ export default class EditProfile extends React.Component {
     }
 
     handleMentorEditSubmit(e) {
+        console.log("preferredTopics to be submitted is", this.state.preferredTopics);
         e.preventDefault();
         let payload = {
             password: this.state.password,
             school: this.state.school,
             major: this.state.major, // mentor
-            location: this.state.major,
+            location: this.state.location,
             preferredTopics: this.state.preferredTopics,
             position: this.state.position, // mentor
             aboutYourself: this.state.aboutYourself,
@@ -86,7 +87,7 @@ export default class EditProfile extends React.Component {
         let payload = {
             password: this.state.password,
             school: this.state.school,
-            location: this.state.major,
+            location: this.state.location,
             aboutYourself: this.state.aboutYourself,
             imageLink: this.state.imageLink,
             email: this.props.email,
@@ -133,6 +134,7 @@ export default class EditProfile extends React.Component {
     }
 
     handleChangeTopic(e, {value}) {
+        console.log("preferred Topic value is", value);
         e.preventDefault();
         this.setState({
             preferredTopics: value
