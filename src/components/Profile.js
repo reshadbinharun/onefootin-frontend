@@ -91,6 +91,7 @@ export default class Profile extends React.Component {
                     <PreferredTimeEditor
                         mentorEmail={this.props.email}
                         goBack={this.goBack}
+                        timeZone={this.props.timeZone}
                     /> :
                     <EditProfile
                         email={this.props.email}
