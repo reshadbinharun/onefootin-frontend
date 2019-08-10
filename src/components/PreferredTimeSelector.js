@@ -228,7 +228,7 @@ export default class PreferredTimeSelector extends React.Component {
                                     <Label pointing='below'>Please insert your zoom meeting room ID below after you've set up a free account.</Label> 
                                 </Grid.Row>
                                 <Grid.Row>
-                                    <Input name='zoom_link' placeholder='https://zoom.us/j/xxxxxxxxxx' onChange={this.handleChange}/>                                    
+                                    <Input name='zoom_link' placeholder='https://zoom.us/j/xxxxxxxxxx' onChange={this.handleChange}/>
                                 </Grid.Row>
                             </Grid.Row>
                             <Divider/>
