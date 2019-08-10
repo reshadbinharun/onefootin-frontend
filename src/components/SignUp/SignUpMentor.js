@@ -163,6 +163,7 @@ export default class SignUpMentor extends React.Component {
             location: this.state.location,
             preferredTimes: this.state.preferredTimes,
             preferredTopics: this.state.preferredTopics,
+            languages: this.state.languages,
             timeZone: timeZone,
             position: this.state.position,
             aboutYourself: this.state.aboutYourself,
