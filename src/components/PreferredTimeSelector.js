@@ -224,6 +224,7 @@ export default class PreferredTimeSelector extends React.Component {
                                 <Grid.Row>
                                     <Button onClick={()=>{window.open("https://www.zoom.us/signup")}}>Click here to set up a zoom account for free!</Button>
                                 </Grid.Row>
+                                <Divider/>
                                 <Grid.Row>
                                     <Label pointing='below'>Please insert your zoom meeting room ID below after you've set up a free account.</Label> 
                                 </Grid.Row>
