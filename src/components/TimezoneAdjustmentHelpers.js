@@ -23,7 +23,7 @@ export function generateTimesfromStartOfSlot(day, startTimeIn24h, slotsNum) {
         slotsNum--;
         allTimes.push({time: startTimeIn24h%2400, day: day});
         startTimeIn24h += 50; // increment by 30 min
-        if (startTimeIn24h/2400 > 1 && !dayMoved) {
+        if (startTimeIn24h/2400 >= 1 && !dayMoved) {
             day = moveDay(day, true); // move day forward if time is in next day, only possibility is moving day forward
             dayMoved = true;
         }
