@@ -22,7 +22,7 @@ export default class ScheduleCard extends React.Component {
                 <Card.Content extra>
                     <div className='ui two buttons'>
                     <Button basic color='dark orange'
-                        onClick={() => this.props.getRequestForVideoMentee(this.props.requestId, mentor)}
+                        onClick={() => window.open(this.props.meetingRoom)}
                     >
                         Join Video Call
                     </Button>

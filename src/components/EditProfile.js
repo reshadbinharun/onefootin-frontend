@@ -3,10 +3,13 @@ import React from 'react'
 import { Container, Grid, Form, Message, Dropdown, Icon, Button } from 'semantic-ui-react'
 import { BACKEND } from "../App"
 import swal from "sweetalert";
-import { PREFERRED_TOPICS } from "./SignUp/SignUpMentor";
+import { PREFERRED_TOPICS, LANGUAGE_OPTIONS } from "./SignUp/SignUpMentor";
 let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
     return {key: val, text: val, value: val}
-})
+});
+let languageOptions = LANGUAGE_OPTIONS.map(val => {
+    return {key: val, text: val, value: val}
+});
 
 //TODO: Write handleSubmit functions and backend API to update database
 let fieldStyle = {
@@ -23,8 +26,10 @@ export default class EditProfile extends React.Component {
             school: '',
             major: '', // mentor
             location: '',
-            preferredTopics: [],
+            preferredTopics: [], // mentor
             position: '', // mentor
+            languages: [], // mentor
+            zoom_info: '', //mentor
             aboutYourself: '',
             imageLink: '',
             submitting: false,
@@ -36,6 +41,14 @@ export default class EditProfile extends React.Component {
     }
 
     handleMentorEditSubmit(e) {
+        if (this.state.password !== this.state.confirmPassword) {
+            swal({
+                title: "Passwords do not match!",
+                text: "Please ensure your passwords match.",
+                icon: "error",
+            });
+            return;
+        }
         e.preventDefault();
         let payload = {
             password: this.state.password,
@@ -43,6 +56,8 @@ export default class EditProfile extends React.Component {
             major: this.state.major, // mentor
             location: this.state.location,
             preferredTopics: this.state.preferredTopics,
+            languages: this.state.languages, //mentor
+            zoom_info: this.state.zoom_info,
             position: this.state.position, // mentor
             aboutYourself: this.state.aboutYourself,
             imageLink: this.state.imageLink,
@@ -83,6 +98,14 @@ export default class EditProfile extends React.Component {
     }
 
     handleMenteeEditSubmit(e) {
+        if (this.state.password !== this.state.confirmPassword) {
+            swal({
+                title: "Passwords do not match!",
+                text: "Please ensure your passwords match.",
+                icon: "error",
+            });
+            return;
+        }
         let payload = {
             password: this.state.password,
             school: this.state.school,
@@ -139,12 +162,18 @@ export default class EditProfile extends React.Component {
         })
     }
 
+    handleChangeLanguages(e, {value}) {
+        e.preventDefault();
+        this.setState({
+            languages: value
+        })
+    }
+
     render() {
         let mentorEditForm = 
         <Form onSubmit={this.handleMentorEditSubmit}>
             <Form.Field
                 type="password"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Password</label>
@@ -152,23 +181,13 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="password"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Confirm Password</label>
                 <input placeholder='***' name="confirmPassword" type="password" onChange={this.handleChange} />
             </Form.Field>
-            {this.state.password !== this.state.confirmPassword ? 
-            <Message
-                attached
-                centered
-                error
-                content="Your passwords do not match!"
-            /> 
-            : null}
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
                 disabled={true}
             >
@@ -177,7 +196,6 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Major</label>
@@ -185,15 +203,17 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
-                <label>School</label>
-                <input placeholder={this.props.school} name="school" onChange={this.handleChange}/>
+                <label>College</label>
+                <input placeholder={this.props.school} name="college" onChange={this.handleChange}/>
             </Form.Field>
+            <Form.Field>
+                <label>What languages do you speak?</label>
+                    <Dropdown placeholder='Select all languages you speak...' fluid multiple selection options={languageOptions} onChange={this.handleChangeLanguages} name="languages" value={this.state.languages}/>
+                </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Location</label>
@@ -201,7 +221,6 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Professional Position</label>
@@ -209,7 +228,13 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
+                style={fieldStyle}
+            >
+                <label>Zoom Meeting Link</label>
+                <input placeholder={this.props.zoom_info} name="zoom_info" onChange={this.handleChange}/>
+            </Form.Field>
+            <Form.Field
+                type="text"
                 style={fieldStyle}
             >
                 <label>Tell us a little bit about yourself!</label>
@@ -240,7 +265,6 @@ export default class EditProfile extends React.Component {
         <Form onSubmit={this.handleMenteeEditSubmit}>
             <Form.Field
                 type="password"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Password</label>
@@ -248,23 +272,13 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="password"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Confirm Password</label>
                 <input placeholder='***' name="confirmPassword" type="password" onChange={this.handleChange} />
             </Form.Field>
-            {this.state.password !== this.state.confirmPassword ? 
-            <Message
-                attached
-                centered
-                error
-                content="Your passwords do not match!"
-            /> 
-            : null}
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
                 disabled={true}
             >
@@ -273,7 +287,6 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
                 <label>School</label>
@@ -281,7 +294,6 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                 type="text"
-                required="true"
                 style={fieldStyle}
             >
                 <label>Location</label>
@@ -289,7 +301,6 @@ export default class EditProfile extends React.Component {
             </Form.Field>
             <Form.Field
                     type="text"
-                    required="true"
                     style={fieldStyle}
                 >
                     <label>Tell us a little bit about yourself!</label>

@@ -105,6 +105,7 @@ export default class Profile extends React.Component {
                         // mentors only
                         position={this.props.position}
                         major={this.props.major}
+                        zoom_info={this.props.zoom_info}
                     />
                 ) : profile
             }

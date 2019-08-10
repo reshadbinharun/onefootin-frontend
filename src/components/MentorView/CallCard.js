@@ -10,7 +10,6 @@ export default class CallCard extends React.Component {
         this.handleConfirm = this.handleConfirm.bind(this);
     }
     handleConfirm(e) {
-        console.log("clicked confirm");
         e.preventDefault();
         let confirmPayload = {
             requestId: this.props.requestId
@@ -57,7 +56,7 @@ export default class CallCard extends React.Component {
                 <Card.Content extra>
                     <div className='ui two buttons'>
                     <Button 
-                        onClick={(e) => this.props.confirmed ? this.props.getRequestForVideoMentor(this.props.requestId, mentee.name) : this.handleConfirm(e)}
+                        onClick={(e) => this.props.confirmed ? window.open(this.props.meetingRoom) : this.handleConfirm(e)}
                         basic color='dark orange'>
                         {this.props.confirmed ? 'Join Video Call' : 'Confirm'}
                     </Button>

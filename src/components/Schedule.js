@@ -1,10 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Button, Segment, Icon } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
 import { BACKEND } from "../App"
 import { convertToViewerTimeZone } from "./TimezoneAdjustmentHelpers"
-import VideoComponent from './Video/VideoComponent';
 
 export default class Schedule extends React.Component {
     constructor(props){
@@ -12,13 +11,8 @@ export default class Schedule extends React.Component {
         this.state = {
             schedules: [],
             menteeId: null,
-            showVideo: false,
-            requestIdForVideo: null,
-            mentorName: '',
         }
         this.renderScheduleCards = this.renderScheduleCards.bind(this);
-        this.getRequestForVideoMentee = this.getRequestForVideoMentee.bind(this);
-        this.leaveRoom = this.leaveRoom.bind(this);
     }
     
     // TODO: use BACKEND to list confirmed calls
@@ -50,20 +44,6 @@ export default class Schedule extends React.Component {
         );
     }
 
-    getRequestForVideoMentee(requestId, mentorName) {
-        this.setState({
-            showVideo: true,
-            requestIdForVideo: requestId,
-            mentorName: mentorName,
-        })
-    }
-    
-    leaveRoom() {
-        this.setState({
-            showVideo: false,
-        })
-    }
-
     renderScheduleCards() {
         return this.state.schedules && this.state.schedules.map(request => {
             return (
@@ -72,38 +52,16 @@ export default class Schedule extends React.Component {
                     topic={request.topic}
                     mentor={request.mentor.name}
                     requestId={request.id}
-                    getRequestForVideoMentee={this.getRequestForVideoMentee}
+                    meetingRoom={request.mentor.zoom_info}
                 />
             )
         })
     }
 
     render() {
-        return (  
-            this.state.showVideo ? 
-            <VideoComponent
-                requestId={this.state.requestIdForVideo}
-                leaveRoom={this.leaveRoom}
-                email={this.props.menteeEmail}
-                otherName={this.state.mentorName}
-                myName={this.props.menteeName}
-                isMentor={false}
-            /> :
+        return (
             <Container>
-                <Container>
-                    <Segment attached='top'>
-                        Schedule a New Call
-                    </Segment>
-                    <Button attached='bottom' animated='vertical' onClick={this.props.getForm}>
-                        <Button.Content hidden>Schedule!</Button.Content>
-                        <Button.Content visible>
-                            <Icon name='calendar alternate outline' />
-                        </Button.Content>
-                    </Button>
-                </Container>
-                <Container>
-                    {this.renderScheduleCards()}
-                </Container>
+                {this.renderScheduleCards()}
             </Container>
           )
     }
