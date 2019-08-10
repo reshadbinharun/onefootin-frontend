@@ -53,6 +53,7 @@ export default class Schedule extends React.Component {
                     mentor={request.mentor.name}
                     requestId={request.id}
                     meetingRoom={request.mentor.zoom_info}
+                    requestDone={request.done}
                 />
             )
         })

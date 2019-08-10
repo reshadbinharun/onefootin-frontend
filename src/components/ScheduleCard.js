@@ -1,8 +1,49 @@
 import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
+import { BACKEND } from "../App"
+import swal from "sweetalert";
 
 export default class ScheduleCard extends React.Component {
     // TODO: Implement cancel and reschedule
+    constructor(props){
+        super(props);
+        this.provideFeedback = this.provideFeedback.bind(this);
+    }
+    provideFeedback(e){
+        e.preventDefault();
+        swal.withForm({
+            title: 'Feedback Form',
+            text: 'How did your call go?',
+            showCancelButton: true,
+            confirmButtonColor: 'orange',
+            confirmButtonText: 'Submit!',
+            closeOnConfirm: true,
+            formFields: [
+              { id: 'feedback', placeholder: 'feedback' },
+            ]
+          }, function (isConfirm) {
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            fetch(`${BACKEND}/giveFeedback`, {
+                method: 'post',
+                credentials: 'include',
+                headers: headers,
+                body: JSON.stringify(this.swalForm)
+            }).then(res => {
+                if (res.status !== 200) {
+                    console.log("Request failed")
+                } else {
+                    console.log("received response", res.json())
+                    swal({
+                        title: `Thank you for your feedback.`,
+                        text: "Best of luck!",
+                        icon: "success",
+                    });
+                }
+            });
+          })
+    }
     render() {
         const {time, topic, mentor} = this.props;
         const cardStyle ={
@@ -26,8 +67,10 @@ export default class ScheduleCard extends React.Component {
                     >
                         Join Video Call
                     </Button>
-                    <Button basic color='yellow' disabled>
-                        Cancel
+                    <Button
+                        onClick={() => this.props.requestDone ? this.provideFeedback : null}
+                        basic color='yellow' disabled={this.props.requestDone}>
+                        Provide Feedback
                     </Button>
                     </div>
                 </Card.Content>

@@ -10,6 +10,7 @@ export default class ScheduleFormMentorPicked extends Component {
         this.state = {
             topicSelection: '',
             timeSelection: '',
+            mentee_intro: '',
             mentor: null,
             topicOptions: [],
             timeOptions: [],
@@ -19,6 +20,7 @@ export default class ScheduleFormMentorPicked extends Component {
         this.handleChangeTime = this.handleChangeTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderSubmissionMessage = this.renderSubmissionMessage.bind(this);
+        this.handleChangeIntro = this.handleChangeIntro.bind(this);
     }
 
     componentDidMount() {
@@ -77,7 +79,8 @@ export default class ScheduleFormMentorPicked extends Component {
                 dateTime: this.state.timeSelection,
                 requestorId: this.props.menteeId,
                 topic: this.state.topicSelection,
-                mentorId: this.state.mentor.id
+                mentorId: this.state.mentor.id,
+                mentee_intro: this.state.mentee_intro,
             }
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
@@ -108,6 +111,13 @@ export default class ScheduleFormMentorPicked extends Component {
         e.preventDefault();
         this.setState({
             timeSelection: value,
+        })
+    }
+    handleChangeIntro(e, {value}) {
+        // check async await pattern, nest as callbacks if not working
+        e.preventDefault();
+        this.setState({
+            mentee_intro: value,
         })
     }
 
@@ -152,6 +162,13 @@ export default class ScheduleFormMentorPicked extends Component {
                         <Grid.Row>
                             <Form.Field>
                                 <Dropdown placeholder='Times' fluid selection options={this.state.timeOptions} onChange={this.handleChangeTime} name="preferredTopics"/>
+                            </Form.Field>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Form.Field
+                            >
+                                <label>Briefly tell us what you want to speak about.</label>
+                                <input placeholder='Your intro for the call...' name="mentee_intro" maxLength = "500" onChange={this.handleChangeIntro} />
                             </Form.Field>
                         </Grid.Row>
                         <Grid.Row>

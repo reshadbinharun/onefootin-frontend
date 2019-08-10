@@ -20,6 +20,7 @@ export default class Backlog extends React.Component {
                     meetingRoom={call.mentor.zoom_info}
                     mentee={call.mentee}
                     confirmed={this.props.confirmed}
+                    mentee_intro={call.mentee_intro}
                 />
             )
         })
