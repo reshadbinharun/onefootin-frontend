@@ -60,7 +60,7 @@ export function convertTo12h(time) {
     let hh = parseInt(time/100);
     let mm = (time%100)
     let mmString = mm === 50 ? `30` : `00`;
-    let meridian = hh/12 > 1 && hh/12 < 2 ? 'pm' : 'am';
+    let meridian = hh/12 >= 1 && hh/12 < 2 ? 'pm' : 'am';
     return `${hh%12===0 ? 12: hh%12}.${mmString}${meridian}`
 }
 
