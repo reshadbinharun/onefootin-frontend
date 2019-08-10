@@ -17,7 +17,7 @@ export default class Backlog extends React.Component {
                     topic={call.topic}
                     time={call.dateTime}
                     requestId={call.id}
-                    meetingRoom={call.mentor.zoom_link}
+                    meetingRoom={call.mentor.zoom_info}
                     mentee={call.mentee}
                     confirmed={this.props.confirmed}
                 />

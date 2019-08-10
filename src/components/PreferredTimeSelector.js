@@ -30,7 +30,7 @@ export default class PreferredTimeSelector extends React.Component {
             saturdayPreferredTimes: [],
             signUpDone: false,
             submitting: false,
-            zoom_link: '',
+            zoom_info: '',
         }
         this.handleChangeSundayTime = this.handleChangeSundayTime.bind(this);
         this.handleChangeMondayTime = this.handleChangeMondayTime.bind(this);
@@ -107,7 +107,7 @@ export default class PreferredTimeSelector extends React.Component {
         ...this.state.fridayPreferredTimes && this.state.fridayPreferredTimes.map(time => `Friday-${time}`),
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
-        if (!this.state.zoom_link) {
+        if (!this.state.zoom_info) {
             swal({
                 title: "Slow down there!",
                 text: "Please set up a zoom meeting room to complete sign up!",
@@ -120,7 +120,7 @@ export default class PreferredTimeSelector extends React.Component {
         }
         // convert preferredTimes to database storage format:
         let timesToStore = adjustTimeForStorage(preferredTimes, this.props.payload.timeZone);
-        let payload = Object.assign(this.props.payload, {preferredTimes: timesToStore, zoom_link: this.state.zoom_link});
+        let payload = Object.assign(this.props.payload, {preferredTimes: timesToStore, zoom_info: this.state.zoom_info});
         fetch(`${BACKEND}/newMentor`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
@@ -229,7 +229,7 @@ export default class PreferredTimeSelector extends React.Component {
                                     <Label pointing='below'>Please insert your zoom meeting room ID below after you've set up a free account.</Label> 
                                 </Grid.Row>
                                 <Grid.Row>
-                                    <Input name='zoom_link' placeholder='https://zoom.us/j/xxxxxxxxxx' onChange={this.handleChange}/>
+                                    <Input name='zoom_info' placeholder='https://zoom.us/j/xxxxxxxxxx' onChange={this.handleChange}/>
                                 </Grid.Row>
                             </Grid.Row>
                             <Divider/>
