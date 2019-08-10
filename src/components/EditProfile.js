@@ -38,6 +38,7 @@ export default class EditProfile extends React.Component {
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.handleMentorEditSubmit = this.handleMentorEditSubmit.bind(this);
         this.handleMenteeEditSubmit = this.handleMenteeEditSubmit.bind(this);
+        this.handleChangeLanguages = this.handleChangeLanguages.bind(this);
     }
 
     handleMentorEditSubmit(e) {
