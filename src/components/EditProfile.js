@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Grid, Form, Message, Dropdown, Icon, Button } from 'semantic-ui-react'
+import { Container, Grid, Form, Dropdown, Icon, Button } from 'semantic-ui-react'
 import { BACKEND } from "../App"
 import swal from "sweetalert";
 import { PREFERRED_TOPICS, LANGUAGE_OPTIONS } from "./SignUp/SignUpMentor";
