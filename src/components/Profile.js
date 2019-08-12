@@ -68,8 +68,9 @@ export default class Profile extends React.Component {
                 image = {this.props.image}
                 />
                 <Divider/>
-                {this.props.isMentor ? 
-                mentorButtonCollection : buttonCollection
+                {this.props.viewMode ? null :
+                this.props.isMentor ? 
+                    mentorButtonCollection : buttonCollection
                 }
             </Grid.Column>
             <Grid.Column>
@@ -80,6 +81,7 @@ export default class Profile extends React.Component {
                     aboutYourself={this.props.aboutYourself}
                     position={this.props.isMentor ? this.props.position : null }
                     isMentor={this.props.isMentor}
+                    languages={this.props.languages}
                 />
             </Grid.Column>
         </Grid>

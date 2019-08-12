@@ -84,6 +84,7 @@ export default class NavBarMentor extends Component {
                     location={this.state.data.location}
                     timeZone={this.state.data.timeZone}
                     zoom_info={this.state.data.zoom_info}
+                    languages={this.state.data.languages}
                 />
             case BACKLOG:
                 return <Backlog

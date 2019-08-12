@@ -24,7 +24,8 @@ export default class NavBarMentee extends Component {
             data: {},
             schedule: null,
             mentorPicked: false,
-            mentorId: ''
+            mentorId: '',
+            mentorFetchedForView: null,
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
@@ -74,6 +75,32 @@ export default class NavBarMentee extends Component {
         })
     }
 
+    viewMentorProfile(value) {
+        let payload = {
+            id: value
+        }
+        fetch(`${BACKEND}/getMentorById`, {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(payload)
+           }).then(async res => {
+               let resolvedRes = await res;
+               if (resolvedRes.status !== 200) {
+                swal({
+                    title: "Oops!",
+                    text: "Something went wrong... Please try again.",
+                    icon: "error",
+                });
+               }
+               else {
+                   this.setState({
+                       activeItem: MENTOR_PROFILE,
+                       mentorFetchedForView: resolvedRes,
+                   })
+               }
+            })
+        }
+
     renderNavSelection() {
         switch(this.state.activeItem) {
             case MY_PROFILE:
@@ -110,7 +137,20 @@ export default class NavBarMentee extends Component {
                         menteeTimeZone={this.state.data.timeZone}
                     />)
             case MENTOR_PROFILE:
-                return null
+                return <Profile
+                    image={this.state.mentorFetchedForView.image}
+                    name={this.state.mentorFetchedForView.name}
+                    school={this.state.mentorFetchedForView.school}
+                    memberSince={this.state.mentorFetchedForView.memberSince}
+                    aboutYourself={this.state.mentorFetchedForView.aboutYourself}
+                    position={this.state.mentorFetchedForView.position}
+                    major={this.state.mentorFetchedForView.major}
+                    location={this.state.mentorFetchedForView.location}
+                    timeZone={this.state.mentorFetchedForView.timeZone}
+                    languages={this.state.mentorFetchedForView.languages}
+                    viewMode={true}
+                    isMentor={true}
+                />
             default:
                 return null
         }

@@ -42,7 +42,12 @@ export default class MentorNetworkCard extends React.Component {
                         </Card.Content> */}
                     </Grid.Column>
                     <Grid.Column width={3}>
-                        <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
+                        <Grid.Row>
+                            <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Button onClick={() => this.props.viewProfile(id)} class="ui button">View Profile</Button>
+                        </Grid.Row>
                     </Grid.Column>
                 </Grid>
             </Card>
