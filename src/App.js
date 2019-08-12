@@ -73,7 +73,6 @@ export default class App extends Component {
 
   liftPayload(payload, isMentor) {
     if (isMentor) {
-      console.log("languages is ", payload.mentor.languages)
       this.setState({
         isMentor: true,
         mentorPayload: payload
