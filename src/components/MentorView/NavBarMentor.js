@@ -26,7 +26,7 @@ export default class NavBarMentor extends Component {
     }
 
     getConfirmedCalls() {
-        return this.state.requests.filter(request => request.confirmed)
+        return this.state.requests.filter(request => request.confirmed && !request.done)
     }
 
     getBacklog() {

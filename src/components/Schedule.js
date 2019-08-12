@@ -45,7 +45,9 @@ export default class Schedule extends React.Component {
     }
 
     renderScheduleCards() {
-        return this.state.schedules && this.state.schedules.map(request => {
+        return this.state.schedules && this.state.schedules.filter(call => {
+            return (!call.feedback_given);
+        }).map(request => {
             return (
                 <ScheduleCard
                     time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
@@ -54,7 +56,7 @@ export default class Schedule extends React.Component {
                     requestId={request.id}
                     meetingRoom={request.mentor.zoom_info}
                     requestDone={request.done}
-                />
+                /> 
             )
         })
     }
