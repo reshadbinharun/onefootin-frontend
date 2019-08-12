@@ -97,7 +97,7 @@ export default class MentorNetwork extends React.Component {
         } else {
             return MentorObjects.filter(mentor => {return mentor.preferredTopics.includes(this.state.searchTopic)})
                 .filter(mentorByTopic => {
-                    let bagOfWords = this.getBagofWords(mentor);
+                    let bagOfWords = this.getBagofWords(mentorByTopic);
                     let searchTerms = this.state.searchTerms;
                     for (let i = 0; i < bagOfWords.length; i++) {
                         if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
