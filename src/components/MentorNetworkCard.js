@@ -22,9 +22,6 @@ export default class MentorNetworkCard extends React.Component {
                     <Grid.Column width={9}>
                         <Card.Content>
                         <Card.Header>{name}</Card.Header>
-                        {/* <Card.Meta>
-                            <span className='date'>Joined in {connectionSince}</span>
-                        </Card.Meta> */}
                         <Card.Description>
                             School: {school}
                         </Card.Description>
@@ -43,10 +40,9 @@ export default class MentorNetworkCard extends React.Component {
                         <Grid.Row>
                         </Grid.Row>
                         <Grid.Row>
-                            <Button  class="ui button" onClick={() => this.props.viewProfile(id)}>
-                                <Icon name='user' >
+                            <Button  class="ui button" onClick={() => this.props.viewProfile}>
+                                <Icon name='user' />
                                 Go to Profile
-                                </Icon>
                             </Button>
                         </Grid.Row>
                     </Grid.Column>
