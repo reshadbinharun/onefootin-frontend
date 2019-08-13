@@ -22,7 +22,7 @@ export default class CardDetails extends React.Component {
 
     getLanguages(){
         let languages = this.props.languages;
-        if (languages.length > 1) {
+        if (languages && languages.length > 1) {
             return 'I speak ' + languages.slice(0,-1).join(', ') + ' and '+ languages.slice(-1);
         } else {
             return `I speak ${languages[0]}`;
