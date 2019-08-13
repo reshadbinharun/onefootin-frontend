@@ -26,7 +26,7 @@ export default class NavBarMentee extends Component {
             schedule: null,
             mentorPicked: false,
             mentorId: '',
-            mentorFetchedForView: null,
+            mentorPickedForView: null,
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
@@ -78,28 +78,33 @@ export default class NavBarMentee extends Component {
     }
 
     viewMentorProfile(value) {
-        let payload = {
-            id: value
-        }
-        fetch(`${BACKEND}/getMentorById`, {
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(payload)
-           }).then(async res => {
-               let resolvedRes = await res;
-               if (resolvedRes.status !== 200) {
-                swal({
-                    title: "Oops!",
-                    text: "Something went wrong... Please try again.",
-                    icon: "error",
-                });
-               }
-               else {
-                   this.setState({
-                       activeItem: MENTOR_PROFILE,
-                       mentorFetchedForView: resolvedRes,
-                   })
-               }
+        console.log("mentor picked is ", value);
+        // let payload = {
+        //     id: value
+        // }
+        // fetch(`${BACKEND}/getMentorById`, {
+        //     method: 'post',
+        //     headers: {'Content-Type':'application/json'},
+        //     body: JSON.stringify(payload)
+        //    }).then(async res => {
+        //        let resolvedRes = await res;
+        //        if (resolvedRes.status !== 200) {
+        //         swal({
+        //             title: "Oops!",
+        //             text: "Something went wrong... Please try again.",
+        //             icon: "error",
+        //         });
+        //        }
+        //        else {
+        //            this.setState({
+        //                activeItem: MENTOR_PROFILE,
+        //                mentorFetchedForView: resolvedRes,
+        //            })
+        //        }
+        //     })
+            this.setState({
+                activeItem: MENTOR_PROFILE,
+                mentorFetchedForView: value,
             })
         }
 
@@ -119,7 +124,7 @@ export default class NavBarMentee extends Component {
             case MENTOR_NETWORK:
                 return <MentorNetwork
                     pickMentor={this.handleNewScheduleWithMentor}
-                    viewProfile={this.viewMentorProfile}
+                    viewMentorProfile={this.viewMentorProfile}
                     />
             case SCHEDULINGS:
                 return <Schedule

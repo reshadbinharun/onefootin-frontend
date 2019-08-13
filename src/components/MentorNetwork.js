@@ -23,6 +23,7 @@ export default class MentorNetwork extends React.Component {
         this.updateSearchTerms = this.updateSearchTerms.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
+        this.viewProfile = this.viewProfile.bind(this);
     }
 
     componentCleanup() {
@@ -54,6 +55,12 @@ export default class MentorNetwork extends React.Component {
                 mentors: resolvedRes && resolvedRes.mentors
             });
         });
+    }
+
+    viewProfile(e, {value}) {
+        e.preventDefault();
+        let mentorToLift = this.state.mentors.find(mentor => {return mentor.id === value});
+        this.props.viewMentorProfile(mentorToLift);
     }
 
     componentWillUnmount() {
@@ -119,7 +126,7 @@ export default class MentorNetwork extends React.Component {
                     location={mentor.location}
                     image={mentor.image}
                     pickMentor={this.props.pickMentor}
-                    viewProfile={this.props.viewProfile}
+                    viewProfile={this.viewProfile}
                 />
             )
         })
