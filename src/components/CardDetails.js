@@ -25,7 +25,7 @@ export default class CardDetails extends React.Component {
         if (languages && languages.length > 1) {
             return 'I speak ' + languages.slice(0,-1).join(', ') + ' and '+ languages.slice(-1);
         } else {
-            return `I speak ${languages[0]}`;
+            return `I speak ${languages && languages[0]}`;
         }
     }
 
