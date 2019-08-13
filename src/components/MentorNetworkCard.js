@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Image, Button, Icon } from 'semantic-ui-react'
+import { Grid, Card, Image, Button, Icon, Divider } from 'semantic-ui-react'
 
 export default class MentorNetworkCard extends React.Component {
     render() {
@@ -11,7 +11,8 @@ export default class MentorNetworkCard extends React.Component {
         }
         let imageAspect = {
             'width': '200px',
-            'height': '150px'
+            'height': '150px',
+            // TODO: add image property
         }
         return (
             <Card centered={true} style={cardStyle}>
@@ -37,10 +38,9 @@ export default class MentorNetworkCard extends React.Component {
                         <Grid.Row>
                             <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
                         </Grid.Row>
+                        <Divider/>
                         <Grid.Row>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Button  class="ui button" onClick={() => this.props.viewProfile}>
+                            <Button  class="ui button" value={id} onClick={(this.props.viewProfile)}>
                                 <Icon name='user' />
                                 Go to Profile
                             </Button>
