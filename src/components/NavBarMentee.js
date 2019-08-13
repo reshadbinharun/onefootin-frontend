@@ -31,6 +31,7 @@ export default class NavBarMentee extends Component {
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
+        this.viewMentorProfile = this.viewMentorProfile.bind(this);
     }
 
     componentCleanup() {
@@ -118,6 +119,7 @@ export default class NavBarMentee extends Component {
             case MENTOR_NETWORK:
                 return <MentorNetwork
                     pickMentor={this.handleNewScheduleWithMentor}
+                    viewProfile={this.viewMentorProfile}
                     />
             case SCHEDULINGS:
                 return <Schedule

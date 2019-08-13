@@ -35,18 +35,20 @@ export default class MentorNetworkCard extends React.Component {
                             Location: {location}
                         </Card.Description>
                         </Card.Content>
-                        {/* <Card.Content extra>
-                            <Icon name='user'>
-                            Go to Profile
-                            </Icon>
-                        </Card.Content> */}
                     </Grid.Column>
                     <Grid.Column width={3}>
                         <Grid.Row>
                             <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
                         </Grid.Row>
                         <Grid.Row>
-                            <Button onClick={() => this.props.viewProfile(id)} class="ui button">View Profile</Button>
+                        </Grid.Row>
+                        <Grid.Row>
+                        <Card.Content extra>
+                            <Icon name='user' onClick={() => this.props.viewProfile(id)}>
+                            Go to Profile
+                            </Icon>
+                        </Card.Content>
+                            {/* <Button  class="ui button">View Profile</Button> */}
                         </Grid.Row>
                     </Grid.Column>
                 </Grid>
