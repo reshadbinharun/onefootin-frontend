@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Image, Button } from 'semantic-ui-react'
+import { Grid, Card, Image, Button, Icon } from 'semantic-ui-react'
 
 export default class MentorNetworkCard extends React.Component {
     render() {
