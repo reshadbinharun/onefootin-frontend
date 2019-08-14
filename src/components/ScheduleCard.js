@@ -32,6 +32,7 @@ export default class ScheduleCard extends React.Component {
                 headers: headers,
                 body: JSON.stringify(this.swalForm)
             }).then(res => {
+                console.log("feedback sent")
                 if (res.status !== 200) {
                     console.log("Request failed")
                 } else {
