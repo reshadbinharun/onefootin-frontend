@@ -5,8 +5,6 @@ import MentorNetwork from './MentorNetwork';
 import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
-import { BACKEND } from "../App";
-import swal from "sweetalert";
 
 const compName = 'NavBarMentee_LS';
 
