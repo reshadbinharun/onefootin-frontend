@@ -72,10 +72,16 @@ export default class MentorNetwork extends React.Component {
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
         e.preventDefault();
-        this.setState({
-            searchTerms: searchTerms,
-            searchMode: true
-        })
+        if (!searchTerms) {
+            this.setState({
+                searchMode: false,
+            })
+        } else {
+            this.setState({
+                searchTerms: searchTerms,
+                searchMode: true
+            })
+        }
     }
 
     getBagofWords(mentor) {
