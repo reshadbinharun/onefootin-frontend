@@ -70,8 +70,8 @@ export default class ScheduleCard extends React.Component {
                         Join Video Call
                     </Button>
                     <Button
-                        onClick={() => this.props.requestDone ? this.provideFeedback : null}
-                        basic color='yellow' disabled={this.props.requestDone}>
+                        onClick={this.props.requestDone ? this.provideFeedback : null}
+                        basic color='yellow' disabled={!this.props.requestDone}>
                         Provide Feedback
                     </Button>
                     </div>

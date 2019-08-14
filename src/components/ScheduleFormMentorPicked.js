@@ -113,12 +113,12 @@ export default class ScheduleFormMentorPicked extends Component {
             timeSelection: value,
         })
     }
-    handleChangeIntro(e, {value}) {
+    handleChangeIntro(e) {
         // check async await pattern, nest as callbacks if not working
         e.preventDefault();
-        this.setState({
-            mentee_intro: value,
-        })
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
     }
 
     renderSubmissionMessage(){
