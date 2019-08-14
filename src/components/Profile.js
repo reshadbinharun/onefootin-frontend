@@ -72,6 +72,13 @@ export default class Profile extends React.Component {
                 this.props.isMentor ? 
                     mentorButtonCollection : buttonCollection
                 }
+                <Divider/>
+                {this.props.viewMode ? 
+                <Button onClick={(e) => this.props.goBackToMentorNetwork(e)}>
+                    <Icon name="backward"/>
+                    Back to network
+                </Button>
+                : null}
             </Grid.Column>
             <Grid.Column>
                 <CardDetails

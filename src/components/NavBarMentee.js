@@ -32,6 +32,7 @@ export default class NavBarMentee extends Component {
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
         this.viewMentorProfile = this.viewMentorProfile.bind(this);
+        this.goBackToMentorNetwork = this.goBackToMentorNetwork.bind(this);
     }
 
     componentCleanup() {
@@ -69,6 +70,13 @@ export default class NavBarMentee extends Component {
         })
     }
 
+    goBackToMentorNetwork(e) {
+        e.preventDefault();
+        this.setState({
+            activeItem: MENTOR_NETWORK
+        })
+    }
+
     handleNewScheduleWithMentor(value) {
         this.setState({
             activeItem: NEW_CALL,
@@ -78,35 +86,11 @@ export default class NavBarMentee extends Component {
     }
 
     viewMentorProfile(value) {
-        console.log("mentor picked is ", value);
-        // let payload = {
-        //     id: value
-        // }
-        // fetch(`${BACKEND}/getMentorById`, {
-        //     method: 'post',
-        //     headers: {'Content-Type':'application/json'},
-        //     body: JSON.stringify(payload)
-        //    }).then(async res => {
-        //        let resolvedRes = await res;
-        //        if (resolvedRes.status !== 200) {
-        //         swal({
-        //             title: "Oops!",
-        //             text: "Something went wrong... Please try again.",
-        //             icon: "error",
-        //         });
-        //        }
-        //        else {
-        //            this.setState({
-        //                activeItem: MENTOR_PROFILE,
-        //                mentorFetchedForView: resolvedRes,
-        //            })
-        //        }
-        //     })
-            this.setState({
-                activeItem: MENTOR_PROFILE,
-                mentorFetchedForView: value,
-            })
-        }
+        this.setState({
+            activeItem: MENTOR_PROFILE,
+            mentorFetchedForView: value,
+        })
+    }
 
     renderNavSelection() {
         switch(this.state.activeItem) {
@@ -158,6 +142,7 @@ export default class NavBarMentee extends Component {
                     languages={this.state.mentorFetchedForView.languages}
                     viewMode={true}
                     isMentor={true}
+                    goBackToMentorNetwork={this.goBackToMentorNetwork}
                 />
             default:
                 return null
