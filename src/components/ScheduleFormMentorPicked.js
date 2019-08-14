@@ -15,7 +15,7 @@ export default class ScheduleFormMentorPicked extends Component {
             mentor: null,
             topicOptions: [],
             timeOptions: [],
-            formComplete: false,
+            submitting: false,
         }
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.handleChangeTime = this.handleChangeTime.bind(this);
@@ -73,7 +73,7 @@ export default class ScheduleFormMentorPicked extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.setState({
-            formComplete: true,
+            submitting: true,
         },() => {
             let newRequestPayload = {
                 dateTime: this.state.timeSelection,
@@ -97,12 +97,18 @@ export default class ScheduleFormMentorPicked extends Component {
                         text: "Something went wrong! Please try again.",
                         icon: "error",
                     });
+                    this.setState({
+                        submitting: false,
+                    })
                 } else {
                     swal({
                         title: `You're all set!`,
                         text: "You've successfully requested a call! Keep an eye out on your email for updates.",
                         icon: "success",
                     });
+                    this.setState({
+                        submitting: false,
+                    })
                 }
             });
         })

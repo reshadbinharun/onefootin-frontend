@@ -80,9 +80,12 @@ export default class CallCard extends React.Component {
             body: JSON.stringify(confirmPayload)
         }).then(res => {
             if (res.status !== 200) {
-                console.log("Request failed")
+                swal({
+                    title: `Oops!`,
+                    text: "Something went wrong! Please try again.",
+                    icon: "error",
+                  });
             } else {
-                console.log("received response", res.json())
                 swal({
                     title: `Successfully dimissed request.`,
                     text: "Please refresh the app, to view current state of appointments.",

@@ -12,17 +12,17 @@ export default class ScheduleCard extends React.Component {
     provideFeedback(e){
         console.log("provide feedback clicked");
         e.preventDefault();
-        swal.withForm({
-            title: 'Feedback Form',
-            text: 'How did your call go?',
-            showCancelButton: true,
-            confirmButtonColor: 'orange',
-            confirmButtonText: 'Submit!',
-            closeOnConfirm: true,
-            formFields: [
-              { id: 'feedback', placeholder: 'feedback' },
-            ]
-          }, function (isConfirm) {
+        swal({
+            text: "Please provide your feedback",
+            content: "input",
+            button: {
+                text: "Submit!",
+                closeModal: true,
+            },
+          }).then((feedback) => {
+              let payload = {
+                  mentee_feedback: feedback
+              }
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Accept', 'application/json');
@@ -30,13 +30,16 @@ export default class ScheduleCard extends React.Component {
                 method: 'post',
                 credentials: 'include',
                 headers: headers,
-                body: JSON.stringify(this.swalForm)
+                body: JSON.stringify(payload)
             }).then(res => {
                 console.log("feedback sent")
                 if (res.status !== 200) {
-                    console.log("Request failed")
+                    swal({
+                        title: `Oops!`,
+                        text: "Something went wrong! Please try again.",
+                        icon: "error",
+                    });
                 } else {
-                    console.log("received response", res.json())
                     swal({
                         title: `Thank you for your feedback.`,
                         text: "Best of luck!",
