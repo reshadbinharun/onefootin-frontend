@@ -100,6 +100,8 @@ export default class MentorNetwork extends React.Component {
         e.preventDefault();
         this.setState({
             searchMode: false,
+            searchTerms: '',
+            searchTopic: '',
         })
     }
 
@@ -116,7 +118,7 @@ export default class MentorNetwork extends React.Component {
                 }
             })
         } else if (this.state.searchTopic) {
-            return MentorObjects.filter(mentor => {return mentor.preferredTopics.includes(this.state.searchTopic)})
+            return MentorObjects.filter(mentor => {console.log(mentor); return mentor.preferredTopics.includes(this.state.searchTopic)})
         }
     }
 
