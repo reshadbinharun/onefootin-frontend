@@ -3,6 +3,7 @@ import { Grid, Form, Container, Message, Button, Dropdown } from 'semantic-ui-re
 import _ from 'lodash'
 import {BACKEND} from "../App"
 import { convertToViewerTimeZone } from './TimezoneAdjustmentHelpers';
+import swal from "sweetalert";
 
 export default class ScheduleFormMentorPicked extends Component {
     constructor(props){
@@ -19,7 +20,6 @@ export default class ScheduleFormMentorPicked extends Component {
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.handleChangeTime = this.handleChangeTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.renderSubmissionMessage = this.renderSubmissionMessage.bind(this);
         this.handleChangeIntro = this.handleChangeIntro.bind(this);
     }
 
@@ -91,7 +91,19 @@ export default class ScheduleFormMentorPicked extends Component {
                 headers: headers,
                 body: JSON.stringify(newRequestPayload)
             }).then(res => {
-                console.log("received response", res.json())
+                if (res.status !== 200) {
+                    swal({
+                        title: `Oops!`,
+                        text: "Something went wrong! Please try again.",
+                        icon: "error",
+                    });
+                } else {
+                    swal({
+                        title: `You're all set!`,
+                        text: "You've successfully requested a call! Keep an eye out on your email for updates.",
+                        icon: "success",
+                    });
+                }
             });
         })
         // send updated information
@@ -121,21 +133,6 @@ export default class ScheduleFormMentorPicked extends Component {
         this.setState(change)
     }
 
-    renderSubmissionMessage(){
-        let message1 = `Your call is scheduled with ${this.state.mentor.name}.`
-        let message2 = `Your call will be about ${this.state.topicSelection}. `
-        let message3 = `You have requested your call at ${convertToViewerTimeZone(this.state.timeSelection, this.props.menteeTimeZone)}.`
-        return (
-            <Message 
-                floating={true}
-                positive={true}
-            >
-                <Message.Header>You have successfully requested a Call!</Message.Header>
-                <p>{message1 + message2 + message3}</p>
-            </Message>
-        )
-    }
-
     render() {
         let gridStyle = {
             width: '100%',
@@ -149,7 +146,6 @@ export default class ScheduleFormMentorPicked extends Component {
                     <p>
                     {`Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}.`}
                     </p>
-                    {this.state.formComplete? this.renderSubmissionMessage() : null}
                 </Message>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group widths='equal'>
