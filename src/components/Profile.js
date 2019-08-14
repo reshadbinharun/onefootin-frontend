@@ -67,7 +67,6 @@ export default class Profile extends React.Component {
                 name = {this.props.name}
                 image = {this.props.image}
                 />
-                <Divider/>
                 {this.props.viewMode ? null :
                 this.props.isMentor ? 
                     mentorButtonCollection : buttonCollection

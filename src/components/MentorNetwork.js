@@ -24,6 +24,7 @@ export default class MentorNetwork extends React.Component {
         this.componentCleanup = this.componentCleanup.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.viewProfile = this.viewProfile.bind(this);
+        this.clearSearch = this.clearSearch.bind(this);
     }
 
     componentCleanup() {
@@ -89,9 +90,16 @@ export default class MentorNetwork extends React.Component {
         })
     }
 
+    clearSearch(e) {
+        e.preventDefault();
+        this.setState({
+            searchMode: false,
+        })
+    }
+
     filterResults(MentorObjects) {
         // eslint-disable-next-line
-        if (!this.state.searchTerms) {
+        if (this.state.searchTerms) {
             return MentorObjects.filter(mentor => {
                 let bagOfWords = this.getBagofWords(mentor);
                 let searchTerms = this.state.searchTerms;
@@ -101,17 +109,8 @@ export default class MentorNetwork extends React.Component {
                     }
                 }
             })
-        } else {
+        } else if (this.state.searchTopic) {
             return MentorObjects.filter(mentor => {return mentor.preferredTopics.includes(this.state.searchTopic)})
-                .filter(mentorByTopic => {
-                    let bagOfWords = this.getBagofWords(mentorByTopic);
-                    let searchTerms = this.state.searchTerms;
-                    for (let i = 0; i < bagOfWords.length; i++) {
-                        if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
-                            return true;
-                        }
-                    }
-                })
         }
     }
 
@@ -148,6 +147,12 @@ export default class MentorNetwork extends React.Component {
                         <Divider/>
                         <Grid.Row>
                             <Dropdown placeholder='Search by topic' fluid selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="searchTopic"/>
+                        </Grid.Row>
+                        <Divider/>
+                        <Grid.Row>
+                            <Button onClick={this.clearSearch}>
+                                Clear Search
+                            </Button>
                         </Grid.Row>
                     </Grid.Column>
                 </Grid>

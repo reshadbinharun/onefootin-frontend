@@ -10,6 +10,7 @@ export default class ScheduleCard extends React.Component {
         this.provideFeedback = this.provideFeedback.bind(this);
     }
     provideFeedback(e){
+        console.log("provide feedback clicked");
         e.preventDefault();
         swal.withForm({
             title: 'Feedback Form',
