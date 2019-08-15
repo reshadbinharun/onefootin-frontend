@@ -41,12 +41,10 @@ export default class ScheduleCard extends React.Component {
                 } else {
                     swal({
                         title: `Thank you for your feedback.`,
-                        text: "Best of luck!",
+                        text: "Best of luck! App will now refresh to update appointments.",
                         icon: "success",
                     });
-                    setTimeout(()=>{
-                        window.location.reload();
-                    }, 5000)
+                    window.location.reload();
                 }
             });
           })

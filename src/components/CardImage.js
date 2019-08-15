@@ -5,7 +5,8 @@ export default class ImageCard extends React.Component {
   render() {
     const {name, image} = this.props;
     let imageAspect = {
-      'height': '300px'
+      'height': '300px',
+      'object-fit': 'cover',
     }
     return (  
     <Card>

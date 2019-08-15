@@ -31,9 +31,10 @@ export default class CallCard extends React.Component {
                 console.log("received response", res.json())
                 swal({
                     title: `You've confirmed a call with ${this.props.mentee.name}`,
-                    text: "Please refresh the app, to view current state of appointments.",
+                    text: "App will now refresh to reflect view current state of appointments.",
                     icon: "success",
                   });
+                window.location.reload();
             }
         });
     }
@@ -58,9 +59,10 @@ export default class CallCard extends React.Component {
                 console.log("received response", res.json())
                 swal({
                     title: `Congratulations on completing the request!`,
-                    text: "Please refresh the app, to view current state of appointments.",
+                    text: "App will now refresh to reflect view current state of appointments.",
                     icon: "success",
                   });
+                window.location.reload();
             }
         });
     }
@@ -88,9 +90,10 @@ export default class CallCard extends React.Component {
             } else {
                 swal({
                     title: `Successfully dimissed request.`,
-                    text: "Please refresh the app, to view current state of appointments.",
+                    text: "App will now refresh to reflect view current state of appointments.",
                     icon: "success",
                   });
+                window.location.reload();
             }
         });
     }

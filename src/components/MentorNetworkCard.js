@@ -12,7 +12,7 @@ export default class MentorNetworkCard extends React.Component {
         let imageAspect = {
             'width': '200px',
             'height': '150px',
-            // TODO: add image property
+            'object-fit': 'cover'
         }
         return (
             <Card centered={true} style={cardStyle}>

@@ -15,7 +15,7 @@ export default class MentorCard extends React.Component {
             <Card centered={true} style={cardStyle}>
                 <Grid columns={2}>
                     <Grid.Column width={4}>
-                        <Image size='medium' src={image} />
+                        <Image size='medium' style={{'object-fit': 'cover'}} src={image} />
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Card.Content>
