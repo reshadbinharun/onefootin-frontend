@@ -43,8 +43,9 @@ export default class ScheduleCard extends React.Component {
                         title: `Thank you for your feedback.`,
                         text: "Best of luck! App will now refresh to update appointments.",
                         icon: "success",
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload();
                 }
             });
           })
