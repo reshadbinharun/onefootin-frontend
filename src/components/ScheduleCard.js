@@ -10,10 +10,9 @@ export default class ScheduleCard extends React.Component {
         this.provideFeedback = this.provideFeedback.bind(this);
     }
     provideFeedback(e){
-        console.log("provide feedback clicked");
         e.preventDefault();
         swal({
-            text: "Please provide your feedback",
+            text: "What did you like about the call? What could have been better?",
             content: "input",
             button: {
                 text: "Submit!",
@@ -21,6 +20,7 @@ export default class ScheduleCard extends React.Component {
             },
           }).then((feedback) => {
               let payload = {
+                  requestId: this.props.requestId,
                   mentee_feedback: feedback
               }
             var headers = new Headers();
@@ -32,7 +32,6 @@ export default class ScheduleCard extends React.Component {
                 headers: headers,
                 body: JSON.stringify(payload)
             }).then(res => {
-                console.log("feedback sent")
                 if (res.status !== 200) {
                     swal({
                         title: `Oops!`,
@@ -45,6 +44,9 @@ export default class ScheduleCard extends React.Component {
                         text: "Best of luck!",
                         icon: "success",
                     });
+                    setTimeout(()=>{
+                        window.location.reload();
+                    }, 5000)
                 }
             });
           })
