@@ -13,6 +13,20 @@ let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
     return {key: val, text: val, value: val}
 })
 
+export const LANGUAGE_OPTIONS_ALL = ["Afrikanns", "Albanian", "Arabic", "Armenian", "Basque", 
+"Bengali", "Bulgarian", "Catalan", "Cambodian", "Chinese (Mandarin)", "Croation", "Czech", "Danish", 
+"Dutch", "English", "Estonian", "Fiji", "Finnish", "French", "Georgian", "German", "Greek", "Gujarati", 
+"Hebrew", "Hindi", "Hungarian", "Icelandic", "Indonesian", "Irish", "Italian", "Japanese", "Javanese", 
+"Korean", "Latin", "Latvian", "Lithuanian", "Macedonian", "Malay", "Malayalam", "Maltese", "Maori", "Marathi", 
+"Mongolian", "Nepali", "Norwegian", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Romanian", "Russian", 
+"Samoan", "Serbian", "Slovak", "Slovenian", "Spanish", "Swahili", "Swedish ", "Tamil", "Tatar", "Telugu", "Thai", 
+"Tibetan", "Tonga", "Turkish", "Ukranian", "Urdu", "Uzbek", "Vietnamese", "Welsh", "Xhosa"];
+export const LANGUAGE_OPTIONS = ["Arabic", "Bengali", "Chinese (Mandarin)", "English", "French", "German", "Greek", "Hebrew", "Hindi", 
+"Indonesian", "Italian", "Japanese", "Nepali", "Portuguese", "Romanian", "Russian", "Spanish", "Swahili", "Urdu"];
+let languageOptions = LANGUAGE_OPTIONS.map(val => {
+    return {key: val, text: val, value: val}
+})
+
 const compName = 'MentorSignUp_LS';
 
 let fieldStyle = {
@@ -45,6 +59,7 @@ export default class SignUpMentor extends React.Component {
             major: '',
             location: '',
             preferredTopics: [],
+            languages: [],
             selectTimes: false,
             position: '',
             aboutYourself: '',
@@ -52,6 +67,7 @@ export default class SignUpMentor extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
+        this.handleChangeLanguages = this.handleChangeLanguages.bind(this);
         this.selectTimes = this.selectTimes.bind(this);
         this.setPreferredTimes = this.setPreferredTimes.bind(this);
         this.formPayload = this.formPayload.bind(this);
@@ -109,6 +125,13 @@ export default class SignUpMentor extends React.Component {
         })
     }
 
+    handleChangeLanguages(e, {value}) {
+        e.preventDefault();
+        this.setState({
+            languages: value
+        })
+    }
+
     uploadImage(e) {
         e.preventDefault();
         let file = e.target.files[0];
@@ -140,6 +163,7 @@ export default class SignUpMentor extends React.Component {
             location: this.state.location,
             preferredTimes: this.state.preferredTimes,
             preferredTopics: this.state.preferredTopics,
+            languages: this.state.languages,
             timeZone: timeZone,
             position: this.state.position,
             aboutYourself: this.state.aboutYourself,
@@ -229,8 +253,8 @@ export default class SignUpMentor extends React.Component {
                         required="true"
                         style={fieldStyle}
                     >
-                        <label>School</label>
-                        <input placeholder='School' name="school" onChange={this.handleChange} value={this.state.school}/>
+                        <label>College</label>
+                        <input placeholder='College' name="school" onChange={this.handleChange} value={this.state.school}/>
                     </Form.Field>
                     <Form.Field
                         type="text"
@@ -247,6 +271,10 @@ export default class SignUpMentor extends React.Component {
                     >
                         <label>Professional Position</label>
                         <input placeholder='Position' name="position" onChange={this.handleChange} value={this.state.position}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>What languages do you speak?</label>
+                    <Dropdown placeholder='Select all languages you speak...' fluid multiple selection options={languageOptions} onChange={this.handleChangeLanguages} name="languages" value={this.state.languages}/>
                     </Form.Field>
                     <Form.Field
                         type="text"

@@ -26,7 +26,7 @@ export default class NavBarMentor extends Component {
     }
 
     getConfirmedCalls() {
-        return this.state.requests.filter(request => request.confirmed)
+        return this.state.requests.filter(request => request.confirmed && !request.done)
     }
 
     getBacklog() {
@@ -83,6 +83,8 @@ export default class NavBarMentor extends Component {
                     major={this.state.data.major}
                     location={this.state.data.location}
                     timeZone={this.state.data.timeZone}
+                    zoom_info={this.state.data.zoom_info}
+                    languages={this.state.data.languages}
                 />
             case BACKLOG:
                 return <Backlog

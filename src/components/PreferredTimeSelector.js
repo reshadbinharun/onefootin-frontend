@@ -1,6 +1,6 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon } from 'semantic-ui-react';
+import { Grid, Button, Dropdown, Divider, Message, Container, Header, Icon, Input, Label } from 'semantic-ui-react';
 import { BACKEND } from "../App";
 import { Redirect } from "react-router-dom";
 import swal from "sweetalert";
@@ -29,6 +29,8 @@ export default class PreferredTimeSelector extends React.Component {
             fridayPreferredTimes: [],
             saturdayPreferredTimes: [],
             signUpDone: false,
+            submitting: false,
+            zoom_info: '',
         }
         this.handleChangeSundayTime = this.handleChangeSundayTime.bind(this);
         this.handleChangeMondayTime = this.handleChangeMondayTime.bind(this);
@@ -38,8 +40,16 @@ export default class PreferredTimeSelector extends React.Component {
         this.handleChangeFridayTime = this.handleChangeFridayTime.bind(this);
         this.handleChangeSaturdayTime = this.handleChangeSaturdayTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
-    // TODO: Refactor into map function to allow code re-use
+
+    handleChange(e) {
+        e.preventDefault();
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
+    }
+
     handleChangeSundayTime(e, {value}) {
         e.preventDefault();
         this.setState({
@@ -85,6 +95,9 @@ export default class PreferredTimeSelector extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({
+            submitting: true
+        });
         let preferredTimes = [
         ...this.state.sundayPreferredTimes && this.state.sundayPreferredTimes.map(time => `Sunday-${time}`),
         ...this.state.mondayPreferredTimes && this.state.mondayPreferredTimes.map(time => `Monday-${time}`),
@@ -94,10 +107,20 @@ export default class PreferredTimeSelector extends React.Component {
         ...this.state.fridayPreferredTimes && this.state.fridayPreferredTimes.map(time => `Friday-${time}`),
         ...this.state.saturdayPreferredTimes && this.state.saturdayPreferredTimes.map(time => `Saturday-${time}`),
         ]
-
+        if (!this.state.zoom_info) {
+            swal({
+                title: "Slow down there!",
+                text: "Please set up a zoom meeting room to complete sign up!",
+                icon: "error",
+            });
+            this.setState({
+                submitting: false,
+            });
+            return;
+        }
         // convert preferredTimes to database storage format:
         let timesToStore = adjustTimeForStorage(preferredTimes, this.props.payload.timeZone);
-        let payload = Object.assign(this.props.payload, {preferredTimes: timesToStore});
+        let payload = Object.assign(this.props.payload, {preferredTimes: timesToStore, zoom_info: this.state.zoom_info});
         fetch(`${BACKEND}/newMentor`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
@@ -110,6 +133,9 @@ export default class PreferredTimeSelector extends React.Component {
                     text: "Something went wrong... Please try again.",
                     icon: "error",
                 });
+                this.setState({
+                    submitting: false
+                })
                }
                else {
                 swal({
@@ -118,7 +144,8 @@ export default class PreferredTimeSelector extends React.Component {
                     icon: "success",
                   });
                 this.setState({
-                    signUpDone: true
+                    signUpDone: true,
+                    submitting: false
                 })
                }
            });
@@ -193,10 +220,24 @@ export default class PreferredTimeSelector extends React.Component {
                             </Grid.Column>
                         </Grid>
                         <Grid.Row style={{"padding": "14px"}}></Grid.Row>
+                            <Grid.Row centered>
+                                <Grid.Row>
+                                    <Button onClick={()=>{window.open("https://www.zoom.us/signup")}}>Click here to set up a zoom account for free!</Button>
+                                </Grid.Row>
+                                <Divider/>
+                                <Grid.Row>
+                                    <Label pointing='below'>Please insert your zoom meeting room ID below after you've set up a free account.</Label> 
+                                </Grid.Row>
+                                <Grid.Row>
+                                    <Input name='zoom_info' placeholder='https://zoom.us/j/xxxxxxxxxx' onChange={this.handleChange}/>
+                                </Grid.Row>
+                            </Grid.Row>
+                            <Divider/>
                         <Button 
                             color="blue" 
                             type='submit'
                             onClick={this.handleSubmit}
+                            loading={this.state.submitting}
                             >
                             <Icon name="unlock"/>
                             Submit

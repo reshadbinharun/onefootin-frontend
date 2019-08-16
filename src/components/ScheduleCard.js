@@ -1,8 +1,55 @@
 import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
+import { BACKEND } from "../App"
+import swal from "sweetalert";
 
 export default class ScheduleCard extends React.Component {
     // TODO: Implement cancel and reschedule
+    constructor(props){
+        super(props);
+        this.provideFeedback = this.provideFeedback.bind(this);
+    }
+    provideFeedback(e){
+        e.preventDefault();
+        swal({
+            text: "What did you like about the call? What could have been better?",
+            content: "input",
+            button: {
+                text: "Submit!",
+                closeModal: true,
+            },
+          }).then((feedback) => {
+              let payload = {
+                  requestId: this.props.requestId,
+                  mentee_feedback: feedback
+              }
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Accept', 'application/json');
+            fetch(`${BACKEND}/giveFeedback`, {
+                method: 'post',
+                credentials: 'include',
+                headers: headers,
+                body: JSON.stringify(payload)
+            }).then(res => {
+                if (res.status !== 200) {
+                    swal({
+                        title: `Oops!`,
+                        text: "Something went wrong! Please try again.",
+                        icon: "error",
+                    });
+                } else {
+                    swal({
+                        title: `Thank you for your feedback.`,
+                        text: "Best of luck! App will now refresh to update appointments.",
+                        icon: "success",
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            });
+          })
+    }
     render() {
         const {time, topic, mentor} = this.props;
         const cardStyle ={
@@ -22,12 +69,14 @@ export default class ScheduleCard extends React.Component {
                 <Card.Content extra>
                     <div className='ui two buttons'>
                     <Button basic color='dark orange'
-                        onClick={() => this.props.getRequestForVideoMentee(this.props.requestId, mentor)}
+                        onClick={() => window.open(this.props.meetingRoom)}
                     >
                         Join Video Call
                     </Button>
-                    <Button basic color='yellow' disabled>
-                        Cancel
+                    <Button
+                        onClick={this.props.requestDone ? this.provideFeedback : null}
+                        basic color='yellow' disabled={!this.props.requestDone}>
+                        Provide Feedback
                     </Button>
                     </div>
                 </Card.Content>

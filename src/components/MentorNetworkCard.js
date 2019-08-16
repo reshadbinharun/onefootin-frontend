@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Image, Button } from 'semantic-ui-react'
+import { Grid, Card, Image, Button, Icon, Divider } from 'semantic-ui-react'
 
 export default class MentorNetworkCard extends React.Component {
     render() {
@@ -11,7 +11,8 @@ export default class MentorNetworkCard extends React.Component {
         }
         let imageAspect = {
             'width': '200px',
-            'height': '150px'
+            'height': '150px',
+            'object-fit': 'cover'
         }
         return (
             <Card centered={true} style={cardStyle}>
@@ -22,9 +23,6 @@ export default class MentorNetworkCard extends React.Component {
                     <Grid.Column width={9}>
                         <Card.Content>
                         <Card.Header>{name}</Card.Header>
-                        {/* <Card.Meta>
-                            <span className='date'>Joined in {connectionSince}</span>
-                        </Card.Meta> */}
                         <Card.Description>
                             School: {school}
                         </Card.Description>
@@ -35,14 +33,18 @@ export default class MentorNetworkCard extends React.Component {
                             Location: {location}
                         </Card.Description>
                         </Card.Content>
-                        {/* <Card.Content extra>
-                            <Icon name='user'>
-                            Go to Profile
-                            </Icon>
-                        </Card.Content> */}
                     </Grid.Column>
                     <Grid.Column width={3}>
-                        <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
+                        <Grid.Row>
+                            <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
+                        </Grid.Row>
+                        <Divider/>
+                        <Grid.Row>
+                            <Button  class="ui button" value={id} onClick={(this.props.viewProfile)}>
+                                <Icon name='user' />
+                                Go to Profile
+                            </Button>
+                        </Grid.Row>
                     </Grid.Column>
                 </Grid>
             </Card>

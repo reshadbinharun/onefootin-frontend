@@ -1,9 +1,13 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Divider, Dropdown, Button } from 'semantic-ui-react'
 import SearchBar from './SearchBar';
 import MentorNetworkCard from './MentorNetworkCard';
 import { BACKEND } from "../App";
+import { PREFERRED_TOPICS } from "./SignUp/SignUpMentor";
+let preferredTopicsOptions = PREFERRED_TOPICS.map(val => {
+    return {key: val, text: val, value: val}
+});
 
 const compName = 'MentorNetwork_LS';
 
@@ -14,9 +18,13 @@ export default class MentorNetwork extends React.Component {
             mentors: [],
             searchMode: false,
             searchTerms: '',
+            searchTopic: '',
         }
         this.updateSearchTerms = this.updateSearchTerms.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
+        this.handleChangeTopic = this.handleChangeTopic.bind(this);
+        this.viewProfile = this.viewProfile.bind(this);
+        this.clearSearch = this.clearSearch.bind(this);
     }
 
     componentCleanup() {
@@ -50,6 +58,12 @@ export default class MentorNetwork extends React.Component {
         });
     }
 
+    viewProfile(e, {value}) {
+        e.preventDefault();
+        let mentorToLift = this.state.mentors.find(mentor => {return mentor.id === value});
+        this.props.viewMentorProfile(mentorToLift);
+    }
+
     componentWillUnmount() {
         this.componentCleanup();
         window.removeEventListener('beforeunload', this.componentCleanup);
@@ -58,40 +72,68 @@ export default class MentorNetwork extends React.Component {
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
         e.preventDefault();
-        this.setState({
-            searchTerms: searchTerms,
-            searchMode: true
-        })
+        if (!searchTerms) {
+            this.setState({
+                searchMode: false,
+            })
+        } else {
+            this.setState({
+                searchTerms: searchTerms,
+                searchMode: true
+            })
+        }
     }
 
     getBagofWords(mentor) {
         return [mentor.name, mentor.school, mentor.position, mentor.location];
     }
 
-    filterResults(MentorObjects) {
-        // eslint-disable-next-line 
-        return MentorObjects.filter(mentor => {
-            let bagOfWords = this.getBagofWords(mentor);
-            let searchTerms = this.state.searchTerms;
-            for (let i = 0; i < bagOfWords.length; i++) {
-                if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
-                    return true;
-                }
-            }
+    handleChangeTopic(e, {value}) {
+        e.preventDefault();
+        this.setState({
+            searchTopic: value,
+            searchMode: true
         })
+    }
+
+    clearSearch(e) {
+        e.preventDefault();
+        this.setState({
+            searchMode: false,
+            searchTerms: '',
+            searchTopic: '',
+        })
+    }
+
+    filterResults(MentorObjects) {
+        // eslint-disable-next-line
+        if (this.state.searchTerms) {
+            return MentorObjects.filter(mentor => {
+                let bagOfWords = this.getBagofWords(mentor);
+                let searchTerms = this.state.searchTerms;
+                for (let i = 0; i < bagOfWords.length; i++) {
+                    if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
+                        return true;
+                    }
+                }
+            })
+        } else if (this.state.searchTopic) {
+            return MentorObjects.filter(mentor => {return mentor.preferredTopics.includes(this.state.searchTopic)})
+        }
     }
 
     renderUserCards(MentorObjects) {
         return MentorObjects.map(mentor => {
             return (
                 <MentorNetworkCard
-                id={mentor.id}
-                name={mentor.name}
-                school={mentor.school}
-                position={mentor.position}
-                location={mentor.location}
-                image={mentor.image}
-                pickMentor={this.props.pickMentor}
+                    id={mentor.id}
+                    name={mentor.name}
+                    school={mentor.school}
+                    position={mentor.position}
+                    location={mentor.location}
+                    image={mentor.image}
+                    pickMentor={this.props.pickMentor}
+                    viewProfile={this.viewProfile}
                 />
             )
         })
@@ -105,9 +147,21 @@ export default class MentorNetwork extends React.Component {
                         There as {this.state.mentors.length} Mentors currently in network.
                     </Grid.Column>
                     <Grid.Column width={6}>
-                        <SearchBar
-                            onSearchMode={this.updateSearchTerms}
-                        />
+                        <Grid.Row>
+                            <SearchBar
+                                onSearchMode={this.updateSearchTerms}
+                            />
+                        </Grid.Row>
+                        <Divider/>
+                        <Grid.Row>
+                            <Dropdown placeholder='Search by topic' fluid selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="searchTopic"/>
+                        </Grid.Row>
+                        <Divider/>
+                        <Grid.Row>
+                            <Button onClick={this.clearSearch}>
+                                Clear Search
+                            </Button>
+                        </Grid.Row>
                     </Grid.Column>
                 </Grid>
                 <Container>

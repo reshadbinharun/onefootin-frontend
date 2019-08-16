@@ -67,10 +67,17 @@ export default class Profile extends React.Component {
                 name = {this.props.name}
                 image = {this.props.image}
                 />
-                <Divider/>
-                {this.props.isMentor ? 
-                mentorButtonCollection : buttonCollection
+                {this.props.viewMode ? null :
+                this.props.isMentor ? 
+                    mentorButtonCollection : buttonCollection
                 }
+                <Divider/>
+                {this.props.viewMode ? 
+                <Button onClick={(e) => this.props.goBackToMentorNetwork(e)}>
+                    <Icon name="backward"/>
+                    Back to network
+                </Button>
+                : null}
             </Grid.Column>
             <Grid.Column>
                 <CardDetails
@@ -80,6 +87,7 @@ export default class Profile extends React.Component {
                     aboutYourself={this.props.aboutYourself}
                     position={this.props.isMentor ? this.props.position : null }
                     isMentor={this.props.isMentor}
+                    languages={this.props.languages}
                 />
             </Grid.Column>
         </Grid>
@@ -105,6 +113,7 @@ export default class Profile extends React.Component {
                         // mentors only
                         position={this.props.position}
                         major={this.props.major}
+                        zoom_info={this.props.zoom_info}
                     />
                 ) : profile
             }

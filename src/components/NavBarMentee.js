@@ -6,7 +6,6 @@ import Schedule from './Schedule';
 import ScheduleForm from './ScheduleForm';
 import ScheduleFormMentorPicked from './ScheduleFormMentorPicked';
 
-
 const compName = 'NavBarMentee_LS';
 
 export const MY_PROFILE = 'My Profile';
@@ -24,11 +23,14 @@ export default class NavBarMentee extends Component {
             data: {},
             schedule: null,
             mentorPicked: false,
-            mentorId: ''
+            mentorId: '',
+            mentorPickedForView: null,
         }
         this.handleNewSchedule = this.handleNewSchedule.bind(this);
         this.handleNewScheduleWithMentor = this.handleNewScheduleWithMentor.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
+        this.viewMentorProfile = this.viewMentorProfile.bind(this);
+        this.goBackToMentorNetwork = this.goBackToMentorNetwork.bind(this);
     }
 
     componentCleanup() {
@@ -66,11 +68,25 @@ export default class NavBarMentee extends Component {
         })
     }
 
+    goBackToMentorNetwork(e) {
+        e.preventDefault();
+        this.setState({
+            activeItem: MENTOR_NETWORK
+        })
+    }
+
     handleNewScheduleWithMentor(value) {
         this.setState({
             activeItem: NEW_CALL,
             mentorPicked: true,
             mentorId: value
+        })
+    }
+
+    viewMentorProfile(value) {
+        this.setState({
+            activeItem: MENTOR_PROFILE,
+            mentorFetchedForView: value,
         })
     }
 
@@ -90,6 +106,7 @@ export default class NavBarMentee extends Component {
             case MENTOR_NETWORK:
                 return <MentorNetwork
                     pickMentor={this.handleNewScheduleWithMentor}
+                    viewMentorProfile={this.viewMentorProfile}
                     />
             case SCHEDULINGS:
                 return <Schedule
@@ -110,7 +127,21 @@ export default class NavBarMentee extends Component {
                         menteeTimeZone={this.state.data.timeZone}
                     />)
             case MENTOR_PROFILE:
-                return null
+                return <Profile
+                    image={this.state.mentorFetchedForView.image}
+                    name={this.state.mentorFetchedForView.name}
+                    school={this.state.mentorFetchedForView.school}
+                    memberSince={this.state.mentorFetchedForView.memberSince}
+                    aboutYourself={this.state.mentorFetchedForView.aboutYourself}
+                    position={this.state.mentorFetchedForView.position}
+                    major={this.state.mentorFetchedForView.major}
+                    location={this.state.mentorFetchedForView.location}
+                    timeZone={this.state.mentorFetchedForView.timeZone}
+                    languages={this.state.mentorFetchedForView.languages}
+                    viewMode={true}
+                    isMentor={true}
+                    goBackToMentorNetwork={this.goBackToMentorNetwork}
+                />
             default:
                 return null
         }
