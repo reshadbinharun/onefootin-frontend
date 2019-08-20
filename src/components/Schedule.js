@@ -23,7 +23,7 @@ export default class Schedule extends React.Component {
         this.setState({
             menteeId: this.props.menteeId
         }, async () => 
-            await fetch(`${BACKEND}/getConfirmedRequestsForMentee`, {
+            await fetch(`${BACKEND}/getAllRequestsForMentee`, {
                 method: 'post',
                 credentials: 'include',
                 headers: headers,
@@ -44,9 +44,17 @@ export default class Schedule extends React.Component {
         );
     }
 
+    /**
+     * States of calls on mentees side X = show
+     * STATES -->
+     * not confirmed, no feedback, not done X
+     * confirmed, no feedback, not done X
+     * confirmed, no feedback, done X
+     * confirmed, feedback, done
+     */
     renderScheduleCards() {
         return this.state.schedules && this.state.schedules.filter(call => {
-            return (!call.feedback_given || !call.confirmed);
+            return (!call.feedback_given);
         }).map(request => {
             return (
                 <ScheduleCard
