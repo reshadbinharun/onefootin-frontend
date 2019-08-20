@@ -46,7 +46,7 @@ export default class Schedule extends React.Component {
 
     renderScheduleCards() {
         return this.state.schedules && this.state.schedules.filter(call => {
-            return (!call.feedback_given);
+            return (!call.feedback_given || !call.confirmed);
         }).map(request => {
             return (
                 <ScheduleCard
@@ -56,6 +56,7 @@ export default class Schedule extends React.Component {
                     requestId={request.id}
                     meetingRoom={request.mentor.zoom_info}
                     requestDone={request.done}
+                    confirmed={request.confirmed}
                 /> 
             )
         })
