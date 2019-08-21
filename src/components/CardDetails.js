@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Message } from 'semantic-ui-react'
+import { Card, Message, Statistic } from 'semantic-ui-react'
 
 //TODO: allow form that lets mentors edit their time preferences
 export default class CardDetails extends React.Component {

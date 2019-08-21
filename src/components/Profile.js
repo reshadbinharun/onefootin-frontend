@@ -5,6 +5,7 @@ import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
+import { BACKEND } from "../App";
 
 const compName = 'Profile_LS';
 
