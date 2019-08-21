@@ -4,7 +4,6 @@ import { Card, Message } from 'semantic-ui-react'
 //TODO: allow form that lets mentors edit their time preferences
 export default class CardDetails extends React.Component {
     constructor(props) {
-        console.log("props in Card Details", props);
         super(props);
         this.renderAboutMe = this.renderAboutMe.bind(this);
         this.getLanguages = this.getLanguages.bind(this);
@@ -42,6 +41,16 @@ export default class CardDetails extends React.Component {
                     {this.renderAboutMe()}
                     <Card.Description>{name} has been a member since {memberSince}.</Card.Description>
                     </Card.Content>
+                    {this.props.isMentor? <Card.Content>
+                    <Statistic color='orange'>
+                        <Statistic.Value>{this.props.calls_completed}</Statistic.Value>
+                        <Statistic.Label>CALLS COMPLETED</Statistic.Label>
+                    </Statistic>
+                    <Statistic color='yellow'>
+                        <Statistic.Value>{this.props.calls_requested}</Statistic.Value>
+                        <Statistic.Label>CALLS REQUESTED</Statistic.Label>
+                    </Statistic>
+                    </Card.Content> : null}
                 </Card>
             </div>
         );

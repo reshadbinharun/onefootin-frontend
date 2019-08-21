@@ -6,6 +6,8 @@ import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
 
+const compName = 'Profile_LS';
+
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
     // props isMentor, email
@@ -14,10 +16,54 @@ export default class Profile extends React.Component {
         this.state = {
             editMode: false,
             timeSelect: false,
+            calls_requested: null,
+            calls_completed: null,
         }
         this.goBack = this.goBack.bind(this);
         this.launchEditMode = this.launchEditMode.bind(this);
         this.launchTimeSelector = this.launchTimeSelector.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.isMentor) {
+            let payload = {
+                id: this.props.id
+            }
+            fetch(`${BACKEND}/getRequestRecordsMentor`, {
+                method: 'post',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(payload)
+               }).then(async res => {
+                   let resolvedRes = await res;
+                   if (resolvedRes.status !== 200) {
+                    console.log("Could not fetch mentor statistics.");
+                   }
+                   else {
+                    this.setState({
+                        calls_completed: resolvedRes.calls_completed,
+                        calls_requested: resolvedRes.calls_completed,
+                    }).then(() => {
+                        window.addEventListener('beforeunload', this.componentCleanup);
+                        const persistState = sessionStorage.getItem(compName);
+                        if (persistState) {
+                          try {
+                            this.setState(JSON.parse(persistState));
+                          } catch (e) {
+                            console.log("Could not get fetch state from local storage for", compName);
+                          }
+                        }
+                    })
+                    }
+                })
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.isMentor) {
+            this.componentCleanup();
+            window.removeEventListener('beforeunload', this.componentCleanup);
+        }
     }
 
     goBack() {
@@ -88,6 +134,8 @@ export default class Profile extends React.Component {
                     position={this.props.isMentor ? this.props.position : null }
                     isMentor={this.props.isMentor}
                     languages={this.props.languages}
+                    calls_completed={this.state.calls_completed}
+                    calls_requested={this.state.calls_requested}
                 />
             </Grid.Column>
         </Grid>

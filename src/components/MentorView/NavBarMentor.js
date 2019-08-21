@@ -10,7 +10,6 @@ import Backlog from "./Backlog";
 export const MY_PROFILE = 'My Profile';
 export const BACKLOG = 'Backlog';
 export const CONFIRMED_CALLS = 'Confirmed Calls';
-// export const MY_OFFICE = 'My Office'
 
 export default class NavBarMentor extends Component {
     constructor(props){
@@ -72,6 +71,7 @@ export default class NavBarMentor extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile
+                    id={this.state.data.id}
                     email={this.state.data.email} //for profile editing purposes
                     image={this.state.data.image}
                     name={this.state.data.name}
