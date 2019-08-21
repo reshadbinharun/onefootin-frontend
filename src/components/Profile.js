@@ -26,6 +26,10 @@ export default class Profile extends React.Component {
         this.componentCleanup = this.componentCleanup.bind(this);
     }
 
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
+    }
+
     componentDidMount() {
         if (this.props.isMentor) {
             let payload = {
