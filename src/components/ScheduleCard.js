@@ -57,6 +57,14 @@ export default class ScheduleCard extends React.Component {
             padding: '5px',
             margin: '5px',
         }
+        /*
+        States of Join Call Button
+        1. Awaiting Confirmation... --> !confirmed, !done
+        2. Join Video Call --> confirmed, !done
+        3. Call Completed --> done, confirmed
+        4. Call Completed --> !confirmed, done (invalid state)
+        */
+       let buttonText = (this.props.confirmed && !this.props.requestDone) ? 'Join Video Call' : this.props.requestDone ? 'Call Completed' : 'Awaiting Confirmation...';
         return (
             <Card style={cardStyle}>
                 <Card.Content>
@@ -72,7 +80,7 @@ export default class ScheduleCard extends React.Component {
                         disabled={!this.props.confirmed || this.props.requestDone}
                         onClick={() => window.open(this.props.meetingRoom)}
                     >
-                        Join Video Call
+                        {buttonText}
                     </Button>
                     <Button
                         onClick={this.props.requestDone ? this.provideFeedback : null}
