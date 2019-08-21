@@ -108,7 +108,9 @@ export default class ScheduleFormMentorPicked extends Component {
                     });
                     this.setState({
                         submitting: false,
-                    })
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 }
             });
         })
@@ -150,7 +152,7 @@ export default class ScheduleFormMentorPicked extends Component {
                   <Message>
                     <Message.Header>Scheduling form</Message.Header>
                     <p>
-                    {`Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}.`}
+                    {`Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}. Times are displayed in your timezone.`}
                     </p>
                 </Message>
                 <Form onSubmit={this.handleSubmit}>
