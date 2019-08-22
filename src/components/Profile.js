@@ -48,7 +48,7 @@ export default class Profile extends React.Component {
                     this.setState({
                         calls_completed: resolvedRes.calls_completed,
                         calls_requested: resolvedRes.calls_completed,
-                    }).then(() => {
+                    },() => {
                         window.addEventListener('beforeunload', this.componentCleanup);
                         const persistState = sessionStorage.getItem(compName);
                         if (persistState) {

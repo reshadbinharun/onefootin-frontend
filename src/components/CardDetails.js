@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Message, Statistic } from 'semantic-ui-react'
+import { Card, Message, Statistic, Grid } from 'semantic-ui-react'
 
 //TODO: allow form that lets mentors edit their time preferences
 export default class CardDetails extends React.Component {
@@ -42,14 +42,20 @@ export default class CardDetails extends React.Component {
                     <Card.Description>{name} has been a member since {memberSince}.</Card.Description>
                     </Card.Content>
                     {this.props.isMentor? <Card.Content>
-                    <Statistic color='orange'>
-                        <Statistic.Value>{this.props.calls_completed}</Statistic.Value>
-                        <Statistic.Label>CALLS COMPLETED</Statistic.Label>
-                    </Statistic>
-                    <Statistic color='yellow'>
-                        <Statistic.Value>{this.props.calls_requested}</Statistic.Value>
-                        <Statistic.Label>CALLS REQUESTED</Statistic.Label>
-                    </Statistic>
+                        <Grid.Row>
+                            <Grid.Column>
+                            <Statistic color='orange'>
+                                <Statistic.Value>{this.props.calls_completed}</Statistic.Value>
+                                <Statistic.Label>CALLS COMPLETED</Statistic.Label>
+                            </Statistic>
+                            </Grid.Column>
+                            <Grid.Column>
+                            <Statistic color='yellow'>
+                                <Statistic.Value>{this.props.calls_requested}</Statistic.Value>
+                                <Statistic.Label>CALLS REQUESTED</Statistic.Label>
+                            </Statistic>
+                            </Grid.Column>
+                        </Grid.Row>
                     </Card.Content> : null}
                 </Card>
             </div>
