@@ -40,7 +40,8 @@ export default class Profile extends React.Component {
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(payload)
                }).then(async res => {
-                   let resolvedRes = await res;
+                    let resolvedRes = await res;
+                    resolvedRes = await resolvedRes.json()
                    if (resolvedRes.status !== 200) {
                     console.log("Could not fetch mentor statistics.");
                    }
