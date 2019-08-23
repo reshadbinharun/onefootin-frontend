@@ -18,7 +18,7 @@ export default class CardDetails extends React.Component {
         if (this.props.isMentor) {
             if (this.props.mentorIdForStats) {
                 let payload = {
-                    id: this.state.mentorIdForStats
+                    id: this.props.mentorIdForStats
                 }
                 fetch(`${BACKEND}/getRequestRecordsMentor`, {
                     method: 'post',
