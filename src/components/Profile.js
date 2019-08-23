@@ -31,6 +31,10 @@ export default class Profile extends React.Component {
         sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
+    shouldComponentUpdate() {
+        return !this.state.mentorIdForStats;
+    }
+
     componentDidMount() {
         if (this.props.isMentor) {
             this.setState({
@@ -49,28 +53,30 @@ export default class Profile extends React.Component {
                         }
                     }
                 }
-                let payload = {
-                    id: this.state.mentorIdForStats
-                }
-                fetch(`${BACKEND}/getRequestRecordsMentor`, {
-                    method: 'post',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(payload)
-                   }).then(async res => {
-                        let resolvedRes = await res;
-                        let status = resolvedRes.status;
-                        resolvedRes = await resolvedRes.json()
-                       if (status !== 200) {
-                        console.log("Could not fetch mentor statistics.");
-                       }
-                       else {
-                           console.log("statistics fetched are", resolvedRes)
-                        this.setState({
-                            calls_completed: resolvedRes.calls_completed,
-                            calls_requested: resolvedRes.calls_requested,
+                if (this.state.mentorIdForStats) {
+                    let payload = {
+                        id: this.state.mentorIdForStats
+                    }
+                    fetch(`${BACKEND}/getRequestRecordsMentor`, {
+                        method: 'post',
+                        headers: {'Content-Type':'application/json'},
+                        body: JSON.stringify(payload)
+                       }).then(async res => {
+                            let resolvedRes = await res;
+                            let status = resolvedRes.status;
+                            resolvedRes = await resolvedRes.json()
+                           if (status !== 200) {
+                            console.log("Could not fetch mentor statistics.");
+                           }
+                           else {
+                               console.log("statistics fetched are", resolvedRes)
+                            this.setState({
+                                calls_completed: resolvedRes.calls_completed,
+                                calls_requested: resolvedRes.calls_requested,
+                            })
+                            }
                         })
-                        }
-                    })
+                }
             })
         }
     }
