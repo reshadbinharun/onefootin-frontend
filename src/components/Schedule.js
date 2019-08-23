@@ -53,21 +53,40 @@ export default class Schedule extends React.Component {
      * confirmed, feedback, done
      */
     renderScheduleCards() {
-        return this.state.schedules && this.state.schedules.filter(call => {
+        let allSchedules = this.state.schedules && this.state.schedules.filter(call => {
             return (!call.feedback_given);
-        }).map(request => {
-            return (
-                <ScheduleCard
-                    time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
-                    topic={request.topic}
-                    mentor={request.mentor.name}
-                    requestId={request.id}
-                    meetingRoom={request.mentor.zoom_info}
-                    requestDone={request.done}
-                    confirmed={request.confirmed}
-                /> 
-            )
-        })
+        });
+        if (allSchedules.length) {
+            return allSchedules.map(request => {
+                return (
+                    <ScheduleCard
+                        time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
+                        topic={request.topic}
+                        mentor={request.mentor.name}
+                        requestId={request.id}
+                        meetingRoom={request.mentor.zoom_info}
+                        requestDone={request.done}
+                        confirmed={request.confirmed}
+                    /> 
+                )
+            })
+        }
+        const cardStyle ={
+            width: '100%',
+            padding: '5px',
+            margin: '5px',
+        }
+        return (
+            <Card style={cardStyle}>
+                <Card.Content>
+                    <Card.Header>No Scheduled Calls Yet!</Card.Header>
+                    <Card.Meta>Try booking an appointment with one of our mentors...</Card.Meta>
+                    <Card.Description>
+                    There may just be 30 minutes between you and the next chapter of your life!
+                    </Card.Description>
+                </Card.Content>
+            </Card>
+        )
     }
 
     render() {

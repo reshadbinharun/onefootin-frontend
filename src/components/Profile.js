@@ -45,6 +45,7 @@ export default class Profile extends React.Component {
                     console.log("Could not fetch mentor statistics.");
                    }
                    else {
+                       console.log("stats response is", resolvedRes)
                     this.setState({
                         calls_completed: resolvedRes.calls_completed,
                         calls_requested: resolvedRes.calls_completed,
