@@ -129,6 +129,7 @@ export default class NavBarMentee extends Component {
                     />)
             case MENTOR_PROFILE:
                 return <Profile
+                    id={this.state.mentorFetchedForView.id}
                     image={this.state.mentorFetchedForView.image}
                     name={this.state.mentorFetchedForView.name}
                     school={this.state.mentorFetchedForView.school}
