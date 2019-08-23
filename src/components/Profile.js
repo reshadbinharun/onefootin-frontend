@@ -47,9 +47,10 @@ export default class Profile extends React.Component {
                     console.log("Could not fetch mentor statistics.");
                    }
                    else {
+                       console.log("statistics fetched are", resolvedRes)
                     this.setState({
                         calls_completed: resolvedRes.calls_completed,
-                        calls_requested: resolvedRes.calls_completed,
+                        calls_requested: resolvedRes.calls_requested,
                     },() => {
                         window.addEventListener('beforeunload', this.componentCleanup);
                         const persistState = sessionStorage.getItem(compName);
