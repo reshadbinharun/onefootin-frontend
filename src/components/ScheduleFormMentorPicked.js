@@ -108,7 +108,7 @@ export default class ScheduleFormMentorPicked extends Component {
                     });
                     this.setState({
                         submitting: false,
-                    }).then(() => {
+                    },() => {
                         window.location.reload();
                     });
                 }
