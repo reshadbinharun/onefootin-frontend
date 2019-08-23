@@ -69,12 +69,12 @@ export default class Profile extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        if (this.props.isMentor) {
-            this.componentCleanup();
-            window.removeEventListener('beforeunload', this.componentCleanup);
-        }
-    }
+    // componentWillUnmount() {
+    //     if (this.props.isMentor) {
+    //         this.componentCleanup();
+    //         window.removeEventListener('beforeunload', this.componentCleanup);
+    //     }
+    // }
 
     goBack() {
         this.setState({
