@@ -43,7 +43,7 @@ export default class Profile extends React.Component {
                     if(JSON.parse(persistState).mentorIdForStats === this.state.mentorIdForStats) {
                         try {
                             this.setState(JSON.parse(persistState));
-                            return; //no need to make call to fetch state
+                            // set state but overwrite with API call
                         } catch (e) {
                             console.log("Could not get fetch state from local storage for", compName);
                         }
