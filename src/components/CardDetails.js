@@ -14,6 +14,10 @@ export default class CardDetails extends React.Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.calls_completed && nextState.calls_requested;
+    }
+
     componentDidMount() {
         if (this.props.isMentor) {
             if (this.props.mentorIdForStats) {
