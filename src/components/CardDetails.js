@@ -14,10 +14,6 @@ export default class CardDetails extends React.Component {
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextState.calls_completed && nextState.calls_requested;
-    }
-
     componentDidMount() {
         if (this.props.isMentor) {
             if (this.props.mentorIdForStats) {
@@ -83,13 +79,13 @@ export default class CardDetails extends React.Component {
                         <Grid.Row>
                             <Grid.Column>
                             <Statistic color='orange'>
-                                <Statistic.Value>{this.props.calls_completed}</Statistic.Value>
+                                <Statistic.Value>{this.state.calls_completed}</Statistic.Value>
                                 <Statistic.Label>CALLS COMPLETED</Statistic.Label>
                             </Statistic>
                             </Grid.Column>
                             <Grid.Column>
                             <Statistic color='yellow'>
-                                <Statistic.Value>{this.props.calls_requested}</Statistic.Value>
+                                <Statistic.Value>{this.state.calls_requested}</Statistic.Value>
                                 <Statistic.Label>CALLS REQUESTED</Statistic.Label>
                             </Statistic>
                             </Grid.Column>
