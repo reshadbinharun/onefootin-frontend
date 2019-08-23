@@ -7,7 +7,7 @@ import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
 import { BACKEND } from "../App";
 
-// const compName = 'Profile_LS';
+const compName = 'Profile_LS';
 
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
@@ -19,62 +19,68 @@ export default class Profile extends React.Component {
             timeSelect: false,
             calls_requested: null,
             calls_completed: null,
+            mentorIdForStats: null,
         }
         this.goBack = this.goBack.bind(this);
         this.launchEditMode = this.launchEditMode.bind(this);
         this.launchTimeSelector = this.launchTimeSelector.bind(this);
-        // this.componentCleanup = this.componentCleanup.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
     }
 
-    // componentCleanup() {
-    //     sessionStorage.setItem(compName, JSON.stringify(this.state));
-    // }
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
+    }
 
     componentDidMount() {
         if (this.props.isMentor) {
-            let payload = {
-                id: this.props.id
-            }
-            fetch(`${BACKEND}/getRequestRecordsMentor`, {
-                method: 'post',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify(payload)
-               }).then(async res => {
-                    let resolvedRes = await res;
-                    let status = resolvedRes.status;
-                    resolvedRes = await resolvedRes.json()
-                   if (status !== 200) {
-                    console.log("Could not fetch mentor statistics.");
-                   }
-                   else {
-                       console.log("statistics fetched are", resolvedRes)
-                    this.setState({
-                        calls_completed: resolvedRes.calls_completed,
-                        calls_requested: resolvedRes.calls_requested,
+            this.setState({
+                mentorIdForStats: this.props.id
+            },() => {
+                window.addEventListener('beforeunload', this.componentCleanup);
+                const persistState = sessionStorage.getItem(compName);
+                // only read from cached state if on same mentor's profile
+                if (persistState) {
+                    if(JSON.parse(persistState).mentorIdForStats === this.state.mentorIdForStats) {
+                        try {
+                            this.setState(JSON.parse(persistState));
+                            return; //no need to make call to fetch state
+                        } catch (e) {
+                            console.log("Could not get fetch state from local storage for", compName);
+                        }
                     }
-                    // ,() => {
-                    //     window.addEventListener('beforeunload', this.componentCleanup);
-                    //     const persistState = sessionStorage.getItem(compName);
-                    //     if (persistState) {
-                    //       try {
-                    //         this.setState(JSON.parse(persistState));
-                    //       } catch (e) {
-                    //         console.log("Could not get fetch state from local storage for", compName);
-                    //       }
-                    //     }
-                    // }
-                    )
-                    }
-                })
+                }
+                let payload = {
+                    id: this.state.mentorIdForStats
+                }
+                fetch(`${BACKEND}/getRequestRecordsMentor`, {
+                    method: 'post',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify(payload)
+                   }).then(async res => {
+                        let resolvedRes = await res;
+                        let status = resolvedRes.status;
+                        resolvedRes = await resolvedRes.json()
+                       if (status !== 200) {
+                        console.log("Could not fetch mentor statistics.");
+                       }
+                       else {
+                           console.log("statistics fetched are", resolvedRes)
+                        this.setState({
+                            calls_completed: resolvedRes.calls_completed,
+                            calls_requested: resolvedRes.calls_requested,
+                        })
+                        }
+                    })
+            })
         }
     }
 
-    // componentWillUnmount() {
-    //     if (this.props.isMentor) {
-    //         this.componentCleanup();
-    //         window.removeEventListener('beforeunload', this.componentCleanup);
-    //     }
-    // }
+    componentWillUnmount() {
+        if (this.props.isMentor) {
+            this.componentCleanup();
+            window.removeEventListener('beforeunload', this.componentCleanup);
+        }
+    }
 
     goBack() {
         this.setState({
