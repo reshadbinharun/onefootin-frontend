@@ -41,14 +41,12 @@ export default class Profile extends React.Component {
                 body: JSON.stringify(payload)
                }).then(async res => {
                     let resolvedRes = await res;
-                    console.log("res unresolved is", resolvedRes)
+                    let status = resolvedRes.status;
                     resolvedRes = await resolvedRes.json()
-                    console.log("res for stats is", resolvedRes)
-                   if (resolvedRes.status !== 200) {
+                   if (status !== 200) {
                     console.log("Could not fetch mentor statistics.");
                    }
                    else {
-                       console.log("stats response is", resolvedRes)
                     this.setState({
                         calls_completed: resolvedRes.calls_completed,
                         calls_requested: resolvedRes.calls_completed,
