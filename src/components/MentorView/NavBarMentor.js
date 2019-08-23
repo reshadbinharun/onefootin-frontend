@@ -107,7 +107,6 @@ export default class NavBarMentor extends Component {
 
     render() {
         const { activeItem } = this.state.activeItem;
-        console.log("id of mentor is ", this.props.payload.mentor.id);
         return (
         <div>
             <Menu pointing>

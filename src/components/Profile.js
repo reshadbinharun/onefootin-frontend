@@ -5,7 +5,6 @@ import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
-import { BACKEND } from "../App";
 
 const compName = 'Profile_LS';
 
@@ -17,9 +16,6 @@ export default class Profile extends React.Component {
         this.state = {
             editMode: false,
             timeSelect: false,
-            calls_requested: null,
-            calls_completed: null,
-            mentorIdForStats: null,
         }
         this.goBack = this.goBack.bind(this);
         this.launchEditMode = this.launchEditMode.bind(this);
@@ -31,54 +27,17 @@ export default class Profile extends React.Component {
         sessionStorage.setItem(compName, JSON.stringify(this.state));
     }
 
-    shouldComponentUpdate() {
-        return !this.state.mentorIdForStats;
-    }
-
     componentDidMount() {
-        console.log("profile mounted with id", this.props.id)
-        if (this.props.isMentor) {
-            this.setState({
-                mentorIdForStats: this.props.id
-            },() => {
-                window.addEventListener('beforeunload', this.componentCleanup);
-                const persistState = sessionStorage.getItem(compName);
-                // only read from cached state if on same mentor's profile
-                if (persistState) {
-                    if(JSON.parse(persistState).mentorIdForStats === this.state.mentorIdForStats) {
-                        try {
-                            this.setState(JSON.parse(persistState));
-                            // set state but overwrite with API call
-                        } catch (e) {
-                            console.log("Could not get fetch state from local storage for", compName);
-                        }
-                    }
-                }
-                if (this.state.mentorIdForStats) {
-                    let payload = {
-                        id: this.state.mentorIdForStats
-                    }
-                    fetch(`${BACKEND}/getRequestRecordsMentor`, {
-                        method: 'post',
-                        headers: {'Content-Type':'application/json'},
-                        body: JSON.stringify(payload)
-                       }).then(async res => {
-                            let resolvedRes = await res;
-                            let status = resolvedRes.status;
-                            resolvedRes = await resolvedRes.json()
-                           if (status !== 200) {
-                            console.log("Could not fetch mentor statistics.");
-                           }
-                           else {
-                               console.log("statistics fetched are", resolvedRes)
-                            this.setState({
-                                calls_completed: resolvedRes.calls_completed,
-                                calls_requested: resolvedRes.calls_requested,
-                            })
-                            }
-                        })
-                }
-            })
+        window.addEventListener('beforeunload', this.componentCleanup);
+        const persistState = sessionStorage.getItem(compName);
+        // only read from cached state if on same mentor's profile
+        if (persistState) {
+            try {
+                this.setState(JSON.parse(persistState));
+                // set state but overwrite with API call
+            } catch (e) {
+                console.log("Could not get fetch state from local storage for", compName);
+            }
         }
     }
 
@@ -157,8 +116,7 @@ export default class Profile extends React.Component {
                     position={this.props.isMentor ? this.props.position : null }
                     isMentor={this.props.isMentor}
                     languages={this.props.languages}
-                    calls_completed={this.state.calls_completed}
-                    calls_requested={this.state.calls_requested}
+                    mentorIdForStats={this.props.id}
                 />
             </Grid.Column>
         </Grid>
