@@ -7,7 +7,7 @@ import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
 import { BACKEND } from "../App";
 
-const compName = 'Profile_LS';
+// const compName = 'Profile_LS';
 
 export default class Profile extends React.Component {
     // TODO: Add a property to show requests serviced
@@ -23,12 +23,12 @@ export default class Profile extends React.Component {
         this.goBack = this.goBack.bind(this);
         this.launchEditMode = this.launchEditMode.bind(this);
         this.launchTimeSelector = this.launchTimeSelector.bind(this);
-        this.componentCleanup = this.componentCleanup.bind(this);
+        // this.componentCleanup = this.componentCleanup.bind(this);
     }
 
-    componentCleanup() {
-        sessionStorage.setItem(compName, JSON.stringify(this.state));
-    }
+    // componentCleanup() {
+    //     sessionStorage.setItem(compName, JSON.stringify(this.state));
+    // }
 
     componentDidMount() {
         if (this.props.isMentor) {
@@ -51,17 +51,19 @@ export default class Profile extends React.Component {
                     this.setState({
                         calls_completed: resolvedRes.calls_completed,
                         calls_requested: resolvedRes.calls_requested,
-                    },() => {
-                        window.addEventListener('beforeunload', this.componentCleanup);
-                        const persistState = sessionStorage.getItem(compName);
-                        if (persistState) {
-                          try {
-                            this.setState(JSON.parse(persistState));
-                          } catch (e) {
-                            console.log("Could not get fetch state from local storage for", compName);
-                          }
-                        }
-                    })
+                    }
+                    // ,() => {
+                    //     window.addEventListener('beforeunload', this.componentCleanup);
+                    //     const persistState = sessionStorage.getItem(compName);
+                    //     if (persistState) {
+                    //       try {
+                    //         this.setState(JSON.parse(persistState));
+                    //       } catch (e) {
+                    //         console.log("Could not get fetch state from local storage for", compName);
+                    //       }
+                    //     }
+                    // }
+                    )
                     }
                 })
         }
