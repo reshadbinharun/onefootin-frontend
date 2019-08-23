@@ -36,6 +36,7 @@ export default class Profile extends React.Component {
     }
 
     componentDidMount() {
+        console.log("profile mounted with id", this.props.id)
         if (this.props.isMentor) {
             this.setState({
                 mentorIdForStats: this.props.id
