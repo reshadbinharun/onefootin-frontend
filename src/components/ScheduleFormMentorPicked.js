@@ -101,16 +101,17 @@ export default class ScheduleFormMentorPicked extends Component {
                         submitting: false,
                     })
                 } else {
-                    swal({
-                        title: `You're all set!`,
-                        text: "You've successfully requested a call! Keep an eye out on your email for updates.",
-                        icon: "success",
-                    });
                     this.setState({
                         submitting: false,
                     },() => {
-                        window.location.reload();
-                    });
+                        swal({
+                            title: `You're all set!`,
+                            text: "You've successfully requested a call! Keep an eye out on your email for updates.",
+                            icon: "success",
+                        }).then(() => {
+                            this.props.goBackToMentorNetwork();
+                        })
+                    })
                 }
             });
         })

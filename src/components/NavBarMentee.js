@@ -121,6 +121,7 @@ export default class NavBarMentee extends Component {
                         mentorId={this.state.mentorId}
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
+                        goBackToMentorNetwork={this.goBackToMentorNetwork}
                         />:
                     <ScheduleForm
                         menteeId={this.state.data.id}
