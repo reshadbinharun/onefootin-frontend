@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container } from 'semantic-ui-react'
+import { Container, Card } from 'semantic-ui-react'
 import CallCard from './CallCard';
 
 export default class Backlog extends React.Component {

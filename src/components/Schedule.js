@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container } from 'semantic-ui-react'
+import { Container, Card } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
 import { BACKEND } from "../App"
 import { convertToViewerTimeZone } from "./TimezoneAdjustmentHelpers"
