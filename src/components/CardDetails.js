@@ -30,6 +30,7 @@ export default class CardDetails extends React.Component {
 
     render() {
         let {name, school, memberSince} = this.props;
+        console.log("props in card", this.props)
         return (
             <div>
                 <Card>
