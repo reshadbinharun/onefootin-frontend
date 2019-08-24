@@ -5,12 +5,13 @@ export default class SearchBar extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Column width={8}>
+        <Grid.Column width={6}>
           <Search 
             open={false}
             onSearchChange={this.props.onSearchMode}
             placeholder='Search by name, location, etc...'
             value={this.props.searchValue}
+            size='big'
           />
         </Grid.Column>
       </Grid>
