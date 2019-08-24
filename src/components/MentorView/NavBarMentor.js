@@ -71,7 +71,7 @@ export default class NavBarMentor extends Component {
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile
-                    id={this.state.data.id}
+                    id={this.state.data.id || this.props.payload.mentor.id} // from state or props
                     email={this.state.data.email} //for profile editing purposes
                     image={this.state.data.image}
                     name={this.state.data.name}

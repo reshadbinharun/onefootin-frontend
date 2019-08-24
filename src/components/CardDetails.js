@@ -2,19 +2,37 @@ import React from 'react'
 import { Card, Message, Statistic, Grid } from 'semantic-ui-react'
 import { BACKEND } from "../App";
 
+const compName = 'CardDetails_LS';
+
 //TODO: allow form that lets mentors edit their time preferences
 export default class CardDetails extends React.Component {
     constructor(props) {
         super(props);
         this.renderAboutMe = this.renderAboutMe.bind(this);
         this.getLanguages = this.getLanguages.bind(this);
+        this.componentCleanup = this.componentCleanup.bind(this);
         this.state = {
             calls_requested: null,
             calls_completed: null,
         }
     }
 
+    componentCleanup() {
+        sessionStorage.setItem(compName, JSON.stringify(this.state));
+    }
+
     componentDidMount() {
+        window.addEventListener('beforeunload', this.componentCleanup);
+        const persistState = sessionStorage.getItem(compName);
+        // only read from cached state if on same mentor's profile
+        if (persistState) {
+            try {
+                this.setState(JSON.parse(persistState));
+                // set state but overwrite with API call
+            } catch (e) {
+                console.log("Could not get fetch state from local storage for", compName);
+            }
+        }
         if (this.props.isMentor) {
             if (this.props.mentorIdForStats) {
                 let payload = {
@@ -40,6 +58,13 @@ export default class CardDetails extends React.Component {
                         }
                     })
             }
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.isMentor) {
+            this.componentCleanup();
+            window.removeEventListener('beforeunload', this.componentCleanup);
         }
     }
 
