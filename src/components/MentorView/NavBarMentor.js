@@ -123,6 +123,8 @@ export default class NavBarMentor extends Component {
                 return <MentorNetwork
                     pickMentor={this.handleNewScheduleWithMentor}
                     viewMentorProfile={this.viewMentorProfile}
+                    myId={this.props.mentor.id}
+                    isMentor={true}
                     />
             case MENTOR_PROFILE:
                 return <Profile

@@ -123,6 +123,12 @@ export default class MentorNetwork extends React.Component {
     }
 
     renderUserCards(MentorObjects) {
+        // removes mentor from list!
+        if (this.props.isMentor) (
+            MentorObjects = MentorObjects.filter(mentor => {
+                return mentor.id !== this.props.myId
+            })
+        )
         return MentorObjects.map(mentor => {
             return (
                 <MentorNetworkCard
@@ -134,17 +140,20 @@ export default class MentorNetwork extends React.Component {
                     image={mentor.image}
                     pickMentor={this.props.pickMentor}
                     viewProfile={this.viewProfile}
+                    viewedAsMentor={this.props.isMentor}
                 />
             )
         })
     }
 
     render() {
+        let mentorText = `That includes YOU!`
+        let menteeText = ``;
         return (  
             <Container>
                 <Grid columns={2}>
                     <Grid.Column width={10}>
-                        There as {this.state.mentors.length} Mentors currently in network.
+                        There as {this.state.mentors.length} Mentors currently in network. {this.props.isMentor? mentorText : menteeText}
                     </Grid.Column>
                     <Grid.Column width={6}>
                         <Grid.Row>
