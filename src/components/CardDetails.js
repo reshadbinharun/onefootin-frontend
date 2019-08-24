@@ -47,10 +47,8 @@ export default class CardDetails extends React.Component {
                         let status = resolvedRes.status;
                         resolvedRes = await resolvedRes.json()
                         if (status !== 200) {
-                        console.log("Could not fetch mentor statistics.");
                         }
                         else {
-                            console.log("statistics fetched are", resolvedRes)
                         this.setState({
                             calls_completed: resolvedRes.calls_completed,
                             calls_requested: resolvedRes.calls_requested,
