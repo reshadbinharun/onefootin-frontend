@@ -29,8 +29,7 @@ export default class NavBarMentor extends Component {
         this.goBackToMentorNetwork = this.goBackToMentorNetwork.bind(this);
     }
 
-    goBackToMentorNetwork(e) {
-        e.preventDefault();
+    goBackToMentorNetwork() {
         this.setState({
             activeItem: MENTOR_NETWORK
         })

@@ -68,8 +68,7 @@ export default class NavBarMentee extends Component {
         })
     }
 
-    goBackToMentorNetwork(e) {
-        e.preventDefault();
+    goBackToMentorNetwork() {
         this.setState({
             activeItem: MENTOR_NETWORK
         })
