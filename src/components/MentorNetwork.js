@@ -159,11 +159,12 @@ export default class MentorNetwork extends React.Component {
                         <Grid.Row>
                             <SearchBar
                                 onSearchMode={this.updateSearchTerms}
+                                searchValue={this.state.searchTerms}
                             />
                         </Grid.Row>
                         <Divider/>
                         <Grid.Row>
-                            <Dropdown placeholder='Search by topic' fluid selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="searchTopic"/>
+                            <Dropdown placeholder='Search by topic' fluid selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="searchTopic" value={this.state.searchTopic}/>
                         </Grid.Row>
                         <Divider/>
                         <Grid.Row>
