@@ -101,13 +101,16 @@ export default class ScheduleFormMentorPicked extends Component {
                         submitting: false,
                     })
                 } else {
-                    swal({
-                        title: `You're all set!`,
-                        text: "You've successfully requested a call! Keep an eye out on your email for updates.",
-                        icon: "success",
-                    });
                     this.setState({
                         submitting: false,
+                    },() => {
+                        swal({
+                            title: `You're all set!`,
+                            text: "You've successfully requested a call! Keep an eye out on your email for updates.",
+                            icon: "success",
+                        }).then(() => {
+                            this.props.goBackToMentorNetwork();
+                        })
                     })
                 }
             });
@@ -150,7 +153,7 @@ export default class ScheduleFormMentorPicked extends Component {
                   <Message>
                     <Message.Header>Scheduling form</Message.Header>
                     <p>
-                    {`Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}.`}
+                    {`Your call will be scheduled with ${this.state.mentor && this.state.mentor.name}. Times are displayed in your timezone.`}
                     </p>
                 </Message>
                 <Form onSubmit={this.handleSubmit}>

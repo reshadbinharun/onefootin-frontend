@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container } from 'semantic-ui-react'
+import { Container, Card } from 'semantic-ui-react'
 import ScheduleCard from './ScheduleCard';
 import { BACKEND } from "../App"
 import { convertToViewerTimeZone } from "./TimezoneAdjustmentHelpers"
@@ -23,7 +23,7 @@ export default class Schedule extends React.Component {
         this.setState({
             menteeId: this.props.menteeId
         }, async () => 
-            await fetch(`${BACKEND}/getConfirmedRequestsForMentee`, {
+            await fetch(`${BACKEND}/getAllRequestsForMentee`, {
                 method: 'post',
                 credentials: 'include',
                 headers: headers,
@@ -44,21 +44,49 @@ export default class Schedule extends React.Component {
         );
     }
 
+    /**
+     * States of calls on mentees side X = show
+     * STATES -->
+     * not confirmed, no feedback, not done X
+     * confirmed, no feedback, not done X
+     * confirmed, no feedback, done X
+     * confirmed, feedback, done
+     */
     renderScheduleCards() {
-        return this.state.schedules && this.state.schedules.filter(call => {
+        let allSchedules = this.state.schedules && this.state.schedules.filter(call => {
             return (!call.feedback_given);
-        }).map(request => {
-            return (
-                <ScheduleCard
-                    time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
-                    topic={request.topic}
-                    mentor={request.mentor.name}
-                    requestId={request.id}
-                    meetingRoom={request.mentor.zoom_info}
-                    requestDone={request.done}
-                /> 
-            )
-        })
+        });
+        if (allSchedules.length) {
+            return allSchedules.map(request => {
+                return (
+                    <ScheduleCard
+                        time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
+                        topic={request.topic}
+                        mentor={request.mentor.name}
+                        requestId={request.id}
+                        meetingRoom={request.mentor.zoom_info}
+                        requestDone={request.done}
+                        confirmed={request.confirmed}
+                    /> 
+                )
+            })
+        }
+        const cardStyle ={
+            width: '100%',
+            padding: '5px',
+            margin: '5px',
+        }
+        return (
+            <Card style={cardStyle}>
+                <Card.Content>
+                    <Card.Header>No Scheduled Calls Yet!</Card.Header>
+                    <Card.Meta>Try booking an appointment with one of our mentors...</Card.Meta>
+                    <Card.Description>
+                    There may just be 30 minutes between you and the next chapter of your life!
+                    </Card.Description>
+                </Card.Content>
+            </Card>
+        )
     }
 
     render() {

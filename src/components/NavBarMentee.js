@@ -121,6 +121,7 @@ export default class NavBarMentee extends Component {
                         mentorId={this.state.mentorId}
                         menteeId={this.state.data.id}
                         menteeTimeZone={this.state.data.timeZone}
+                        goBackToMentorNetwork={this.goBackToMentorNetwork}
                         />:
                     <ScheduleForm
                         menteeId={this.state.data.id}
@@ -128,6 +129,7 @@ export default class NavBarMentee extends Component {
                     />)
             case MENTOR_PROFILE:
                 return <Profile
+                    id={this.state.mentorFetchedForView.id}
                     image={this.state.mentorFetchedForView.image}
                     name={this.state.mentorFetchedForView.name}
                     school={this.state.mentorFetchedForView.school}
