@@ -9,9 +9,8 @@ export default class SearchBar extends Component {
           <Search 
             open={false}
             onSearchChange={this.props.onSearchMode}
-            placeholder='Search by name, location, etc...'
+            placeholder='Search by key words...'
             value={this.props.searchValue}
-            size='big'
           />
         </Grid.Column>
       </Grid>
