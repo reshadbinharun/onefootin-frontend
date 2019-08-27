@@ -11,7 +11,7 @@ import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 
-export const BACKEND = process.env.BACKEND || 'https://one-foot-in-backend.herokuapp.com';
+export const BACKEND = process.env.BACKEND || 'https://onefootin-dev.herokuapp.com';
 
 const compName = 'App_LS';
 
