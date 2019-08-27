@@ -71,6 +71,7 @@ export default class MentorNetwork extends React.Component {
 
     updateSearchTerms(e, searchObject) {
         let searchTerms = searchObject.value
+        console.log("search value is -->", searchTerms)
         e.preventDefault();
         if (!searchTerms) {
             this.setState({
