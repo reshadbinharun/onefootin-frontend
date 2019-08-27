@@ -284,7 +284,9 @@ export default class SignUpMentor extends React.Component {
                         <label>Tell us a little bit about yourself!</label>
                         <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} value={this.state.aboutYourself}/>
                     </Form.Field>
-                    <Form.Field>
+                    <Form.Field
+                        require="true"
+                    >
                         <label>Select the topics you would like to consult.</label>
                     <Dropdown placeholder='Preferred Topics' fluid multiple selection options={preferredTopicsOptions} onChange={this.handleChangeTopic} name="preferredTopics" value={this.state.preferredTopics}/>
                     </Form.Field>

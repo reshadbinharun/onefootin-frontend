@@ -101,7 +101,7 @@ export default class Profile extends React.Component {
                 }
                 <Divider/>
                 {this.props.viewMode ? 
-                <Button onClick={(e) => this.props.goBackToMentorNetwork(e)}>
+                <Button onClick={() => this.props.goBackToMentorNetwork()}>
                     <Icon name="backward"/>
                     Back to network
                 </Button>

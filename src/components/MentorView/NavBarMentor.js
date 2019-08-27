@@ -3,6 +3,7 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Profile from '../Profile'
 import { BACKEND } from "../../App"
 import Backlog from "./Backlog";
+import MentorNetwork from "../MentorNetwork";
 
 // TODO: Deprecated, remove
 // import ConfirmedCalls from "./ConfirmedCalls"
@@ -10,6 +11,8 @@ import Backlog from "./Backlog";
 export const MY_PROFILE = 'My Profile';
 export const BACKLOG = 'Backlog';
 export const CONFIRMED_CALLS = 'Confirmed Calls';
+export const MENTOR_NETWORK = 'Mentor Network';
+export const MENTOR_PROFILE = 'Mentor Profile'
 
 export default class NavBarMentor extends Component {
     constructor(props){
@@ -22,6 +25,21 @@ export default class NavBarMentor extends Component {
         this.getRequests = this.getRequests.bind(this);
         this.getConfirmedCalls = this.getConfirmedCalls.bind(this);
         this.getBacklog = this.getBacklog.bind(this);
+        this.viewMentorProfile = this.viewMentorProfile.bind(this);
+        this.goBackToMentorNetwork = this.goBackToMentorNetwork.bind(this);
+    }
+
+    goBackToMentorNetwork() {
+        this.setState({
+            activeItem: MENTOR_NETWORK
+        })
+    }
+
+    viewMentorProfile(value) {
+        this.setState({
+            activeItem: MENTOR_PROFILE,
+            mentorFetchedForView: value,
+        })
     }
 
     getConfirmedCalls() {
@@ -100,6 +118,30 @@ export default class NavBarMentor extends Component {
                     mentorEmail={this.state.data.email}
                     mentorName={this.state.data.name}
                 />
+            case MENTOR_NETWORK:
+                return <MentorNetwork
+                    pickMentor={this.handleNewScheduleWithMentor}
+                    viewMentorProfile={this.viewMentorProfile}
+                    myId={this.props.payload && this.props.payload.mentor.id}
+                    isMentor={true}
+                    />
+            case MENTOR_PROFILE:
+                return <Profile
+                    id={this.state.mentorFetchedForView.id}
+                    image={this.state.mentorFetchedForView.image}
+                    name={this.state.mentorFetchedForView.name}
+                    school={this.state.mentorFetchedForView.school}
+                    memberSince={this.state.mentorFetchedForView.memberSince}
+                    aboutYourself={this.state.mentorFetchedForView.aboutYourself}
+                    position={this.state.mentorFetchedForView.position}
+                    major={this.state.mentorFetchedForView.major}
+                    location={this.state.mentorFetchedForView.location}
+                    timeZone={this.state.mentorFetchedForView.timeZone}
+                    languages={this.state.mentorFetchedForView.languages}
+                    viewMode={true}
+                    isMentor={true}
+                    goBackToMentorNetwork={this.goBackToMentorNetwork}
+                />
             default:
                 return null
         }
@@ -111,6 +153,11 @@ export default class NavBarMentor extends Component {
         <div>
             <Menu pointing>
                 <Menu.Item name={MY_PROFILE} active={activeItem === MY_PROFILE} onClick={this.handleItemClick} />
+                <Menu.Item
+                    name={MENTOR_NETWORK}
+                    active={activeItem === MENTOR_NETWORK}
+                    onClick={this.handleItemClick}
+                />
                 <Menu.Item
                     name={BACKLOG}
                     active={activeItem === BACKLOG}

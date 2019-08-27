@@ -7,8 +7,10 @@ export default class SearchBar extends Component {
       <Grid>
         <Grid.Column width={6}>
           <Search 
-          open={false}
-          onSearchChange={this.props.onSearchMode}
+            open={false}
+            onSearchChange={this.props.onSearchMode}
+            placeholder='Search by key words...'
+            value={this.props.searchValue}
           />
         </Grid.Column>
       </Grid>
