@@ -104,13 +104,13 @@ export default class App extends Component {
     let loggedInView = null;
     switch(this.state.role)
     {
-      case(MENTEE):
+      case(MENTOR):
         loggedInView = 
           <NavBarMentor
             payload = {this.state.mentorPayload}
           />
           break;
-      case(MENTOR):
+      case(MENTEE):
         loggedInView =
           <NavBarMentee
             payload = {this.state.menteePayload}

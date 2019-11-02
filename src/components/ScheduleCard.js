@@ -52,7 +52,7 @@ export default class ScheduleCard extends React.Component {
     }
     render() {
         const {time, topic, mentor} = this.props;
-        const cardStyle ={
+        const cardStyle = {
             width: '100%',
             padding: '5px',
             margin: '5px',
@@ -79,6 +79,12 @@ export default class ScheduleCard extends React.Component {
                     <Button basic color='dark orange'
                         disabled={!this.props.confirmed || this.props.requestDone}
                         onClick={() => window.open(this.props.meetingRoom)}
+                    >
+                        {buttonText}
+                    </Button>
+                    <Button basic color='gray'
+                    // TODO: Open modal for messaging
+                        onClick={() => {}}
                     >
                         {buttonText}
                     </Button>

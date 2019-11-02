@@ -59,23 +59,30 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
+            let resolvedResParsed = await resolvedRes.json();
             if (resolvedRes.status === 400) {
+                console.log("response returned is", resolvedResParsed)
                 this.setState({
                     incorrectCredentials: true,
-                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
                     mentorLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
-                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                     mentorLoginLoading: false,
                 },() => {
                     this.props.login()
-                    this.props.liftPayload(resolvedRes, MENTOR);
+                    this.props.liftPayload(resolvedResParsed, MENTOR);
                 })
             }
+        }).catch(err => {
+            this.setState({
+                mentorLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
         });
     }
 
@@ -112,23 +119,29 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
+            let resolvedResParsed = await res.json();
             if (resolvedRes.status === 400) {
                 this.setState({
                     incorrectCredentials: true,
-                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
                     menteeLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
-                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                     menteeLoginLoading: false,
                 },() => {
                     this.props.login()
-                    this.props.liftPayload(resolvedRes, MENTEE);
+                    this.props.liftPayload(resolvedResParsed, MENTEE);
                 })
             }
+        }).catch(err => {
+            this.setState({
+                menteeLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
         });        
     }
 
@@ -148,24 +161,30 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
+            let resolvedResParsed = await resolvedRes.json()
             if (resolvedRes.status === 400) {
                 this.setState({
                     incorrectCredentials: true,
-                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
-                    menteeLoginLoading: false,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
+                    adminLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
-                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                     adminLoginLoading: false,
                 },() => {
                     this.props.login()
-                    this.props.liftPayload(resolvedRes, ADMIN);
+                    this.props.liftPayload(resolvedResParsed, ADMIN);
                 })
             }
-        });        
+        }).catch(err => {
+            this.setState({
+                adminLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
+        });
     }
     
     handleChange(e) {

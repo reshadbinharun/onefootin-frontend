@@ -55,7 +55,7 @@ export default class SignUpMentor extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            school: '',
+            college: '',
             major: '',
             location: '',
             preferredTopics: [],
@@ -158,7 +158,7 @@ export default class SignUpMentor extends React.Component {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            school: this.state.school,
+            college: this.state.college,
             major: this.state.major,
             location: this.state.location,
             preferredTimes: this.state.preferredTimes,
@@ -186,7 +186,6 @@ export default class SignUpMentor extends React.Component {
                 this.state.selectTimes? <PreferredTimeSelector 
                     payload={this.formPayload()}
                     setPreferredTimes={this.setPreferredTimes}
-                    handleSignUp={this.props.handleSignUp}
                     back={this.backToSignUp}
                 /> : 
                 <Grid.Column centered>
@@ -254,7 +253,7 @@ export default class SignUpMentor extends React.Component {
                         style={fieldStyle}
                     >
                         <label>College</label>
-                        <input placeholder='College' name="school" onChange={this.handleChange} value={this.state.school}/>
+                        <input placeholder='College' name="college" onChange={this.handleChange} value={this.state.college}/>
                     </Form.Field>
                     <Form.Field
                         type="text"

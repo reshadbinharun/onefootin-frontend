@@ -33,7 +33,7 @@ export default class Requests extends React.Component {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        fetch(`${BACKEND}/getAllRequests`, {
+        fetch(`${BACKEND}/getAllRequestsByAdmin`, {
             method: 'get',
             credentials: 'include',
             headers: headers,
@@ -41,7 +41,7 @@ export default class Requests extends React.Component {
             let resolvedRes = await res;
             resolvedRes = await resolvedRes.json()
             this.setState({
-                mentors: resolvedRes && resolvedRes.mentors
+                requests: resolvedRes && resolvedRes.requests
             });
         });
     }
@@ -76,7 +76,7 @@ export default class Requests extends React.Component {
                     </Grid.Column>
                 </Grid>
                 <Container>
-                    {this.renderRequestCards(this.filterResults(this.state.requests))}
+                    {this.renderRequestCards(this.state.requests)}
                 </Container>
             </Container>
         )

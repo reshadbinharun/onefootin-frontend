@@ -110,14 +110,23 @@ export default class SignUpMentee extends React.Component {
                 method: 'post',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(payload)
-            }).then(res => {
-                swal({
-                    title: "Congratulations!",
-                    text: "Your submission was successful! Please check your email to confirm your account.",
-                    icon: "success",
-                  });
+            }).then(async res => {
+                let resolvedRes = await res;
+                if (resolvedRes.status === 200) {
+                    swal({
+                        title: "Congratulations!",
+                        text: "Your submission was successful! Please check your email to confirm your account.",
+                        icon: "success",
+                      });
+                    this.setState({
+                        signUpDone: true
+                    })
+                }
+            }).catch(err => {
                 this.setState({
-                    signUpDone: true
+                    submitting: false
+                }, () => {
+                    window.alert("Whoops! The server's acting up... :(");
                 })
             });
         } else {

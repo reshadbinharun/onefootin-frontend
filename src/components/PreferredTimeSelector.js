@@ -148,7 +148,13 @@ export default class PreferredTimeSelector extends React.Component {
                     submitting: false
                 })
                }
-           });
+           }).catch(err => {
+                this.setState({
+                    submitting: false
+                }, () => {
+                    window.alert("Whoops! The server's acting up... :(");
+                })
+            });
     }
     render() {
         return (

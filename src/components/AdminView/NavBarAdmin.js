@@ -5,14 +5,15 @@ import Mentees from './Mentees';
 import Requests from './Requests';
 import Mentors from './Mentors';
 
-const compName = 'NavBarMentee_LS';
+const compName = 'NavBarAdmin_LS';
 
 export const DASHBOARD = 'Dashboard';
 export const REQUESTS = 'Requests';
 export const MENTORS = 'Mentors';
 export const MENTEES = 'Mentees'
 
-export default class NavBarMentee extends Component {
+//TODO: Define Dashboard
+export default class NavBarAdmin extends Component {
     constructor(props){
         super(props);
         this.state = {

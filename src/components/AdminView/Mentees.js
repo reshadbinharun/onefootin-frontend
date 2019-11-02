@@ -46,7 +46,7 @@ export default class Mentees extends React.Component {
             let resolvedRes = await res;
             resolvedRes = await resolvedRes.json()
             this.setState({
-                mentors: resolvedRes && resolvedRes.mentors
+                mentees: resolvedRes && resolvedRes.mentees
             });
         });
     }
@@ -116,7 +116,7 @@ export default class Mentees extends React.Component {
             <Container>
                 <Grid columns={1}>
                     <Grid.Column width={10}>
-                        There as {this.state.mentors.length} Mentees currently in network.
+                        There as {this.state.mentees.length} Mentees currently in network.
                     </Grid.Column>
                     <Grid.Column width={6}>
                         <Grid.Row>
@@ -135,7 +135,7 @@ export default class Mentees extends React.Component {
                 </Grid>
                 <Container>
                     {this.state.searchMode ? 
-                    this.renderUserCards(this.filterResults(this.state.mentors)) : this.renderUserCards(this.state.mentors)}
+                    this.renderUserCards(this.filterResults(this.state.mentees)) : this.renderUserCards(this.state.mentees)}
                 </Container>
             </Container>
         )

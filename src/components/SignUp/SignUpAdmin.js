@@ -88,6 +88,12 @@ export default class SignUpAdmin extends React.Component {
                 this.setState({
                     signUpDone: true
                 })
+            }).catch(err => {
+                this.setState({
+                    submitting: false
+                }, () => {
+                    window.alert("Whoops! The server's acting up... :(");
+                })
             });
         } else {
             swal({
