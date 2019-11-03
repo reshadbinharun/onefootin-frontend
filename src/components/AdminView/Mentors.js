@@ -73,7 +73,7 @@ export default class Mentors extends React.Component {
     }
 
     getBagofWords(mentor) {
-        return [mentor.name, mentor.school, mentor.position, mentor.location];
+        return [mentor.name || '', mentor.college || '', mentor.location || ''];
     }
 
     clearSearch(e) {
@@ -89,6 +89,7 @@ export default class Mentors extends React.Component {
         // eslint-disable-next-line
         return MentorObjects.filter(mentor => {
             let bagOfWords = this.getBagofWords(mentor);
+            console.log("bag of words is ", bagOfWords)
             let searchTerms = this.state.searchTerms;
             for (let i = 0; i < bagOfWords.length; i++) {
                 if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
@@ -107,6 +108,8 @@ export default class Mentors extends React.Component {
                     location={mentor.location}
                     memberSince={mentor.memberSince}
                     callsCompleted={mentor.callsCompleted}
+                    approved={mentor.approved}
+                    email={mentor.email}
                 />
             )
         })

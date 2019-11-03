@@ -56,8 +56,8 @@ export default class Requests extends React.Component {
             return (
                 <RequestCard
                     // TODO: add time adjusted for admin
-                    menteeName={request.menteeNameSchool}
-                    mentorName={request.menteeNameCollege}
+                    menteeNameSchool={request.menteeNameSchool}
+                    mentorNameCollege={request.mentorNameCollege}
                     topic={request.topic}
                     status={request.status}
                     feedback={request.feedback}

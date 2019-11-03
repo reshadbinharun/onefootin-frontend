@@ -1,60 +1,55 @@
 import React from 'react'
 import { Grid, Card, Button, Icon, Divider, Message } from 'semantic-ui-react'
+import { adminRowPaddingStyle, adminCardStyleYellow, adminContentOrangeStyle, adminContentYellowStyle } from "../../inlineStyles"
 
 export default class RequestCard extends React.Component {
     render() {
         const {menteeNameSchool, mentorNameCollege, topic, status, feedback, menteeIntro} = this.props;
-        const cardStyle ={
-            width: '100%',
-            padding: '5px',
-            margin: '5px',
-        }
+
         return (
-            <Card centered={true} style={cardStyle}>
+            <Card centered={true} style={adminCardStyleYellow}>
                 <Grid columns={2}>
                     <Grid.Column width={11}>
-                        <Grid.Row>
+                        <Grid.Row style = {adminRowPaddingStyle}>
                             {/* Mentee Name x Mentor Name x Topic x Mentor Time */}
-                            <Message>
-                                Mentee: {menteeNameSchool} X Mentor: {mentorNameCollege} - Topic: {topic}
+                            <Message style={adminContentYellowStyle}>
+                                <strong>{mentorNameCollege}</strong> mentoring <strong>{menteeNameSchool}</strong> about <strong>{topic}</strong>
                             </Message>
                         </Grid.Row>
-                        <Grid.Row>
-                            <Message>
-                                Status: {status}
+                        <Grid.Row style = {adminRowPaddingStyle}>
+                            <Message style={adminContentOrangeStyle}>
+                                Status: <strong>{status}</strong>
                             </Message>
                             {/* Logic to determine status */}
                         </Grid.Row>
-                        <Grid.Row>
+                        <Grid.Row style = {adminRowPaddingStyle}>
                             {/* Feedback (if any) */}
                             {feedback? 
                             <div>
                                 <Message.Header>
-                                    Feedback
+                                    <strong>Feedback</strong>
                                 </Message.Header>
-                                <Message>
-                                    {feedback}
+                                <Message style={adminContentYellowStyle}>
+                                    " {feedback} "
                                 </Message>
                             </div>
                              : null}
                         </Grid.Row>
-                        <Grid.Row>
-                            {/* Mentee Intro (if any) */}
-                            {menteeIntro? 
+                        <Grid.Row style = {adminRowPaddingStyle}>
                             <div>
                                 <Message.Header>
-                                    Mentee's Introduction
+                                    <strong>Mentee's Introduction</strong>
                                 </Message.Header>
-                                <Message>
+                                <Message style={adminContentOrangeStyle}>
                                     {menteeIntro}
                                 </Message>
                             </div>
-                             : null}
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={5}>
-                        {/* Ping button */}
-                        <Button/>
+                        <Button>
+                            Ping participants!
+                        </Button>
                     </Grid.Column>
                 </Grid>
             </Card>

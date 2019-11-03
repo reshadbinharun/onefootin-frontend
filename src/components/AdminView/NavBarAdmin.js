@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import Dashboard from './Dashboard';
 import Mentees from './Mentees';
 import Requests from './Requests';
 import Mentors from './Mentors';
 
 const compName = 'NavBarAdmin_LS';
 
-export const DASHBOARD = 'Dashboard';
 export const REQUESTS = 'Requests';
 export const MENTORS = 'Mentors';
 export const MENTEES = 'Mentees'
 
-//TODO: Define Dashboard
 export default class NavBarAdmin extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: DASHBOARD,
+            activeItem: REQUESTS,
             data: {},
         }
         this.componentCleanup = this.componentCleanup.bind(this);
@@ -51,9 +48,6 @@ export default class NavBarAdmin extends Component {
 
     renderNavSelection() {
         switch(this.state.activeItem) {
-            case DASHBOARD:
-                return <Dashboard
-                />
             case REQUESTS:
                 return <Requests
                     />
@@ -74,7 +68,6 @@ export default class NavBarAdmin extends Component {
         return (
         <div>
             <Menu pointing>
-                <Menu.Item name={DASHBOARD} active={activeItem === DASHBOARD} onClick={this.handleItemClick} />
                 <Menu.Item
                     name={REQUESTS}
                     active={activeItem === REQUESTS}

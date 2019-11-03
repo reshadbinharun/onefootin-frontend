@@ -188,10 +188,10 @@ export default class LoginForm extends React.Component {
     }
     
     handleChange(e) {
-    e.preventDefault();
-    let change = {}
-    change[e.target.name] = e.target.value
-    this.setState(change)
+        e.preventDefault();
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
     }
 
     renderIncorrectCredentialsMessage() {

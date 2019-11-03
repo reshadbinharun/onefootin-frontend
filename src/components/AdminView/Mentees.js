@@ -73,7 +73,7 @@ export default class Mentees extends React.Component {
     }
 
     getBagofWords(mentee) {
-        return [mentee.name, mentee.school, mentee.location];
+        return [mentee.name || '', mentee.school || '', mentee.location || ''];
     }
 
     clearSearch(e) {
@@ -86,7 +86,7 @@ export default class Mentees extends React.Component {
 
     filterResults(MenteeObjects) {
         // eslint-disable-next-line
-        return MentorObjects.filter(mentee => {
+        return MenteeObjects.filter(mentee => {
             let bagOfWords = this.getBagofWords(mentee);
             let searchTerms = this.state.searchTerms;
             for (let i = 0; i < bagOfWords.length; i++) {
@@ -101,8 +101,9 @@ export default class Mentees extends React.Component {
         return MenteeObjects.map(mentee => {
             return (
                 <MenteeCard
+                    email={mentee.email}
                     name={mentee.name}
-                    college={mentee.school}
+                    school={mentee.school}
                     memberSince={mentee.memberSince}
                     location={mentee.location}
                     callsRequested={mentee.callsRequested}
