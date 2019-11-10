@@ -109,6 +109,7 @@ export default class NavBarMentor extends Component {
                     calls = {this.getBacklog()}
                     mentorTimeZone = {this.state.data.timeZone}
                     confirmed = {false}
+                    mentorName={this.state.data.name}
                 />
             case CONFIRMED_CALLS:
                 return <Backlog

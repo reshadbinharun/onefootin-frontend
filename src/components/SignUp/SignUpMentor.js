@@ -135,7 +135,6 @@ export default class SignUpMentor extends React.Component {
     uploadImage(e) {
         e.preventDefault();
         let file = e.target.files[0];
-        console.log("file is", file)
         let data = new FormData();
         data.append('file', file);
         axios.post(`${BACKEND}/imageUpload`, data, {

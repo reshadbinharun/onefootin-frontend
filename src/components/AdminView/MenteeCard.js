@@ -11,7 +11,8 @@ export default class MenteeCard extends React.Component {
             email: this.props.email,
             name: this.props.name,
             modalOpen: false,
-            message: ''
+            message: '',
+            suspensionStatus: this.props.suspensionStatus
         }
         this.changeSuspensionMentee = this.changeSuspensionMentee.bind(this);
         this.pingMentee = this.pingMentee.bind(this);

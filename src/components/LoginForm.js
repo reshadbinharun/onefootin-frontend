@@ -61,7 +61,6 @@ export default class LoginForm extends React.Component {
             let resolvedRes = await res;
             let resolvedResParsed = await resolvedRes.json();
             if (resolvedRes.status === 400) {
-                console.log("response returned is", resolvedResParsed)
                 this.setState({
                     incorrectCredentials: true,
                     error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,

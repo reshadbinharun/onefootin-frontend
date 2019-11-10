@@ -56,7 +56,6 @@ export default class ScheduleForm extends React.Component {
     */
     async getMentorsByTopic() {
         let payload = {requestedTopics: this.state.selectedTopics};
-        console.log("get topic matched mentors");
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');

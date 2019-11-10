@@ -63,10 +63,13 @@ export default class Schedule extends React.Component {
                         time={convertToViewerTimeZone(request.dateTime, request.mentee.timeZone)}
                         topic={request.topic}
                         mentor={request.mentor.name}
+                        mentee={request.mentee.name}
                         requestId={request.id}
                         meetingRoom={request.mentor.zoom_info}
                         requestDone={request.done}
                         confirmed={request.confirmed}
+                        mentorMessages={request.mentorMessages || []}
+                        menteeMessages={request.menteeMessages || []}
                     /> 
                 )
             })
