@@ -15,6 +15,7 @@ export default class Backlog extends React.Component {
                 return (
                     <CallCard
                         mentorTimeZone={this.props.mentorTimeZone}
+                        mentorName={this.props.mentorName}
                         topic={call.topic}
                         time={call.dateTime}
                         requestId={call.id}
@@ -22,6 +23,8 @@ export default class Backlog extends React.Component {
                         mentee={call.mentee}
                         confirmed={this.props.confirmed}
                         mentee_intro={call.mentee_intro}
+                        menteeMessages={call.menteeMessages || []}
+                        mentorMessages={call.mentorMessages || []}
                     />
                 )
             })

@@ -89,7 +89,6 @@ export default class Mentors extends React.Component {
         // eslint-disable-next-line
         return MentorObjects.filter(mentor => {
             let bagOfWords = this.getBagofWords(mentor);
-            console.log("bag of words is ", bagOfWords)
             let searchTerms = this.state.searchTerms;
             for (let i = 0; i < bagOfWords.length; i++) {
                 if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {

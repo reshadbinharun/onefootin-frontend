@@ -130,6 +130,9 @@ export default class MentorNetwork extends React.Component {
                 return mentor.id !== this.props.myId
             })
         )
+        MentorObjects = MentorObjects.filter(mentor => {
+            return mentor.approved
+        });
         return MentorObjects.map(mentor => {
             return (
                 <MentorNetworkCard
@@ -154,7 +157,7 @@ export default class MentorNetwork extends React.Component {
             <Container>
                 <Grid columns={2}>
                     <Grid.Column width={10}>
-                        There as {this.state.mentors.length} Mentors currently in network. {this.props.isMentor? mentorText : menteeText}
+                        There as {this.state.mentors.length} Mentors currently in network. {this.props.isMentor? mentorText : menteeText} Only verified mentors will be listed.
                     </Grid.Column>
                     <Grid.Column width={6}>
                         <Grid.Row>
