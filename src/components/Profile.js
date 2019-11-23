@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Container, Grid, Divider, Icon, Button } from 'semantic-ui-react'
+import { Container, Grid, Divider, Icon, Button, Segment } from 'semantic-ui-react'
 import CardImage from './CardImage';
 import CardDetails from './CardDetails';
 import EditProfile from './EditProfile';
 import PreferredTimeEditor from './PreferredTimesEditor';
+import Tracking from "./MenteeView/Tracking"
 
 const compName = 'Profile_LS';
 
@@ -118,6 +119,11 @@ export default class Profile extends React.Component {
                     languages={this.props.languages}
                     mentorIdForStats={this.props.id}
                 />
+                {this.props.isMentor ? null : this.props.id ? 
+                <Segment>
+                    <Tracking menteeId={this.props.id} trackingId={this.props.trackingId}/>
+                </Segment> : null
+                }
             </Grid.Column>
         </Grid>
         return (  
