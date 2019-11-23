@@ -92,7 +92,9 @@ export default class NavBarMentee extends Component {
     renderNavSelection() {
         switch(this.state.activeItem) {
             case MY_PROFILE:
-                return <Profile 
+                return <Profile
+                    trackingId={this.state.data.tracking && this.state.data.tracking.id}
+                    id={this.state.data.id}
                     email={this.state.data.email}
                     image={this.state.data.image}
                     name={this.state.data.name}
