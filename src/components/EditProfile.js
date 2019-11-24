@@ -11,6 +11,8 @@ let languageOptions = LANGUAGE_OPTIONS.map(val => {
     return {key: val, text: val, value: val}
 });
 
+const CUSTOM = 'custom'
+
 //TODO: Write handleSubmit functions and backend API to update database
 let fieldStyle = {
     width: '100%',
@@ -33,12 +35,17 @@ export default class EditProfile extends React.Component {
             aboutYourself: '',
             imageLink: '',
             submitting: false,
+            schoolCustom: '',
+            schoolSelected: '',
+            customSchoolSelected: false,
+            schools: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTopic = this.handleChangeTopic.bind(this);
         this.handleMentorEditSubmit = this.handleMentorEditSubmit.bind(this);
         this.handleMenteeEditSubmit = this.handleMenteeEditSubmit.bind(this);
         this.handleChangeLanguages = this.handleChangeLanguages.bind(this);
+        this.handleSchoolSelection = this.handleSchoolSelection.bind(this);
     }
 
     handleMentorEditSubmit(e) {
@@ -104,6 +111,39 @@ export default class EditProfile extends React.Component {
         })
     }
 
+    handleSchoolSelection(e, {value}) {
+        e.preventDefault();
+        if (value === CUSTOM) {
+            this.setState({
+                customSchoolSelected: true,
+                schoolCustom: value
+            })
+        } else {
+            this.setState({
+                school: value
+            })
+        }
+    }
+
+    componentDidMount() {
+        // TODO: get list of available schools
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getSchools`, {
+            method: 'get',
+            headers: headers,
+            credentials: 'include',
+        }).then(async res => {
+                let resolvedRes = await res;
+                resolvedRes = await resolvedRes.json()
+                this.setState({
+                    schools: resolvedRes.schools
+                })
+        }
+        ).catch(e => console.log(e))
+    }
+
     handleMenteeEditSubmit(e) {
         if (this.state.password !== this.state.confirmPassword) {
             swal({
@@ -116,6 +156,9 @@ export default class EditProfile extends React.Component {
         let payload = {
             password: this.state.password,
             school: this.state.school,
+            schoolCustom: this.state.schoolCustom,
+            customSchoolSelected: this.state.customSchoolSelected,
+            schoolSelected: this.state.schoolSelected,
             location: this.state.location,
             aboutYourself: this.state.aboutYourself,
             imageLink: this.state.imageLink,
@@ -183,6 +226,20 @@ export default class EditProfile extends React.Component {
     }
 
     render() {
+        let schoolOptions = this.state.schools ? this.state.schools.map(school => {
+            return {
+                key: school.name,
+                value: school.name,
+                text: school.name
+            }
+        }) : null
+        if (schoolOptions) {
+            schoolOptions.push({
+                key: CUSTOM,
+                value: CUSTOM,
+                text: CUSTOM
+            })
+        }
         let mentorEditForm = 
         <Form onSubmit={this.handleMentorEditSubmit}>
             <Form.Field
@@ -224,7 +281,7 @@ export default class EditProfile extends React.Component {
             <Form.Field>
                 <label>What languages do you speak?</label>
                     <Dropdown placeholder='Select all languages you speak...' fluid multiple selection options={languageOptions} onChange={this.handleChangeLanguages} name="languages" value={this.state.languages}/>
-                </Form.Field>
+            </Form.Field>
             <Form.Field
                 type="text"
                 style={fieldStyle}
@@ -298,13 +355,21 @@ export default class EditProfile extends React.Component {
                 <label>Name</label>
                 <input placeholder='Name' name="name" value={this.props.name} />
             </Form.Field>
-            <Form.Field
+            {!this.state.customSchoolSelected?
+                <Form.Field>
+                    <label>Select your school</label>
+                    <Dropdown placeholder='Select the school your attend' fluid selection options={schoolOptions} onChange={this.handleSchoolSelection} name="school"/>
+                </Form.Field>
+                : 
+                <Form.Field
                 type="text"
+                required="true"
                 style={fieldStyle}
-            >
-                <label>School</label>
-                <input placeholder={this.props.school} name="school" onChange={this.handleChange}/>
-            </Form.Field>
+                >
+                    <label>Add your School</label>
+                    <input placeholder='School' name="school" onChange={this.handleChange} />
+                </Form.Field>
+            }
             <Form.Field
                 type="text"
                 style={fieldStyle}
