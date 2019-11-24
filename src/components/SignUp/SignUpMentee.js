@@ -1,6 +1,6 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
+import { Form, Button, Icon, Message, Grid, Dropdown } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
 import { BACKEND, PATHS } from "../../App"
 import { Redirect, Link } from "react-router-dom"
@@ -8,6 +8,7 @@ import axios from 'axios';
 import swal from "sweetalert";
 
 const compName = 'SignUpMentee_LS';
+const CUSTOM = 'Other... (Not included in list)'
 
 let fieldStyle = {
     width: '100%',
@@ -25,7 +26,18 @@ export default class SignUpMentee extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            school: '',
+            /*
+            {
+                id: '',
+                name: '',
+                region: '',
+                contact: '',
+            }
+            */
+            schools: [],
+            schoolCustom: '', //custom choice
+            school: '', // from available schools
+            customSchoolSelected: false, // bool to indicate if user selected custom school
             location: '',
             aboutYourself: '',
             // TODO: include stock image if image link is empty, IMAGE LINK is optional
@@ -37,6 +49,7 @@ export default class SignUpMentee extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
+        this.handleSchoolSelection = this.handleSchoolSelection.bind(this);
     }
 
     componentCleanup() {
@@ -54,6 +67,22 @@ export default class SignUpMentee extends React.Component {
             console.log("Could not get fetch state from local storage for", compName);
           }
         }
+        // TODO: get list of available schools
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/getSchools`, {
+            method: 'get',
+            headers: headers,
+            credentials: 'include',
+        }).then(async res => {
+                let resolvedRes = await res;
+                resolvedRes = await resolvedRes.json()
+                this.setState({
+                    schools: resolvedRes.schools
+                })
+        }
+        ).catch(e => console.log(e))
     }
 
     componentWillUnmount() {
@@ -86,9 +115,22 @@ export default class SignUpMentee extends React.Component {
         );
     }
 
+    handleSchoolSelection(e, {value}) {
+        e.preventDefault();
+        if (value === CUSTOM) {
+            this.setState({
+                customSchoolSelected: true
+            })
+        } else {
+            this.setState({
+                school: value
+            })
+        }
+    }
+
     handleSubmit(e) {
         e.preventDefault();
-        let readyForSubmit = (this.state.name && this.state.email && this.state.password && this.state.school && 
+        let readyForSubmit = (this.state.name && this.state.email && this.state.password && (this.state.school || this.state.schoolCustom) && 
         this.state.location && this.state.aboutYourself && this.state.confirmPassword) && (this.state.confirmPassword === this.state.password);
         this.setState({
             submitting: readyForSubmit,
@@ -100,6 +142,8 @@ export default class SignUpMentee extends React.Component {
                 email: this.state.email,
                 password: this.state.password,
                 school: this.state.school,
+                schoolCustom: this.state.schoolCustom,
+                customSchoolSelected: this.state.customSchoolSelected,
                 location: this.state.location,
                 timeZone: timeZone,
                 aboutYourself: this.state.aboutYourself,
@@ -139,6 +183,20 @@ export default class SignUpMentee extends React.Component {
         
     }
     render() {
+    let schoolOptions = this.state.schools ? this.state.schools.map(school => {
+        return {
+            key: school.name,
+            value: school.name,
+            text: school.name
+        }
+    }) : null
+    if (schoolOptions) {
+        schoolOptions.push({
+            key: CUSTOM,
+            value: CUSTOM,
+            text: CUSTOM
+        })
+    }
     return (
         <div>
             {
@@ -201,14 +259,22 @@ export default class SignUpMentee extends React.Component {
                                 <label>Name</label>
                                 <input placeholder='Name' name="name" onChange={this.handleChange} />
                             </Form.Field>
-                            <Form.Field
-                                type="text"
-                                required="true"
-                                style={fieldStyle}
-                            >
-                                <label>School</label>
-                                <input placeholder='School' name="school" onChange={this.handleChange} />
-                            </Form.Field>
+                            {/* Dropdown with options, if option is other --> free input */}
+                            {!this.state.customSchoolSelected?
+                                 <Form.Field>
+                                 <label>Select your school</label>
+                                 <Dropdown placeholder='Select the school your attend' fluid selection options={schoolOptions} onChange={this.handleSchoolSelection} name="school"/>
+                                </Form.Field>
+                                 : 
+                                 <Form.Field
+                                 type="text"
+                                 required="true"
+                                 style={fieldStyle}
+                                >
+                                    <label>Add your School</label>
+                                    <input placeholder='School' name="school" onChange={this.handleChange} />
+                                </Form.Field>
+                            }
                             <Form.Field
                                 type="text"
                                 required="true"

@@ -3,12 +3,14 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Mentees from './Mentees';
 import Requests from './Requests';
 import Mentors from './Mentors';
+import Dashboard from "./Dashboard"
 
 const compName = 'NavBarAdmin_LS';
 
 export const REQUESTS = 'Requests';
 export const MENTORS = 'Mentors';
 export const MENTEES = 'Mentees'
+export const DASHBOARD = 'Dashboard'
 
 export default class NavBarAdmin extends Component {
     constructor(props){
@@ -57,6 +59,9 @@ export default class NavBarAdmin extends Component {
             case MENTEES:
                 return <Mentees
                 />
+            case DASHBOARD:
+                    return <Dashboard
+                    />
             default:
                 return null
         }
@@ -81,6 +86,11 @@ export default class NavBarAdmin extends Component {
                 <Menu.Item
                     name={MENTEES}
                     active={activeItem === MENTEES}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name={DASHBOARD}
+                    active={activeItem === DASHBOARD}
                     onClick={this.handleItemClick}
                 />
                 </Menu>
