@@ -51,7 +51,7 @@ export default class ScheduleFormMentorPicked extends Component {
                     value: option
                 }))
             },() => {
-                let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes[0].map(
+                let menteeTimeObjects = this.state.mentor && this.state.mentor.preferredTimes[0] && this.state.mentor.preferredTimes[0].map(
                         time => {
                             return {
                                 gmtFreeTime: time,

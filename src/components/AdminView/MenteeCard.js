@@ -3,6 +3,7 @@ import { Grid, Card, Button, Message, Modal, Form } from 'semantic-ui-react'
 import { adminCardStyleYellow, adminContentYellowStyle, adminRowPaddingStyle, adminContentOrangeStyle } from "../../inlineStyles"
 import {BACKEND} from "../../App";
 import swal from "sweetalert";
+import ProfileModal from '../MenteeView/ProfileModal'
 
 export default class MenteeCard extends React.Component {
     constructor(props){
@@ -158,6 +159,9 @@ export default class MenteeCard extends React.Component {
                         <Button onClick={this.changeSuspensionMentee}>
                             {this.state.suspensionStatus ? `Unsuspend` : `Suspend`}
                         </Button>
+                        <Grid.Row>
+                            <ProfileModal menteeId={this.props.menteeId}/>
+                        </Grid.Row>
                     </Grid.Column>
                 </Grid>
             </Card>

@@ -32,7 +32,7 @@ export const SAFETY = 'Safety'
     menteeId: string
 */
 
-function groupByRank(collegeObjs) {
+export function groupByRank(collegeObjs) {
     let sortedShortList = {
         MATCH: [],
         REACH: [],

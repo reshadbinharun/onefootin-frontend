@@ -36,7 +36,7 @@ export default class EditProfile extends React.Component {
             imageLink: '',
             submitting: false,
             schoolCustom: '',
-            schoolSelected: '',
+            schoolSelected: false,
             customSchoolSelected: false,
             schools: []
         }
@@ -116,11 +116,13 @@ export default class EditProfile extends React.Component {
         if (value === CUSTOM) {
             this.setState({
                 customSchoolSelected: true,
-                schoolCustom: value
+                schoolCustom: value,
+                schoolSelected: true
             })
         } else {
             this.setState({
-                school: value
+                school: value,
+                schoolSelected: true
             })
         }
     }

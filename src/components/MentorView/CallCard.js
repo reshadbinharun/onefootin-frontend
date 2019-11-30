@@ -6,6 +6,7 @@ import swal from "sweetalert";
 import FeedChat from "../Feed/FeedChat"
 import {createMessageEvent} from "../ScheduleCard"
 import {MENTEE, MENTOR} from "../../magicString"
+import ProfileModal from "../MenteeView/ProfileModal"
 
 let MAX_CHARS_MESSAGE = process.env.REACT_APP_MAX_CHARS_MESSAGE || 200;
 
@@ -14,7 +15,9 @@ export default class CallCard extends React.Component {
         super(props);
         this.state = {
             message: '',
-            modalOpen: false 
+            modalOpen: false,
+            modalProfileViewOpen: false,
+            menteeId: this.props.menteeId
         }
         this.handleConfirm = this.handleConfirm.bind(this);
         this.handleMarkAsComplete = this.handleMarkAsComplete.bind(this);
@@ -200,7 +203,7 @@ export default class CallCard extends React.Component {
                         basic color='dark orange'>
                         {this.props.confirmed ? 'Join Video Call' : 'Confirm'}
                     </Button>
-                    {/* TODO: Include ability to cancell requests for mentors */}
+                    {/* TODO: Include ability to cancel requests for mentors */}
                     <Button
                         onClick={(e) => this.props.confirmed ? this.handleMarkAsComplete(e) : this.handleDismiss(e)}
                         basic color='yellow'>
@@ -208,7 +211,44 @@ export default class CallCard extends React.Component {
                     </Button>
                     </div>
                     <Divider/>
-                    <Modal
+                    <div className='ui two buttons'>
+                        <Modal
+                            open={this.state.modalOpen}
+                            trigger={
+                                <Button
+                                    onClick={() => {this.setState({modalOpen: true})}}
+                                >
+                                    Chat!
+                                </Button>
+                            }>
+                            <Modal.Header>Your conversation with {mentee.name}</Modal.Header>
+                            <Modal.Content>
+                                <FeedChat events={this.getMessageEvents(this.props.mentorMessages, this.props.menteeMessages)}/>
+                                <Form onSubmit={this.sendMessage}>
+                                <Form.Field
+                                    type="text">
+                                        <label>Message</label>
+                                        <input maxlength={MAX_CHARS_MESSAGE} placeholder='Your message...' name="message" onChange={this.handleChange} value={this.state.message} />
+                                    </Form.Field>
+                                    <Button 
+                                        color="blue" 
+                                        type='submit'
+                                        disabled={!this.state.message}
+                                    >
+                                        Send
+                                    </Button>
+                                </Form>
+                            </Modal.Content>
+                            <Modal.Actions>
+                                <Button onClick={() => {this.setState({modalOpen: false})}}>
+                                    Done
+                                </Button>
+                            </Modal.Actions>
+                        </Modal>
+                    {/* TODO: Include ability to cancel requests for mentors */}
+                        <ProfileModal menteeId={this.state.menteeId}/>
+                    </div>
+                    {/* <Modal
                         open={this.state.modalOpen}
                         trigger={
                             <Button
@@ -242,7 +282,7 @@ export default class CallCard extends React.Component {
                                 Done
                             </Button>
                         </Modal.Actions>
-                    </Modal>
+                    </Modal> */}
                 </Card.Content>
             </Card>
         )

@@ -108,6 +108,7 @@ export default class Mentees extends React.Component {
                     location={mentee.location}
                     callsRequested={mentee.callsRequested}
                     suspensionStatus={mentee.suspended}
+                    menteeId={mentee.id}
                 />
             )
         })

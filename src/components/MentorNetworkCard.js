@@ -38,7 +38,7 @@ export default class MentorNetworkCard extends React.Component {
                         {this.props.viewedAsMentor? null : 
                         <div>
                             <Grid.Row>
-                                <Button onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
+                                <Button disabled={!this.props.hasTimesAvailable} onClick={() => this.props.pickMentor(id)} class="ui button">Book!</Button>
                             </Grid.Row>
                             <Divider/>
                         </div>
