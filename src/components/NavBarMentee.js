@@ -90,6 +90,7 @@ export default class NavBarMentee extends Component {
     }
 
     renderNavSelection() {
+        let school = this.state.data.schoolCustom ? this.state.data.schoolCustom : this.state.data.school ? this.state.data.school.name : 'None listed.'
         switch(this.state.activeItem) {
             case MY_PROFILE:
                 return <Profile
@@ -98,7 +99,7 @@ export default class NavBarMentee extends Component {
                     email={this.state.data.email}
                     image={this.state.data.image}
                     name={this.state.data.name}
-                    school={this.state.data.school}
+                    school={school}
                     memberSince={this.state.data.memberSince}
                     aboutYourself={this.state.data.aboutYourself}
                     location={this.state.data.location}

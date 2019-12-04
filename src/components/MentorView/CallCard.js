@@ -184,6 +184,7 @@ export default class CallCard extends React.Component {
             padding: '5px',
             margin: '5px',
         }
+        let school = mentee.schoolCustom ? mentee.schoolCustom : mentee.school ? mentee.school.name : 'None listed.'
         return (
             // TODO: update confirm/dismiss with backend calls
             // TODO: adjustTime to mentor's timeZone
@@ -193,7 +194,7 @@ export default class CallCard extends React.Component {
                     <Card.Meta>Topic {topic} at { convertToViewerTimeZone(time, mentorTimeZone) }</Card.Meta>
                     <Card.Meta>Message from mentee: { this.props.mentee_intro }</Card.Meta>
                     <Card.Description>
-                        {mentee.name} attends {mentee.school} and is from {mentee.location}
+                        {mentee.name} attends {school} and is from {mentee.location}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>

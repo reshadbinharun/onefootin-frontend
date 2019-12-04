@@ -130,6 +130,7 @@ export default class MentorNetwork extends React.Component {
                 return mentor.id !== this.props.myId
             })
         )
+        //TODO: filter by hasAvailabilities here?
         MentorObjects = MentorObjects.filter(mentor => {
             return mentor.approved
         });

@@ -99,11 +99,12 @@ export default class Mentees extends React.Component {
 
     renderUserCards(MenteeObjects) {
         return MenteeObjects.map(mentee => {
+            let school = mentee.schoolCustom ? mentee.schoolCustom : mentee.school ? mentee.school.name : 'None listed'
             return (
                 <MenteeCard
                     email={mentee.email}
                     name={mentee.name}
-                    school={mentee.school}
+                    school={school}
                     memberSince={mentee.memberSince}
                     location={mentee.location}
                     callsRequested={mentee.callsRequested}

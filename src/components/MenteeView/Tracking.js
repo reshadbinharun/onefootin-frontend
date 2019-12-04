@@ -33,6 +33,7 @@ export const SAFETY = 'Safety'
 */
 
 export function groupByRank(collegeObjs) {
+
     let sortedShortList = {
         MATCH: [],
         REACH: [],
