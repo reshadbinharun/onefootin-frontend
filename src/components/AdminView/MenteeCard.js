@@ -4,6 +4,7 @@ import { adminCardStyleYellow, adminContentYellowStyle, adminRowPaddingStyle, ad
 import {BACKEND} from "../../App";
 import swal from "sweetalert";
 import ProfileModal from '../MenteeView/ProfileModal'
+import {buttonStyle3} from '../../inlineStyles';
 
 export default class MenteeCard extends React.Component {
     constructor(props){
@@ -128,6 +129,7 @@ export default class MenteeCard extends React.Component {
                             open={this.state.modalOpen}
                             trigger={
                                 <Button
+                                    style={buttonStyle3}
                                     onClick={() => {this.setState({modalOpen: true})}}
                                 >
                                     Ping Mentee
@@ -156,7 +158,9 @@ export default class MenteeCard extends React.Component {
                                 </Button>
                             </Modal.Actions>
                         </Modal> 
-                        <Button onClick={this.changeSuspensionMentee}>
+                        <Button 
+                            style={buttonStyle3}                            
+                            onClick={this.changeSuspensionMentee}>
                             {this.state.suspensionStatus ? `Unsuspend` : `Suspend`}
                         </Button>
                         <Grid.Row>

@@ -3,6 +3,7 @@ import React from 'react'
 import { Modal, Card, Button, Header, Label, List, Image, Segment } from 'semantic-ui-react'
 import { BACKEND } from "../../App"
 import { groupByRank } from "./Tracking"
+import {buttonStyle3} from "../../inlineStyles"
 
 /*
 props: menteeId
@@ -42,7 +43,6 @@ export default class MenteeModal extends React.Component {
                     let resolvedRes = await res;
                     resolvedRes = await resolvedRes.json()
                     // tracking info
-                    console.log("profile modal", resolvedRes)
                     let {name, ECA, OAlevel, SAT, OtherExams, grade, collegeShortlist, memberSince, location, image, school} = resolvedRes
                     /*
                     parse mentee info from resolved Res
@@ -101,8 +101,9 @@ export default class MenteeModal extends React.Component {
                 {sortedShortlist[rank].map( college => {
                     return (<List.Item>
                         <>
-                        <Label size={'medium'} image>{college}
-                        </Label>
+                        {/* <Label size={'medium'} image> */}
+                        {college}
+                        {/* </Label> */}
                         </>
                     </List.Item>)
                 })}
@@ -117,6 +118,7 @@ export default class MenteeModal extends React.Component {
             open={this.state.modalOpen}
             trigger={
                 <Button
+                    style={buttonStyle3}
                     onClick={() => {this.setState({modalOpen: true})}}
                 >
                     View {this.state.name}'s Profile
@@ -137,11 +139,11 @@ export default class MenteeModal extends React.Component {
                 </Card.Content>
                 <Card.Content centered>
                     <Segment style={{'width': '95%'}}>
-                        <label>Colleges in shortlist:</label> <br/>
+                        <strong><label>Colleges in shortlist:</label> </strong><br/>
                         {this.getCollegesList()}
                     </Segment>
                     <Segment style={{'width': '95%'}}>
-                        <label>Extra-curricular activities:</label>
+                        <strong><label>Extra-curricular activities:</label></strong>
                         {this.getECA()}
                     </Segment>
                 </Card.Content>

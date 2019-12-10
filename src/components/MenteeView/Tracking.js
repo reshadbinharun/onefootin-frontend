@@ -285,9 +285,8 @@ export default class Tracking extends React.Component {
                 {sortedShortlist[rank].map( college => {
                     return (<List.Item>
                         <>
-                        <Label size={'medium'} image>{college}
-                            {edit? <Icon name='delete' onClick={() => this.removeCollege(college)}/>: null}
-                        </Label>
+                        {college}
+                        {edit? <Icon name='delete' onClick={() => this.removeCollege(college)}/>: null}
                         </>
                     </List.Item>)
                 })}

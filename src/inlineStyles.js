@@ -1,4 +1,4 @@
-import {yellowLight, orangeLight, yellowUltraLight} from './htmlColorCodes'
+import {yellowLight, orangeLight, yellowUltraLight, darkYellow, mediumOrange} from './htmlColorCodes'
 
 
 export const adminRowPaddingStyle = {
@@ -45,4 +45,24 @@ export const mentorMessage = {
     margin: '5px',
     background: orangeLight,
     float: 'right'
+}
+
+export const buttonStyle1 = {
+    width: '90%',
+    padding: '8px 8px 8px 8px',
+    margin: '3px 3px 3px 3px',
+    background: mediumOrange
+}
+
+export const buttonStyle2 = {
+    width: '90%',
+    padding: '8px 8px 8px 8px',
+    margin: '3px 3px 3px 3px',
+    background: darkYellow
+}
+
+export const buttonStyle3 = {
+    width: '90%',
+    padding: '8px 8px 8px 8px',
+    margin: '3px 3px 3px 3px'
 }
