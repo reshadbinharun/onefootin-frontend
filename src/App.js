@@ -4,13 +4,14 @@ import Header from './components/Header';
 import NavBarMentor from './components/MentorView/NavBarMentor';
 import NavBarMentee from "./components/NavBarMentee";
 import NavBarAdmin from "./components/AdminView/NavBarAdmin";
+import NavBarSchoolAdmin from "./components/SchoolView/NavBarSchoolAdmin";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
 import LoginForm from "./components/LoginForm";
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
 import SignUpAdmin from './components/SignUp/SignUpAdmin';
-import { MENTEE, MENTOR, ADMIN } from './magicString';
+import { MENTEE, MENTOR, ADMIN, SCHOOL_ADMIN } from './magicString';
 
 export const BACKEND = process.env.REACT_APP_BACKEND || 'https://one-foot-in-backend.herokuapp.com';
 
@@ -31,6 +32,8 @@ export default class App extends Component {
       role: '',
       mentorPayload: {},
       menteePayload: {},
+      adminPayload: {},
+      schoolAdminPayload: {},
       loggedIn: false,
     };
     this.renderLogin = this.renderLogin.bind(this);
@@ -94,6 +97,12 @@ export default class App extends Component {
           adminPayload: payload
         })
         break;
+      case (SCHOOL_ADMIN):
+        this.setState({
+          role: SCHOOL_ADMIN,
+          schoolAdminPayload: payload
+        })
+        break;
       default:
         return;
     }
@@ -120,6 +129,12 @@ export default class App extends Component {
         loggedInView =
           <NavBarAdmin
             payload = {this.state.adminPayload}
+            />
+        break;
+      case(SCHOOL_ADMIN):
+        loggedInView =
+          <NavBarSchoolAdmin
+            payload = {this.state.schoolAdminPayload}
             />
         break;
       default:

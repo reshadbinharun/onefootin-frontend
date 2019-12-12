@@ -2,7 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { BACKEND } from "../App";
-import { MENTEE, MENTOR, ADMIN } from '../magicString'
+import { MENTEE, MENTOR, ADMIN, SCHOOL_ADMIN } from '../magicString'
 
 let fieldStyle = {
     width: '100%',
@@ -29,11 +29,13 @@ export default class LoginForm extends React.Component {
             menteeLoginLoading: false,
             mentorLoginLoading: false,
             adminLoading: false,
+            schoolAdminLoading: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitAsMentee = this.handleSubmitAsMentee.bind(this);
         this.handleSubmitAsMentor = this.handleSubmitAsMentor.bind(this);
         this.handleSubmitAsAdmin = this.handleSubmitAsAdmin.bind(this);
+        this.handleSubmitAsSchoolAdmin = this.handleSubmitAsSchoolAdmin.bind(this);
         this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -185,6 +187,48 @@ export default class LoginForm extends React.Component {
             })
         });
     }
+
+    handleSubmitAsSchoolAdmin(e) {
+        e.preventDefault();
+        this.setState({schoolAdminLoginLoading: true});
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/schoolAdminLogin`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            })
+        }).then(async res => {
+            let resolvedRes = await res;
+            let resolvedResParsed = await resolvedRes.json()
+            if (resolvedRes.status === 400) {
+                this.setState({
+                    incorrectCredentials: true,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
+                    schoolAdminLoginLoading: false,
+                },() => console.log("login rejected", resolvedRes))
+            }
+            else {
+                this.setState({
+                    incorrectCredentials: false,
+                    schoolAdminLoginLoading: false,
+                },() => {
+                    this.props.login()
+                    this.props.liftPayload(resolvedResParsed, SCHOOL_ADMIN);
+                })
+            }
+        }).catch(err => {
+            this.setState({
+                schoolAdminLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
+        });
+    }
     
     handleChange(e) {
         e.preventDefault();
@@ -267,6 +311,15 @@ export default class LoginForm extends React.Component {
                 >
                     <Icon name="unlock"/>
                     Login as Admin
+                </Button>
+                <Button 
+                    style={buttonStyle}
+                    onClick={this.handleSubmitAsSchoolAdmin}
+                    color="gray"
+                    loading={this.state.schoolAdminLoginLoading}
+                >
+                    <Icon name="unlock"/>
+                    Login as School Admin
                 </Button>
                 </Button.Group>
             </Grid.Row>
