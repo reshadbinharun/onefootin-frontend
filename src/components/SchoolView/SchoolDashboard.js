@@ -36,6 +36,7 @@ export default class SchoolDashboard extends React.Component {
         window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
+    // TODO: Message students by grade
     pingStudents(e) {
         e.preventDefault();
         this.setState({
@@ -65,7 +66,7 @@ export default class SchoolDashboard extends React.Component {
                else {
                 swal({
                     title: "Message Sent!",
-                    text: `You just pinged ${this.state.name}.`,
+                    text: `You messaged all students in your school.`,
                     icon: "success",
                   });
                }

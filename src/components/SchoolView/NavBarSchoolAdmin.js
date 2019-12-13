@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-// import Students from './Students';
+import Students from './Students';
 // import SchoolRequests from './SchoolRequests';
 // import SchoolMentors from './SchoolMentors';
 import SchoolDashboard from "./SchoolDashboard"
@@ -61,7 +61,7 @@ export default class NavBarSchoolAdmin extends Component {
                 return <Students
                 />
             case DASHBOARD:
-                    return <Dashboard
+                    return <SchoolDashboard
                     />
             default:
                 return null
