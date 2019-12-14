@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import Mentees from './Mentees';
 import Requests from './Requests';
+import SchoolRequests from './SchoolRequests';
 import Mentors from './Mentors';
 import Dashboard from "./Dashboard"
 
@@ -11,6 +12,7 @@ export const REQUESTS = 'Requests';
 export const MENTORS = 'Mentors';
 export const MENTEES = 'Mentees'
 export const DASHBOARD = 'Dashboard'
+export const SCHOOL_REQUESTS = 'School Requests'
 
 export default class NavBarAdmin extends Component {
     constructor(props){
@@ -60,8 +62,11 @@ export default class NavBarAdmin extends Component {
                 return <Mentees
                 />
             case DASHBOARD:
-                    return <Dashboard
-                    />
+                return <Dashboard
+                />
+            case DASHBOARD:
+                return <SchoolRequests
+                />
             default:
                 return null
         }
@@ -91,6 +96,11 @@ export default class NavBarAdmin extends Component {
                 <Menu.Item
                     name={DASHBOARD}
                     active={activeItem === DASHBOARD}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name={SCHOOL_REQUESTS}
+                    active={activeItem === SCHOOL_REQUESTS}
                     onClick={this.handleItemClick}
                 />
                 </Menu>
