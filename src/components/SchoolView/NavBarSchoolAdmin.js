@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import Students from './Students';
-// import SchoolRequests from './SchoolRequests';
-// import SchoolMentors from './SchoolMentors';
+import SchoolRequests from './SchoolRequests';
+import SchoolMentors from './SchoolMentors';
 import SchoolDashboard from "./SchoolDashboard"
 
 const compName = 'NavBarSchoolAdmin_LS';
@@ -53,6 +53,7 @@ export default class NavBarSchoolAdmin extends Component {
         switch(this.state.activeItem) {
             case REQUESTS:
                 return <SchoolRequests
+                        schoolId={this.state.data.school.id}
                     />
             case MENTORS:
                 return <SchoolMentors
