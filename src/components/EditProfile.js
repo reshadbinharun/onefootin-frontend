@@ -11,7 +11,7 @@ let languageOptions = LANGUAGE_OPTIONS.map(val => {
     return {key: val, text: val, value: val}
 });
 
-const CUSTOM = 'custom'
+const CUSTOM = 'Add your own school'
 
 //TODO: Write handleSubmit functions and backend API to update database
 let fieldStyle = {
@@ -36,7 +36,7 @@ export default class EditProfile extends React.Component {
             imageLink: '',
             submitting: false,
             schoolCustom: '',
-            schoolSelected: '',
+            schoolSelected: false,
             customSchoolSelected: false,
             schools: []
         }
@@ -116,11 +116,12 @@ export default class EditProfile extends React.Component {
         if (value === CUSTOM) {
             this.setState({
                 customSchoolSelected: true,
-                schoolCustom: value
+                schoolSelected: true
             })
         } else {
             this.setState({
-                school: value
+                school: value,
+                schoolSelected: true
             })
         }
     }
@@ -367,7 +368,7 @@ export default class EditProfile extends React.Component {
                 style={fieldStyle}
                 >
                     <label>Add your School</label>
-                    <input placeholder='School' name="school" onChange={this.handleChange} />
+                    <input placeholder='School' name="schoolCustom" onChange={this.handleChange} />
                 </Form.Field>
             }
             <Form.Field

@@ -25,6 +25,7 @@ export default class Backlog extends React.Component {
                         mentee_intro={call.mentee_intro}
                         menteeMessages={call.menteeMessages || []}
                         mentorMessages={call.mentorMessages || []}
+                        menteeId = {call.mentee.id}
                     />
                 )
             })

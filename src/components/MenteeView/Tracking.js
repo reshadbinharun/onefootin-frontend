@@ -32,7 +32,8 @@ export const SAFETY = 'Safety'
     menteeId: string
 */
 
-function groupByRank(collegeObjs) {
+export function groupByRank(collegeObjs) {
+
     let sortedShortList = {
         MATCH: [],
         REACH: [],
@@ -284,9 +285,8 @@ export default class Tracking extends React.Component {
                 {sortedShortlist[rank].map( college => {
                     return (<List.Item>
                         <>
-                        <Label size={'medium'} image>{college}
-                            {edit? <Icon name='delete' onClick={() => this.removeCollege(college)}/>: null}
-                        </Label>
+                        {college}
+                        {edit? <Icon name='delete' onClick={() => this.removeCollege(college)}/>: null}
                         </>
                     </List.Item>)
                 })}

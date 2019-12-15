@@ -65,7 +65,6 @@ export default class TimeSelector extends React.Component {
         this.setState({
             timeSelection: value,
         },() => {
-            console.log(this.state)
         })
     }
 

@@ -62,7 +62,6 @@ export default class RequestCard extends React.Component {
 
     render() {
         const {menteeNameSchool, mentorNameCollege, topic, status, feedback, menteeIntro} = this.props;
-
         return (
             <Card centered={true} style={adminCardStyleYellow}>
                 <Grid columns={2}>

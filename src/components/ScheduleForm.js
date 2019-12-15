@@ -67,7 +67,6 @@ export default class ScheduleForm extends React.Component {
         }).then(async res => {
             let resolvedRes = await res.json()
             if (res.status===200){
-                console.log("received response", resolvedRes)
                 this.setState({
                     mentorsByTopic: resolvedRes
                 })

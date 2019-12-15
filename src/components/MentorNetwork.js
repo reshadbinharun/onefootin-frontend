@@ -130,10 +130,12 @@ export default class MentorNetwork extends React.Component {
                 return mentor.id !== this.props.myId
             })
         )
+        //TODO: filter by hasAvailabilities here?
         MentorObjects = MentorObjects.filter(mentor => {
             return mentor.approved
         });
         return MentorObjects.map(mentor => {
+            let hasAvailabilities = mentor.preferredTimes[0].length > 0
             return (
                 <MentorNetworkCard
                     id={mentor.id}
@@ -145,6 +147,7 @@ export default class MentorNetwork extends React.Component {
                     pickMentor={this.props.pickMentor}
                     viewProfile={this.viewProfile}
                     viewedAsMentor={this.props.isMentor}
+                    hasTimesAvailable={hasAvailabilities}
                 />
             )
         })

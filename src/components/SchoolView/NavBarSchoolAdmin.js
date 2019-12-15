@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import Mentees from './Mentees';
-import Requests from './Requests';
+import Students from './Students';
 import SchoolRequests from './SchoolRequests';
-import Mentors from './Mentors';
-import Dashboard from "./Dashboard"
+import SchoolMentors from './SchoolMentors';
+import SchoolDashboard from "./SchoolDashboard"
 
-const compName = 'NavBarAdmin_LS';
+const compName = 'NavBarSchoolAdmin_LS';
 
-export const REQUESTS = 'Requests';
-export const MENTORS = 'Mentors';
-export const MENTEES = 'Mentees'
-export const DASHBOARD = 'Dashboard'
-export const SCHOOL_REQUESTS = 'School Requests'
+const REQUESTS = 'Requests';
+const MENTORS = 'Mentors';
+const STUDENTS = 'Students'
+const DASHBOARD = 'Dashboard'
 
-export default class NavBarAdmin extends Component {
+export default class NavBarSchoolAdmin extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeItem: REQUESTS,
+            activeItem: DASHBOARD,
             data: {},
         }
         this.componentCleanup = this.componentCleanup.bind(this);
@@ -39,6 +37,7 @@ export default class NavBarAdmin extends Component {
             }
         }
         this.setState({
+            // TODO: change props
             data: this.props.payload.mentee
         })
     }
@@ -53,20 +52,18 @@ export default class NavBarAdmin extends Component {
     renderNavSelection() {
         switch(this.state.activeItem) {
             case REQUESTS:
-                return <Requests
+                return <SchoolRequests
+                        schoolId={this.state.data.school.id}
                     />
             case MENTORS:
-                return <Mentors
+                return <SchoolMentors
                 />
-            case MENTEES:
-                return <Mentees
-                />
-            case DASHBOARD:
-                return <Dashboard
+            case STUDENTS:
+                return <Students
                 />
             case DASHBOARD:
-                return <SchoolRequests
-                />
+                    return <SchoolDashboard
+                    />
             default:
                 return null
         }
@@ -89,18 +86,13 @@ export default class NavBarAdmin extends Component {
                     onClick={this.handleItemClick}
                 />
                 <Menu.Item
-                    name={MENTEES}
-                    active={activeItem === MENTEES}
+                    name={STUDENTS}
+                    active={activeItem === STUDENTS}
                     onClick={this.handleItemClick}
                 />
                 <Menu.Item
                     name={DASHBOARD}
                     active={activeItem === DASHBOARD}
-                    onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                    name={SCHOOL_REQUESTS}
-                    active={activeItem === SCHOOL_REQUESTS}
                     onClick={this.handleItemClick}
                 />
                 </Menu>

@@ -3,15 +3,15 @@ import React from 'react'
 import { Container, Grid, Divider, Button } from 'semantic-ui-react'
 import SearchBar from '../SearchBar';
 import { BACKEND } from "../../App";
-import MenteeCard from './MenteeCard';
+import MentorSchoolCard from './MentorSchoolCard';
 
-const compName = 'Mentees_LS';
+const compName = 'Mentors_LS';
 
-export default class Mentees extends React.Component {
+export default class SchoolMentors extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            mentees: [],
+            mentors: [],
             searchMode: false,
             searchTerms: '',
         }
@@ -38,7 +38,7 @@ export default class Mentees extends React.Component {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        fetch(`${BACKEND}/getAllMenteesByAdmin`, {
+        fetch(`${BACKEND}/getAllMentorsByAdmin`, {
             method: 'get',
             credentials: 'include',
             headers: headers,
@@ -46,7 +46,7 @@ export default class Mentees extends React.Component {
             let resolvedRes = await res;
             resolvedRes = await resolvedRes.json()
             this.setState({
-                mentees: resolvedRes && resolvedRes.mentees
+                mentors: resolvedRes && resolvedRes.mentors
             });
         });
     }
@@ -72,8 +72,8 @@ export default class Mentees extends React.Component {
         }
     }
 
-    getBagofWords(mentee) {
-        return [mentee.name || '', mentee.school || '', mentee.location || ''];
+    getBagofWords(mentor) {
+        return [mentor.name || '', mentor.college || '', mentor.location || ''];
     }
 
     clearSearch(e) {
@@ -81,13 +81,14 @@ export default class Mentees extends React.Component {
         this.setState({
             searchMode: false,
             searchTerms: '',
+            searchTopic: '',
         })
     }
 
-    filterResults(MenteeObjects) {
+    filterResults(MentorObjects) {
         // eslint-disable-next-line
-        return MenteeObjects.filter(mentee => {
-            let bagOfWords = this.getBagofWords(mentee);
+        return MentorObjects.filter(mentor => {
+            let bagOfWords = this.getBagofWords(mentor);
             let searchTerms = this.state.searchTerms;
             for (let i = 0; i < bagOfWords.length; i++) {
                 if (bagOfWords[i].toLowerCase().includes(searchTerms.toLowerCase())) {
@@ -97,19 +98,17 @@ export default class Mentees extends React.Component {
         })
     }
 
-    renderUserCards(MenteeObjects) {
-        return MenteeObjects.map(mentee => {
-            let school = mentee.schoolCustom ? mentee.schoolCustom : mentee.school ? mentee.school.name : 'None listed'
+    renderUserCards(MentorObjects) {
+        return MentorObjects.map(mentor => {
             return (
-                <MenteeCard
-                    email={mentee.email}
-                    name={mentee.name}
-                    school={school}
-                    memberSince={mentee.memberSince}
-                    location={mentee.location}
-                    callsRequested={mentee.callsRequested}
-                    suspensionStatus={mentee.suspended}
-                    menteeId={mentee.id}
+                <MentorSchoolCard
+                    name={mentor.name}
+                    college={mentor.college}
+                    location={mentor.location}
+                    memberSince={mentor.memberSince}
+                    callsCompleted={mentor.callsCompleted}
+                    image={mentor.image}
+                    position={mentor.position}
                 />
             )
         })
@@ -120,7 +119,7 @@ export default class Mentees extends React.Component {
             <Container>
                 <Grid columns={1}>
                     <Grid.Column width={10}>
-                        There as {this.state.mentees.length} Mentees currently in network.
+                        There as {this.state.mentors.length} Mentors currently in network.
                     </Grid.Column>
                     <Grid.Column width={6}>
                         <Grid.Row>
@@ -139,7 +138,7 @@ export default class Mentees extends React.Component {
                 </Grid>
                 <Container>
                     {this.state.searchMode ? 
-                    this.renderUserCards(this.filterResults(this.state.mentees)) : this.renderUserCards(this.state.mentees)}
+                    this.renderUserCards(this.filterResults(this.state.mentors)) : this.renderUserCards(this.state.mentors)}
                 </Container>
             </Container>
         )
