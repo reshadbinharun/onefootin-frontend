@@ -1,9 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react'
 import { Container, Button, Modal, Form, Dropdown, Table, Select} from 'semantic-ui-react'
+import { buttonStyle3 } from "../../inlineStyles";
 import { BACKEND } from "../../App";
 import swal from "sweetalert";
 import {ECA_STRATEGY, ESSAY_CRITIQUE, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION} from "../../topics";
+import ProfileModal from "../MenteeView/ProfileModal"
 
 const TOPIC_OPTIONS = [ECA_STRATEGY, ESSAY_CRITIQUE, ESSAY_BRAINSTORM, COLLEGE_SHORTLISTING, FINANCIAL_AID_MATTERS, GENERAL_CONSULTATION];
 let topicsOptions = TOPIC_OPTIONS.map(val => {
@@ -17,7 +19,7 @@ const compName = 'Students_LS';
 export default class Students extends React.Component {
     constructor(props){
         super(props);
-        state = {
+        this.state = {
             students: [],
             message: '',
             modalMessageOpen: false,

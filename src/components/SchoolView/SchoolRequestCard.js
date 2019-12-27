@@ -8,7 +8,7 @@ export default class SchoolRequestCard extends React.Component {
     }
 
     render() {
-        const { topic, menteeName, mentorName, paired } = this.props;
+        const { topic, menteeName, schoolName, mentorName, paired } = this.props;
         return (
             <Card centered={true} style={paired? adminContentOrangeStyle : adminContentYellowStyle}>
                 <Grid columns={1}>

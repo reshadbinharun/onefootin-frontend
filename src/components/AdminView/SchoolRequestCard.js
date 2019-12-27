@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Button, Modal, Form } from 'semantic-ui-react'
+import { Grid, Card, Button, Modal, Form, Select } from 'semantic-ui-react'
 import { adminContentOrangeStyle, adminContentYellowStyle } from "../../inlineStyles"
 import {BACKEND} from "../../App";
 import swal from "sweetalert";
@@ -47,7 +47,6 @@ export default class SchoolRequestCard extends React.Component {
     }
 
     pairCall() {
-        e.preventDefault();
         this.setState({
             modalOpen: false
         });
@@ -78,7 +77,7 @@ export default class SchoolRequestCard extends React.Component {
                else {
                 swal({
                     title: "Pair request sent!",
-                    text: `You just requested a call with mentor on behalf of ${schoolName}.`,
+                    text: `You just requested a call with mentor on behalf of ${this.props.schoolName}.`,
                     icon: "success",
                   });
                }
@@ -89,7 +88,7 @@ export default class SchoolRequestCard extends React.Component {
 
     render() {
         const {schoolName, topic, paired, menteeName, mentorName} = this.props;
-        options = this.state.mentors && this.state.mentors.map(mentor => {
+        const options = this.state.mentors && this.state.mentors.map(mentor => {
             return {
                 text: `${mentor.name} (${mentor.college})`,
                 key: mentor.id,
