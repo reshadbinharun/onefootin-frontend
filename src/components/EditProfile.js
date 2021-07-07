@@ -94,7 +94,13 @@ export default class EditProfile extends React.Component {
                    }, () => {
                     this.props.goBack();
                    })
-            })
+            }).catch(err => {
+                this.setState({
+                    submitting: false
+                }, () => {
+                    window.alert("Whoops! The server's acting up... :(");
+                })
+            });
         })
     }
 
@@ -145,7 +151,13 @@ export default class EditProfile extends React.Component {
                    }, () => {
                     this.props.goBack();
                    })
-            })
+            }).catch(err => {
+                this.setState({
+                    submitting: false
+                }, () => {
+                    window.alert("Whoops! The server's acting up... :(");
+                })
+            });
         })
     }
 

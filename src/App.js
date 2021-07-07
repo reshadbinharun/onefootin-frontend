@@ -3,13 +3,14 @@ import 'semantic-ui-css/semantic.min.css';
 import Header from './components/Header';
 import NavBarMentor from './components/MentorView/NavBarMentor';
 import NavBarMentee from "./components/NavBarMentee";
+import NavBarAdmin from "./components/AdminView/NavBarAdmin";
 import { Container, Grid, Button, Divider } from 'semantic-ui-react';
-// TODO: clean up and remove test mode
-// import Test from './components/connectTest';
 import LoginForm from "./components/LoginForm";
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 import SignUpMentor from './components/SignUp/SignUpMentor';
 import SignUpMentee from './components/SignUp/SignUpMentee';
+import SignUpAdmin from './components/SignUp/SignUpAdmin';
+import { MENTEE, MENTOR, ADMIN } from './magicString';
 
 export const BACKEND = process.env.REACT_APP_BACKEND || 'https://one-foot-in-backend.herokuapp.com';
 
@@ -19,13 +20,15 @@ export const PATHS = {
   root: "/",
   signupMentor: "/signupMentor",
   signupMentee: "/signupMentee",
+  signupAdmin: "/signupAdmin"
 }
 
 export default class App extends Component {
   constructor(){
     super();
     this.state = {
-      isMentor: false,
+      // isMentor: false,
+      role: '',
       mentorPayload: {},
       menteePayload: {},
       loggedIn: false,
@@ -71,29 +74,57 @@ export default class App extends Component {
     })
   }
 
-  liftPayload(payload, isMentor) {
-    if (isMentor) {
-      this.setState({
-        isMentor: true,
-        mentorPayload: payload
-      })
-    } else {
-      this.setState({
-        isMentor: false,
-        menteePayload: payload
-      })
+  liftPayload(payload, role) {
+    switch(role) {
+      case (MENTEE):
+          this.setState({
+            role: MENTEE,
+            menteePayload: payload
+          });
+          break;
+      case (MENTOR):
+        this.setState({
+          role: MENTOR,
+          mentorPayload: payload
+        })
+        break;
+      case (ADMIN):
+        this.setState({
+          role: ADMIN,
+          adminPayload: payload
+        })
+        break;
+      default:
+        return;
     }
   }
 
   renderLogin() {
-    let loggedInView =
-      this.state.isMentor ? 
-        <NavBarMentor
-          payload = {this.state.mentorPayload}
-        /> : 
-        <NavBarMentee
-          payload = {this.state.menteePayload}
-        />
+    // TODO: switch-case with 3 views for loggedInView
+    let loggedInView = null;
+    switch(this.state.role)
+    {
+      case(MENTOR):
+        loggedInView = 
+          <NavBarMentor
+            payload = {this.state.mentorPayload}
+          />
+          break;
+      case(MENTEE):
+        loggedInView =
+          <NavBarMentee
+            payload = {this.state.menteePayload}
+          />
+        break;
+      case(ADMIN):
+        loggedInView =
+          <NavBarAdmin
+            payload = {this.state.adminPayload}
+            />
+        break;
+      default:
+        loggedInView = null;
+    }
     let navigation =
     <Grid centered>
       <Router>
@@ -104,6 +135,7 @@ export default class App extends Component {
                     <div>
                     <Grid centered rows={1}>
                       <Grid.Row left>
+                        <Button.Group>
                         <Button
                         >
                           <Link to={PATHS.signupMentor}>
@@ -116,12 +148,18 @@ export default class App extends Component {
                             Sign up as Mentee
                           </Link>
                         </Button>
+                        <Button
+                        >
+                          <Link to={PATHS.signupAdmin}>
+                            Sign up as Admin
+                          </Link>
+                        </Button>
+                        </Button.Group>
                       </Grid.Row>
                     </Grid>
                     </div>
                     <Divider/>
                     <LoginForm {...props}
-                      toggleTest = {this.toggleTest}
                       login = {this.login}
                       liftPayload = {this.liftPayload}
                     />
@@ -131,11 +169,12 @@ export default class App extends Component {
                   <SignUpMentor />}/>
                 <Route exact path={PATHS.signupMentee} render={() => 
                   <SignUpMentee /> }/>
+                <Route exact path={PATHS.signupAdmin} render={() => 
+                  <SignUpAdmin /> }/>
               </Switch>
             </div>
           </Router>
     </Grid>
-    
     return this.state.loggedIn ? loggedInView : navigation;
   }
 

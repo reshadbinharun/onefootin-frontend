@@ -4,10 +4,9 @@ import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { getTimezoneOffset } from "./SignUpMentor"
 import { BACKEND, PATHS } from "../../App"
 import { Redirect, Link } from "react-router-dom"
-import axios from 'axios';
 import swal from "sweetalert";
 
-const compName = 'SignUpMentee_LS';
+const compName = 'SignUpAdmin_LS';
 
 let fieldStyle = {
     width: '100%',
@@ -17,7 +16,7 @@ let messageStyle = {
     margin: '10px',
 }
 
-export default class SignUpMentee extends React.Component {
+export default class SignUpAdmin extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -25,17 +24,11 @@ export default class SignUpMentee extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            school: '',
-            location: '',
-            aboutYourself: '',
-            // TODO: include stock image if image link is empty, IMAGE LINK is optional
-            imageLink: '',
             signUpDone: false,
             submitting: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.uploadImage = this.uploadImage.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
     }
 
@@ -67,29 +60,9 @@ export default class SignUpMentee extends React.Component {
         this.setState(change)
     }
 
-    uploadImage(e) {
-        e.preventDefault();
-        let file = e.target.files[0];
-        let data = new FormData();
-        data.append('file', file);
-        axios.post(`${BACKEND}/imageUpload`, data, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-        }).then(
-            success => {
-                console.log(success); // Handle the success response object
-                this.setState({imageLink: success.data})
-            }
-        ).catch(
-            error => console.log(error) // Handle the error response object
-        );
-    }
-
     handleSubmit(e) {
         e.preventDefault();
-        let readyForSubmit = (this.state.name && this.state.email && this.state.password && this.state.school && 
-        this.state.location && this.state.aboutYourself && this.state.confirmPassword) && (this.state.confirmPassword === this.state.password);
+        let readyForSubmit = (this.state.name && this.state.email && this.state.password && this.state.confirmPassword) && (this.state.confirmPassword === this.state.password);
         this.setState({
             submitting: readyForSubmit,
         })
@@ -99,29 +72,22 @@ export default class SignUpMentee extends React.Component {
                 name: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
-                school: this.state.school,
-                location: this.state.location,
                 timeZone: timeZone,
-                aboutYourself: this.state.aboutYourself,
-                imageLink: this.state.imageLink
             }
             e.preventDefault();
-            fetch(`${BACKEND}/newMentee`, {
+            fetch(`${BACKEND}/newAdmin`, {
                 method: 'post',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(payload)
-            }).then(async res => {
-                let resolvedRes = await res;
-                if (resolvedRes.status === 200) {
-                    swal({
-                        title: "Congratulations!",
-                        text: "Your submission was successful! Please check your email to confirm your account.",
-                        icon: "success",
-                      });
-                    this.setState({
-                        signUpDone: true
-                    })
-                }
+            }).then(res => {
+                swal({
+                    title: "Congratulations!",
+                    text: "Your submission was successful! Please check your email to confirm your account.",
+                    icon: "success",
+                  });
+                this.setState({
+                    signUpDone: true
+                })
             }).catch(err => {
                 this.setState({
                     submitting: false
@@ -148,8 +114,8 @@ export default class SignUpMentee extends React.Component {
                         style= {messageStyle}
                         attached
                         centered
-                        header="Mentee Sign up"
-                        content="Welcome! We're excited to have you on board."
+                        header="Admin Sign up"
+                        content="Welcome admin! If you aren't Reshad or Mir, you must be really important!"
                     />
                         <Grid>
                         <Grid.Row centered>
@@ -201,34 +167,6 @@ export default class SignUpMentee extends React.Component {
                                 <label>Name</label>
                                 <input placeholder='Name' name="name" onChange={this.handleChange} />
                             </Form.Field>
-                            <Form.Field
-                                type="text"
-                                required="true"
-                                style={fieldStyle}
-                            >
-                                <label>School</label>
-                                <input placeholder='School' name="school" onChange={this.handleChange} />
-                            </Form.Field>
-                            <Form.Field
-                                type="text"
-                                required="true"
-                                style={fieldStyle}
-                            >
-                                <label>Location</label>
-                                <input placeholder='Location' name="location" onChange={this.handleChange} />
-                            </Form.Field>
-                            <Form.Field
-                                    type="text"
-                                    required="true"
-                                    style={fieldStyle}
-                                >
-                                    <label>Tell us a little bit about yourself!</label>
-                                    <input placeholder='Interests, Hobbies, Motos...' name="aboutYourself" maxLength = "500" onChange={this.handleChange} />
-                                </Form.Field>
-                                <Form.Field>
-                                    <label>Let's put a face on you! Please upload an image.</label>
-                                    <input type="file" onChange={this.uploadImage} class="ui huge yellow center floated button"/>
-                                </Form.Field>
                             <Button 
                                 color="blue" 
                                 type='submit'

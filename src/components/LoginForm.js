@@ -2,6 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Icon, Message, Grid } from 'semantic-ui-react';
 import { BACKEND } from "../App";
+import { MENTEE, MENTOR, ADMIN } from '../magicString'
 
 let fieldStyle = {
     width: '100%',
@@ -12,7 +13,7 @@ let messageStyle = {
 }
 
 let buttonStyle = {
-    width: '80%',
+    width: '35%',
 }
 
 const compName = 'LoginForm_LS';
@@ -27,10 +28,12 @@ export default class LoginForm extends React.Component {
             error: null,
             menteeLoginLoading: false,
             mentorLoginLoading: false,
+            adminLoading: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitAsMentee = this.handleSubmitAsMentee.bind(this);
         this.handleSubmitAsMentor = this.handleSubmitAsMentor.bind(this);
+        this.handleSubmitAsAdmin = this.handleSubmitAsAdmin.bind(this);
         this.renderIncorrectCredentialsMessage = this.renderIncorrectCredentialsMessage.bind(this);
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -56,23 +59,30 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
+            let resolvedResParsed = await resolvedRes.json();
             if (resolvedRes.status === 400) {
+                console.log("response returned is", resolvedResParsed)
                 this.setState({
                     incorrectCredentials: true,
-                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
                     mentorLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
-                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                     mentorLoginLoading: false,
                 },() => {
                     this.props.login()
-                    this.props.liftPayload(resolvedRes, true);
+                    this.props.liftPayload(resolvedResParsed, MENTOR);
                 })
             }
+        }).catch(err => {
+            this.setState({
+                mentorLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
         });
     }
 
@@ -109,31 +119,79 @@ export default class LoginForm extends React.Component {
             })
         }).then(async res => {
             let resolvedRes = await res;
+            let resolvedResParsed = await res.json();
             if (resolvedRes.status === 400) {
                 this.setState({
                     incorrectCredentials: true,
-                    error: resolvedRes.error ? resolvedRes.error : `Your login was unsuccessful.`,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
                     menteeLoginLoading: false,
                 },() => console.log("login rejected", resolvedRes))
             }
             else {
-                resolvedRes = await resolvedRes.json()
                 this.setState({
                     incorrectCredentials: false,
                     menteeLoginLoading: false,
                 },() => {
                     this.props.login()
-                    this.props.liftPayload(resolvedRes, false);
+                    this.props.liftPayload(resolvedResParsed, MENTEE);
                 })
             }
+        }).catch(err => {
+            this.setState({
+                menteeLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
         });        
+    }
+
+    handleSubmitAsAdmin(e) {
+        e.preventDefault();
+        this.setState({adminLoginLoading: true});
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        fetch(`${BACKEND}/adminLogin`, {
+            method: 'post',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            })
+        }).then(async res => {
+            let resolvedRes = await res;
+            let resolvedResParsed = await resolvedRes.json()
+            if (resolvedRes.status === 400) {
+                this.setState({
+                    incorrectCredentials: true,
+                    error: resolvedResParsed.message ? resolvedResParsed.message : `Your login was unsuccessful.`,
+                    adminLoginLoading: false,
+                },() => console.log("login rejected", resolvedRes))
+            }
+            else {
+                this.setState({
+                    incorrectCredentials: false,
+                    adminLoginLoading: false,
+                },() => {
+                    this.props.login()
+                    this.props.liftPayload(resolvedResParsed, ADMIN);
+                })
+            }
+        }).catch(err => {
+            this.setState({
+                adminLoginLoading: false
+            }, () => {
+                window.alert("Whoops! The server's acting up... :(");
+            })
+        });
     }
     
     handleChange(e) {
-    e.preventDefault();
-    let change = {}
-    change[e.target.name] = e.target.value
-    this.setState(change)
+        e.preventDefault();
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
     }
 
     renderIncorrectCredentialsMessage() {
@@ -182,32 +240,38 @@ export default class LoginForm extends React.Component {
                 </Form.Field>
                 </Form>
             </Grid.Row>
-            <Grid.Row centered columns={2}>
-                <Grid.Column>
-                    <Button
-                        style={buttonStyle}
-                        onClick={this.handleSubmitAsMentee}
-                        color="yellow" 
-                        loading={this.state.menteeLoginLoading}
-                    >
-                        <Icon name="unlock"/>
-                        Login as Mentee
-                    </Button>
-                </Grid.Column>
-                <Grid.Column>
-                    <Button 
-                        style={buttonStyle}                        
-                        onClick={this.handleSubmitAsMentor}
-                        color="orange"
-                        loading={this.state.mentorLoginLoading}
-                    >
-                        <Icon name="unlock"/>
-                        Login as Mentor
-                    </Button>
-                </Grid.Column>
+            <Grid.Row centered>
+                <Button.Group>
+                <Button
+                    style={buttonStyle}
+                    onClick={this.handleSubmitAsMentee}
+                    color="yellow" 
+                    loading={this.state.menteeLoginLoading}
+                >
+                    <Icon name="unlock"/>
+                    Login as Mentee
+                </Button>
+                <Button 
+                    style={buttonStyle}                        
+                    onClick={this.handleSubmitAsMentor}
+                    color="orange"
+                    loading={this.state.mentorLoginLoading}
+                >
+                    <Icon name="unlock"/>
+                    Login as Mentor
+                </Button>
+                <Button 
+                    style={buttonStyle}                        
+                    onClick={this.handleSubmitAsAdmin}
+                    color="gray"
+                    loading={this.state.adminLoginLoading}
+                >
+                    <Icon name="unlock"/>
+                    Login as Admin
+                </Button>
+                </Button.Group>
             </Grid.Row>
-            </Grid>
-            
+            </Grid>  
         </div>)
     }
 }
